@@ -58,7 +58,8 @@ function syllabus_supports($feature) {
 
 /**
  * This function is used by the reset_course_userdata function in moodlelib.
- * @param $data the data submitted from the reset course.
+ *
+ * @param array $data the data submitted from the reset course.
  * @return array status array
  */
 function syllabus_reset_userdata($data) {
@@ -72,17 +73,33 @@ function syllabus_reset_userdata($data) {
  * @return int new syllabus instance id
  */
 function syllabus_add_instance($data, $mform) {
-    global $DB;
+    global $DB, $USER;
 
     $cmid        = $data->coursemodule;
-
+    // Fill course data.
+    $course = get_course($data->course);
+    $category = \core_course_category::get($course->category);
+    $data->title = $course->fullname;
+    $data->idnumber = $course->idnumber;
+    $data->facultydept = $category->name;
+    if ($date = udem_get_session_date($course->idnumber)) {
+        $d = new \DateTime();
+        $d->setTimestamp($date);
+        $data->courseyear = $d->format('Y');
+    }
+    if ($session = udem_get_session($course->idnumber)) {
+        $data->trimester = get_string($session, 'mod_syllabus');
+    }
+    $data->simpledescription = $course->summary;
+    $data->trainingtype = \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED;
+    $data->usermodified = $USER->id;
     $data->id = $DB->insert_record('syllabus', $data);
 
     // We need to use context now, so we need to make sure all needed info is already in db.
     $DB->set_field('course_modules', 'instance', $data->id, array('id' => $cmid));
 
     $completiontimeexpected = !empty($data->completionexpected) ? $data->completionexpected : null;
-    \core_completion\api::update_completion_date_event($data->coursemodule, 'syllabus', $data->id, $completiontimeexpected);
+    \core_completion\api::update_completion_date_event($cmid, 'syllabus', $data->id, $completiontimeexpected);
 
     return $data->id;
 }
@@ -97,15 +114,13 @@ function syllabus_update_instance($data, $mform) {
     global $CFG, $DB;
 
     $cmid        = $data->coursemodule;
-    $draftitemid = $data->files;
 
     $data->timemodified = time();
     $data->id           = $data->instance;
-
     $DB->update_record('syllabus', $data);
 
     $completiontimeexpected = !empty($data->completionexpected) ? $data->completionexpected : null;
-    \core_completion\api::update_completion_date_event($data->coursemodule, 'syllabus', $data->id, $completiontimeexpected);
+    \core_completion\api::update_completion_date_event($cmid, 'syllabus', $data->id, $completiontimeexpected);
 
     return true;
 }
@@ -211,4 +226,21 @@ function syllabus_extend_settings_navigation(settings_navigation $settingsnav, n
         $url = new moodle_url('/mod/syllabus/edit.php', array('cmid' => $PAGE->cm->id));
         $syllabusnode->add(get_string('enterdata', 'syllabus'), $url, settings_navigation::TYPE_SETTING);
     }
+}
+
+/**
+ * Get course session.
+ *
+ * @param string $idnumber
+ * @return string Session
+ */
+function udem_get_session($idnumber) {
+    global $CFG;
+    $matches = array();
+    $trimestre = array('H' => 'winter', 'E' => 'summer', 'A' => 'fall');
+    if (preg_match('/([\-][AHE][0-9]{2})$/', $idnumber, $matches)) {
+        $session = substr($matches[1], -3, 1);
+        return $trimestre[$session];
+    }
+    return null;
 }

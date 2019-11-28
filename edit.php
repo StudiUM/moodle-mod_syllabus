@@ -31,7 +31,8 @@ $cm = get_coursemodule_from_id('syllabus', $id, 0, true, MUST_EXIST);
 $context = context_module::instance($cm->id, MUST_EXIST);
 $syllabus = $DB->get_record('syllabus', array('id' => $cm->instance), '*', MUST_EXIST);
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-
+$url = new moodle_url("/mod/syllabus/edit.php", array('cmid' => $cm->id));
+$redirecturl = new moodle_url("/mod/syllabus/view.php", array('id' => $cm->id));
 require_login($course, false, $cm);
 
 $PAGE->set_url('/mod/syllabus/edit.php', array('cmid' => $cm->id));
@@ -39,16 +40,25 @@ $PAGE->set_title($course->shortname . ': ' . $syllabus->name);
 $PAGE->set_heading($course->fullname);
 $PAGE->set_activity_record($syllabus);
 
-$data = new stdClass();
-$data->id = $cm->id;
+// Set up the form.
+$syllabuspersistent = new \mod_syllabus\syllabus($syllabus->id);
+$formoptions = [
+    'persistent' => $syllabuspersistent
+];
 
-$mform = new \mod_syllabus\form\edit_form(null, array('data' => $data));
+$mform = new \mod_syllabus\form\syllabus($url, $formoptions);
 
+// Form cancelled.
 if ($mform->is_cancelled()) {
     redirect($redirecturl);
-
-} else if ($formdata = $mform->get_data()) {
-    // Ici traiter le formulaire.
+}
+$databuttons = $mform->get_data_buttons();
+// Get form data.
+$data = $mform->get_submitted_data();
+if ($data) {
+    // Update syllabus.
+    $syllabuspersistent->from_record($data);
+    $syllabuspersistent->update();
 
     $params = array(
         'context' => $context,
@@ -57,8 +67,12 @@ if ($mform->is_cancelled()) {
     $event = \mod_syllabus\event\syllabus_updated::create($params);
     $event->add_record_snapshot('syllabus', $syllabus);
     $event->trigger();
-
-    redirect($redirecturl);
+    if (isset($databuttons['saveandpreview'])) {
+        redirect($redirecturl);
+    } else if (isset($databuttons['saveandreturntocourse'])) {
+        $redirecturlcourse = new moodle_url("/course/view.php", array('id' => $course->id));
+        redirect($redirecturlcourse);
+    }
 }
 
 echo $OUTPUT->header();

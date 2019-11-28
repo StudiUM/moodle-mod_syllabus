@@ -55,8 +55,15 @@ class restore_syllabus_activity_task extends restore_activity_task {
     /**
      * Define the contents in the activity that must be
      * processed by the link decoder.
+     *
+     * @return array
      */
     static public function define_decode_contents() {
+        $contents = array();
+
+        $contents[] = new restore_decode_content('syllabus', array('intro'), 'syllabus');
+
+        return $contents;
     }
 
     /**
@@ -64,6 +71,7 @@ class restore_syllabus_activity_task extends restore_activity_task {
      * to the activity to be executed by the link decoder.
      */
     static public function define_decode_rules() {
+        return array();
     }
 
     /**
@@ -73,6 +81,13 @@ class restore_syllabus_activity_task extends restore_activity_task {
      * of {@link restore_log_rule} objects
      */
     static public function define_restore_log_rules() {
+        $rules = array();
+
+        $rules[] = new restore_log_rule('syllabus', 'add', 'view.php?id={course_module}', '{syllabus}');
+        $rules[] = new restore_log_rule('syllabus', 'update', 'view.php?id={course_module}', '{syllabus}');
+        $rules[] = new restore_log_rule('syllabus', 'view', 'view.php?id={course_module}', '{syllabus}');
+
+        return $rules;
     }
 
     /**
@@ -86,5 +101,10 @@ class restore_syllabus_activity_task extends restore_activity_task {
      * activity level. All them are rules not linked to any module instance (cmid = 0)
      */
     static public function define_restore_log_rules_for_course() {
+        $rules = array();
+
+        $rules[] = new restore_log_rule('syllabus', 'view all', 'index.php?id={course}', null);
+
+        return $rules;
     }
 }

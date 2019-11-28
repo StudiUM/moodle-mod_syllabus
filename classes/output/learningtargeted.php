@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The mod_syllabus course module viewed event.
+ * Learningtargeted class for syllabusform.
  *
  * @package    mod_syllabus
  * @copyright  2019 Université de Montréal
@@ -23,35 +23,32 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace mod_syllabus\event;
+namespace mod_syllabus\output;
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
 /**
- * The mod_syllabus course module viewed event class.
+ * Learningtargeted class for syllabusform.
  *
  * @package    mod_syllabus
  * @copyright  2019 Université de Montréal
  * @author     Issam Taboubi <issam.taboubi@umontreal.ca>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class course_module_viewed extends \core\event\course_module_viewed {
+class learningtargeted extends rubric {
 
     /**
-     * Init method.
+     * Build elements for rubric.
      */
-    protected function init() {
-        $this->data['crud'] = 'r';
-        $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
-        $this->data['objecttable'] = 'syllabus';
-    }
-
-    /**
-     * Get informations for mapping object.
-     *
-     * @return array Informations for mapping object
-     */
-    public static function get_objectid_mapping() {
-        return array('db' => 'syllabus', 'restore' => 'syllabus');
+    public function build_form_rubric() {
+        $label = get_string('educationalintentions', 'mod_syllabus');
+        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $label = get_string('educationalintentions_cmp', 'mod_syllabus');
+        }
+        $this->form->addElement('editor', 'educationalintentions', $label, array('rows' => 10));
+        $this->form->setType('educationalintentions', PARAM_CLEANHTML);
+        $this->form->addElement('editor', 'learningobjectives',
+                get_string('learningobjectives', 'mod_syllabus'), array('rows' => 10));
+        $this->form->setType('learningobjectives', PARAM_CLEANHTML);
     }
 }

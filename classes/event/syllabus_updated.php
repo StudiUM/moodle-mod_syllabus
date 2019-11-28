@@ -83,6 +83,11 @@ class syllabus_updated extends \core\event\base {
             $this->contextinstanceid);
     }
 
+    /**
+     * Get informations for mapping object.
+     *
+     * @return array Informations for mapping object
+     */
     public static function get_objectid_mapping() {
         return array('db' => 'syllabus', 'restore' => 'syllabus');
     }

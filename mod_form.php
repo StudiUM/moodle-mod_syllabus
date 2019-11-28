@@ -36,10 +36,32 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class mod_syllabus_mod_form extends moodleform_mod {
+
+    /**
+     * Define form elements.
+     */
     public function definition() {
         global $CFG;
         $mform = $this->_form;
+        $mform->addElement('header', 'general', get_string('general', 'form'));
+        // Name.
+        $mform->addElement('text', 'name', get_string('name'), array('size' => '64'));
+        if (!empty($CFG->formatstringstriptags)) {
+            $mform->setType('name', PARAM_TEXT);
+        } else {
+            $mform->setType('name', PARAM_CLEANHTML);
+        }
+        $mform->setDefault('name', get_string('modulename', 'mod_syllabus'));
 
+        // Syllabus type.
+        $radio = array();
+        $radio[] = $mform->createElement('radio', 'syllabustype',
+                null, get_string('syllabusobjectives', 'mod_syllabus'), \mod_syllabus\syllabus::SYLLABUS_TYPE_OBJECTIVES);
+        $radio[] = $mform->createElement('radio', 'syllabustype',
+                null, get_string('syllabuscompetencies', 'mod_syllabus'), \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES);
+        $mform->addGroup($radio, 'syllabustype', get_string('syllabustype', 'mod_syllabus'), ' ', false);
+        $mform->setDefault('syllabustype', \mod_syllabus\syllabus::SYLLABUS_TYPE_OBJECTIVES);
+        $this->standard_intro_elements();
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
     }

@@ -18,7 +18,8 @@
  * Class for syllabus persistence.
  *
  * @package    mod_syllabus
- * @copyright  2019 David Ligne
+ * @copyright  2019 Université de Montréal
+ * @author     2019 David Ligne <david.ligne@umontreal.ca>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -26,16 +27,13 @@ namespace mod_syllabus;
 
 defined('MOODLE_INTERNAL') || die();
 
-use coding_exception;
-use context_course;
-use context_user;
-use comment;
-use lang_string;
+use \core\persistent;
 
 /**
  * Class for loading/storing syllabus from the DB.
  *
- * @copyright  2019 David Ligne <david.ligne@umontreal.ca>
+ * @copyright  2019 Université de Montréal
+ * @author     2019 David Ligne <david.ligne@umontreal.ca>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class syllabus extends persistent {
@@ -61,6 +59,25 @@ class syllabus extends persistent {
     /** Training types */
     const TRAINING_TYPE_BIMODAL = 4;
 
+    /** @var array Fields with editor. */
+    protected static $fieldswitheditor = [
+        'simpledescription',
+        'detaileddescription',
+        'placeinprogram',
+        'educationalintentions',
+        'learningobjectives',
+        'policyothers',
+        'integrityothers',
+        'mandatoryresourcedocuments',
+        'librarybooks',
+        'equipment',
+        'additionalresourcedocuments',
+        'websites',
+        'guides',
+        'additionalresourceothers',
+        'supportsuccessothers'
+    ];
+
     /**
      * Return the definition of the properties of this model.
      *
@@ -68,9 +85,6 @@ class syllabus extends persistent {
      */
     protected static function define_properties() {
         return array(
-            'id' => array(
-                'type' => PARAM_INT,
-            ),
             'syllabustype' => array(
                 'choices' => array(
                     self::SYLLABUS_TYPE_OBJECTIVES,
@@ -79,36 +93,38 @@ class syllabus extends persistent {
                 'type' => PARAM_INT,
                 'default' => self::SYLLABUS_TYPE_OBJECTIVES,
             ),
-            'courseid' => array(
-                'type' => PARAM_INT
+            'course' => array(
+                'type' => PARAM_INT,
+            ),
+            'name' => array(
+                'type' => PARAM_TEXT
             ),
             'title' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
+            ),
+            'intro' => array(
+                'type' => PARAM_RAW
+            ),
+            'introformat' => array(
+                'type' => PARAM_INT
             ),
             'creditnb' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'idnumber' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'moodlecourseurl' => array(
-                'type' => PARAM_URL,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_URL
             ),
             'facultydept' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'trimester' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'courseyear' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'trainingtype'  => array(
                 'choices' => array(
@@ -121,52 +137,44 @@ class syllabus extends persistent {
                 'default' => self::TRAINING_TYPE_CAMPUSBASED,
             ),
             'courseconduct' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'weeklyworkload' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'simpledescription' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_CLEANHTML,
+                'default' => null,
+                'null' => NULL_ALLOWED,
             ),
             'detaileddescription' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_CLEANHTML,
+                'default' => null,
+                'null' => NULL_ALLOWED,
             ),
             'placeinprogram' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_CLEANHTML,
             ),
             'educationalintentions' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_CLEANHTML,
             ),
             'learningobjectives' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_CLEANHTML,
             ),
             'evaluationabsence' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'workdeposits' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'authorizedmaterial' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'languagequality' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'successthreshold' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'registrationmodification' => array(
                 'type' => PARAM_INT,
@@ -184,92 +192,90 @@ class syllabus extends persistent {
                 'null' => NULL_ALLOWED,
             ),
             'teachingevaluation' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'courseregistration' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'notetaking' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'mandatoryresourcedocuments' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'librarybooks' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'equipment' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'additionalresourcedocuments' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'websites' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'guides' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'additionalresourceothers' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'writtencommunicationcenter' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'successstudentcenter' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'sourcequote' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'udemlibraries' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'studentswithdisabilities' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'supportsuccessothers' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'studyregulations' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'disabilitypolicy' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
-            ),
-            'policyothers' => array(
                 'type' => PARAM_TEXT
             ),
+            'courseregistration' => array(
+                'type' => PARAM_TEXT
+            ),
+            'notetaking' => array(
+                'type' => PARAM_TEXT
+            ),
+            'mandatoryresourcedocuments' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'librarybooks' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'equipment' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'additionalresourcedocuments' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'websites' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'guides' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'additionalresourceothers' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'writtencommunicationcenter' => array(
+                'type' => PARAM_TEXT
+            ),
+            'successstudentcenter' => array(
+                'type' => PARAM_TEXT
+            ),
+            'sourcequote' => array(
+                'type' => PARAM_TEXT
+            ),
+            'udemlibraries' => array(
+                'type' => PARAM_TEXT
+            ),
+            'studentswithdisabilities' => array(
+                'type' => PARAM_TEXT
+            ),
+            'supportsuccessothers' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
+            'studyregulations' => array(
+                'type' => PARAM_TEXT
+            ),
+            'disabilitypolicy' => array(
+                'type' => PARAM_TEXT
+            ),
+            'policyothers' => array(
+                'type' => PARAM_CLEANHTML,
+            ),
             'integritysite' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'regulationsexplained' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_TEXT
             ),
             'integrityothers' => array(
-                'type' => PARAM_TEXT,
-                'null' => NULL_ALLOWED
+                'type' => PARAM_CLEANHTML,
             )
         );
+    }
+
+    /**
+     * Gets all the formatted properties.
+     *
+     * Formatted properties are properties which have a format associated with them.
+     *
+     * @return array Keys are property names, values are property format names.
+     */
+    public static function get_custom_formatted_properties() {
+        $properties = static::$fieldswitheditor;
+
+        $formatted = array();
+        foreach ($properties as $property) {
+            $propertyformat = $property . 'format';
+            $formatted[$property] = $propertyformat;
+        }
+
+        return $formatted;
     }
 }

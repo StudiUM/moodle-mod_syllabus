@@ -15,28 +15,31 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Edit syllabus content form.
+ * Sessionscalendar class for syllabusform.
  *
  * @package    mod_syllabus
  * @copyright  2019 Université de Montréal
  * @author     Issam Taboubi <issam.taboubi@umontreal.ca>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace mod_syllabus\form;
-use moodleform;
 
-defined('MOODLE_INTERNAL') || die();
+namespace mod_syllabus\output;
+
+defined('MOODLE_INTERNAL') || die;
 
 /**
- * Edit syllabus content form.
+ * Sessionscalendar class for syllabusform.
  *
  * @package    mod_syllabus
  * @copyright  2019 Université de Montréal
  * @author     Issam Taboubi <issam.taboubi@umontreal.ca>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class edit_form extends moodleform {
-    public function definition() {
-        $mform = $this->_form;
+class sessionscalendar extends rubric {
+
+    /**
+     * Build elements for rubric.
+     */
+    public function build_form_rubric() {
     }
 }
