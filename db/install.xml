@@ -1,20 +1,136 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/syllabus/db" VERSION="20191115" COMMENT="XMLDB file for Syllabus module"
+<XMLDB PATH="mod/syllabus/db" VERSION="20191203" COMMENT="XMLDB file for Syllabus module"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd">
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
   <TABLES>
-      <TABLE NAME="syllabus" COMMENT="Defines syllabus">
+    <TABLE NAME="syllabus" COMMENT="Defines syllabus">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="usermodified" TYPE="int" LENGTH="18" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="18" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="18" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
-        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="intro" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="syllabustype" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="title" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="creditnb" TYPE="char" LENGTH="45" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="idnumber" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="moodlecourseurl" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="facultydept" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="trimester" TYPE="char" LENGTH="45" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="courseyear" TYPE="char" LENGTH="4" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="trainingtype" TYPE="int" LENGTH="9" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="courseconduct" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="weeklyworkload" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="simpledescription" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="detaileddescription" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="placeinprogram" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="educationalintentions" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="learningobjectives" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="evaluationabsence" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="workdeposits" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="authorizedmaterial" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="languagequality" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="successthreshold" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="registrationmodification" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="resignationdeadline" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="trimesterend" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="teachingevaluation" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="courseregistration" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="notetaking" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="mandatoryresourcedocuments" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="librarybooks" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="equipment" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="additionalresourcedocuments" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="websites" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="guides" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="additionalresourceothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="writtencommunicationcenter" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="successstudentcenter" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="sourcequote" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="udemlibraries" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="studentswithdisabilities" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="supportsuccessothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="studyregulations" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="disabilitypolicy" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="policyothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="integritysite" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="regulationsexplained" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="integrityothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="syllabus_calendarsession" COMMENT="Defines syllabus_calendarsession">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="syllabusid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="date" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="title" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="content" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="activity" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="readingandworks" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="formativeevaluations" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="evaluations" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
       <INDEXES>
-        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+        <INDEX NAME="fk_syllabuscalendarsession_syllabusidx" UNIQUE="false" FIELDS="syllabusid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="syllabus_contact" COMMENT="Defines syllabus_contact">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="syllabusid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="duty" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="contactinformation" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="availability" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="fk_syllabuscontact_syllabus_idx" UNIQUE="false" FIELDS="syllabusid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="syllabus_evaluation" COMMENT="defines syllabus_evaluation">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="syllabusid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="activities" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="learningobjectives" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="evaluationcriteria" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="evaluationdate" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="weightings" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="fk_syllabusevaluation_syllabus_idx" UNIQUE="false" FIELDS="syllabusid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="syllabus_teacher" COMMENT="Defines syllabus_teacher">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="syllabusid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="title" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="contactinformation" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="availability" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="fk_syllabusteacher_syllabus_idx" UNIQUE="false" FIELDS="syllabusid"/>
       </INDEXES>
     </TABLE>
   </TABLES>
