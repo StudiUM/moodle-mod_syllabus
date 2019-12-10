@@ -46,6 +46,15 @@ abstract class rubric {
     /** @var array The text area options. */
     const TEXTAREAOPTIONS = ['cols' => 64, 'rows' => 3];
 
+    /** @var array editor options. */
+    const EDITOROPTIONS = ['rows' => 10];
+
+    /** @var array input options. */
+    const INPUTOPTIONS = ['size' => '64'];
+
+    /** @var array input options. */
+    const URLINPUTOPTIONS = ['size' => '50'];
+
     /**
      * Constructor for rubric.
      *

@@ -43,7 +43,7 @@ class generalinformation extends rubric {
     public function build_form_rubric() {
 
         $this->form->addElement('html', $this->fieldset_html_start('cours', 'Cours'));
-        $this->form->addElement('text', 'title', get_string('title', 'mod_syllabus'), array('size' => '64'));
+        $this->form->addElement('text', 'title', get_string('title', 'mod_syllabus'), self::INPUTOPTIONS);
         $this->form->setType('title', PARAM_TEXT);
 
         $this->form->addElement('text', 'creditnb', get_string('creditnb', 'mod_syllabus'), array('size' => '8'));
@@ -51,10 +51,10 @@ class generalinformation extends rubric {
         $this->form->addElement('text', 'idnumber', get_string('idnumber', 'mod_syllabus'), array('size' => '16'));
         $this->form->setType('idnumber', PARAM_TEXT);
 
-        $this->form->addElement('text', 'moodlecourseurl', get_string('moodlecourseurl', 'mod_syllabus'), array('size' => '64'));
-        $this->form->setType('moodlecourseurl', PARAM_TEXT);
+        $this->form->addElement('text', 'moodlecourseurl', get_string('moodlecourseurl', 'mod_syllabus'), self::URLINPUTOPTIONS);
+        $this->form->setType('moodlecourseurl', PARAM_URL);
 
-        $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'), array('size' => '64'));
+        $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'), self::INPUTOPTIONS);
         $this->form->setType('facultydept', PARAM_TEXT);
 
         $this->form->addElement('text', 'trimester', get_string('trimester', 'mod_syllabus'), array('size' => '8'));
@@ -63,7 +63,7 @@ class generalinformation extends rubric {
         $this->form->addElement('text', 'courseyear', get_string('courseyear', 'mod_syllabus'), array('size' => '8'));
         $this->form->setType('courseyear', PARAM_TEXT);
 
-        $this->form->freeze(['title', 'idnumber', 'facultydept', 'trimester', 'courseyear']);
+        $this->form->freeze(['title', 'idnumber', 'moodlecourseurl', 'facultydept', 'trimester', 'courseyear']);
 
         $radio = array();
         $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('campusbased', 'mod_syllabus'),
@@ -87,12 +87,14 @@ class generalinformation extends rubric {
         // Course description.
         $this->form->addElement('html', $this->fieldset_html_start('desccours', get_string('coursedesc', 'mod_syllabus')));
         $this->form->addElement('editor', 'simpledescription',
-                get_string('simpledescription', 'mod_syllabus'), array('rows' => 10));
+                get_string('simpledescription', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('simpledescription', PARAM_CLEANHTML);
+        $this->form->disabledIf('simpledescription', null);
+
         $this->form->addElement('editor', 'detaileddescription',
-                get_string('detaileddescription', 'mod_syllabus'), array('rows' => 10));
+                get_string('detaileddescription', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('detaileddescription', PARAM_CLEANHTML);
-        $this->form->addElement('editor', 'placeinprogram', get_string('placeinprogram', 'mod_syllabus'), array('rows' => 10));
+        $this->form->addElement('editor', 'placeinprogram', get_string('placeinprogram', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('placeinprogram', PARAM_CLEANHTML);
         $this->form->addElement('html', $this->fieldset_html_end());
     }

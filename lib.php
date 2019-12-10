@@ -93,6 +93,10 @@ function syllabus_add_instance($data, $mform) {
     $data->simpledescription = $course->summary;
     $data->trainingtype = \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED;
     $data->usermodified = $USER->id;
+    $urlcourse = new \moodle_url("/course/view.php", array('id' => $data->course));
+    $data->moodlecourseurl = $urlcourse->out();
+    // Prefill static data.
+    $data = \mod_syllabus\syllabus::prefill($data);
     $data->id = $DB->insert_record('syllabus', $data);
 
     // We need to use context now, so we need to make sure all needed info is already in db.

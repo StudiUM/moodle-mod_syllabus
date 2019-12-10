@@ -78,6 +78,20 @@ class syllabus extends persistent {
         'supportsuccessothers'
     ];
 
+    /** @var array Prefilled fields. */
+    protected static $prefilledfields = [
+        'courseregistration',
+        'writtencommunicationcenter',
+        'successstudentcenter',
+        'sourcequote',
+        'udemlibraries',
+        'studentswithdisabilities',
+        'studyregulations',
+        'disabilitypolicy',
+        'integritysite',
+        'regulationsexplained'
+    ];
+
     /**
      * Return the definition of the properties of this model.
      *
@@ -277,5 +291,18 @@ class syllabus extends persistent {
         }
 
         return $formatted;
+    }
+
+    /**
+     * Prefill syllabus with default values.
+     *
+     * @param \stdClass $record
+     * @return \stdClass Syllabus prefill
+     */
+    public static function prefill($record) {
+        foreach (self::$prefilledfields as $field) {
+            $record->{$field} = get_string($field . 'default', 'mod_syllabus');
+        }
+        return $record;
     }
 }
