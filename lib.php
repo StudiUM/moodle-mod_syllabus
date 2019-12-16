@@ -81,7 +81,7 @@ function syllabus_add_instance($data, $mform) {
     $category = \core_course_category::get($course->category);
     $data->title = $course->fullname;
     $data->idnumber = $course->idnumber;
-    $data->facultydept = $category->name;
+    $data->facultydept = $category->get_nested_name(false);
     if ($date = udem_get_session_date($course->idnumber)) {
         $d = new \DateTime();
         $d->setTimestamp($date);

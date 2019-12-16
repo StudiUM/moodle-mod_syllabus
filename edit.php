@@ -26,6 +26,7 @@
 require('../../config.php');
 
 $id = required_param('cmid', PARAM_INT);
+$rubric = optional_param('rubric', 'generalinformation', PARAM_TEXT);
 
 $cm = get_coursemodule_from_id('syllabus', $id, 0, true, MUST_EXIST);
 $context = context_module::instance($cm->id, MUST_EXIST);
@@ -43,7 +44,8 @@ $PAGE->set_activity_record($syllabus);
 // Set up the form.
 $syllabuspersistent = new \mod_syllabus\syllabus($syllabus->id);
 $formoptions = [
-    'persistent' => $syllabuspersistent
+    'persistent' => $syllabuspersistent,
+    'rubric' => $rubric
 ];
 
 $mform = new \mod_syllabus\form\syllabus($url, $formoptions);

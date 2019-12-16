@@ -42,7 +42,7 @@ class syllabus extends persistent {
     protected static $persistentclass = 'mod_syllabus\\syllabus';
 
     /** @var array Fields to remove when getting the final data. */
-    protected static $fieldstoremove = array('saveandcontinue', 'saveandpreview', 'saveandreturntocourse', 'cancel');
+    protected static $fieldstoremove = array('saveandcontinue', 'saveandpreview', 'saveandreturntocourse', 'cancel', 'rubric');
 
     /** @var array $tabs The array of form tabs. */
     protected $tabs = [
@@ -55,11 +55,20 @@ class syllabus extends persistent {
             ['id' => 'regfrmwkinstitpolicies', 'subrubric' => true],
         ];
 
+    /** @var string $currenttab The current tab. */
+    protected $currenttab = '';
+
     /**
      * Define the form - called by parent constructor.
      */
     public function definition() {
         global $PAGE;
+
+        $this->_form->addElement('hidden', 'rubric');
+        $this->_form->setType('rubric', PARAM_TEXT);
+        $this->_form->setDefault('rubric', 'generalinformation');
+
+        $this->currenttab = $this->_customdata['rubric'];
 
         $this->_form->addElement('html', \html_writer::start_div('syllabus'));
         $this->_form->addElement('html', $this->get_tabs_header_html());
@@ -89,10 +98,10 @@ class syllabus extends persistent {
         foreach ($this->tabs as $key => $tab) {
             $html .= \html_writer::start_tag('li', ['class' => 'nav-item']);
             $classlink = "nav-link";
-            if ($key === 0 ) {
+            if ($this->currenttab === $tab['id']) {
                 $classlink .= " active";
             }
-            $attributes = ['data-toggle' => 'tab', 'role' => 'tab', 'class' => $classlink];
+            $attributes = ['data-toggle' => 'tab', 'role' => 'tab', 'class' => $classlink, 'data-tab' => $tab['id']];
             $title = get_string($tab['id'], 'mod_syllabus');
             $html .= \html_writer::link('#' . $tab['id'], $title, $attributes);
             $html .= \html_writer::end_tag('li');
@@ -109,7 +118,7 @@ class syllabus extends persistent {
         $this->_form->addElement('html', \html_writer::start_div('tab-content'));
         foreach ($this->tabs as $key => $tab) {
             $classdiv = "tab-pane fade in";
-            if ($key === 0 ) {
+            if ($this->currenttab === $tab['id']) {
                 $classdiv .= " active";
             }
             $attributes = ['id' => $tab['id'], 'role' => 'tabpanel'];

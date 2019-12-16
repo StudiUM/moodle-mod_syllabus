@@ -49,6 +49,12 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                         }
                     });
 
+                    $(".syllabus").on('click', 'ul.nav-tabs li.nav-item a', function(event) {
+                        event.preventDefault();
+                        var tabid = $(this).data('tab');
+                        $('input[name="rubric"]').val(tabid);
+                    });
+
                     // Single collapse/expand.
                     $('.syllabus legend a.fheader').on('click', function(event) {
                         event.preventDefault();

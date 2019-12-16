@@ -43,13 +43,14 @@ class reminders extends rubric {
     public function build_form_rubric() {
 
         $this->form->addElement('html', $this->fieldset_html_start('importantdates', get_string('importantdates', 'mod_syllabus')));
-
+        $startyearopt = ['startyear' => date('Y', strtotime('-1 year'))];
         $this->form->addElement('date_selector', 'registrationmodification',
-                get_string('registrationmodification', 'mod_syllabus'));
+                get_string('registrationmodification', 'mod_syllabus'), $startyearopt);
 
-        $this->form->addElement('date_selector', 'resignationdeadline', get_string('resignationdeadline', 'mod_syllabus'));
+        $this->form->addElement('date_selector', 'resignationdeadline', get_string('resignationdeadline', 'mod_syllabus'),
+                $startyearopt);
 
-        $this->form->addElement('date_selector', 'trimesterend', get_string('trimesterend', 'mod_syllabus'));
+        $this->form->addElement('date_selector', 'trimesterend', get_string('trimesterend', 'mod_syllabus'), $startyearopt);
 
         $this->form->addElement('textarea', 'teachingevaluation',
                 get_string('teachingevaluation', 'mod_syllabus'), self::TEXTAREAOPTIONS);
