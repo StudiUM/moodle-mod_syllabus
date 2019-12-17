@@ -22,20 +22,134 @@
  * @author    Issam Taboubi <issam.taboubi@umontreal.ca>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/str', 'core/notification'], function($, str, notification) {
+define(['jquery', 'core/str', 'core/notification'], function ($, str, notification) {
 
-    return  {
-        init: function() {
+    /**
+     * Syllabus form.
+     * @param {Array} configdatepicker
+     * @param {Array} configmanageline
+     */
+    var SyllabusForm = function (configdatepicker, configmanageline) {
+        this.configdatepicker = configdatepicker;
+        this.configmanageline = configmanageline;
 
+        // Init tabs form.
+        this.tabsinit();
+
+        // Set calendar behaviour.
+        this.managelines();
+    };
+
+    /** @var {Array} The nb repeats array. */
+    SyllabusForm.prototype.nbrepeat = [];
+
+    /** @var {Array} The datepicker config. */
+    SyllabusForm.prototype.configdatepicker = [];
+
+    /** @var {Array} The manageline config. */
+    SyllabusForm.prototype.configmanageline = [];
+
+    /**
+     * Manages lines set up.
+     *
+     * @name   managelines
+     * @return {Void}
+     * @function
+     */
+    SyllabusForm.prototype.managelines = function () {
+        var self = this;
+        $.each(this.configmanageline, function( index, value ) {
+            self.nbrepeat[value.identifier] = parseInt($('input[name="' + value.name + '"]').val());
+            self.reorderlines(value.identifier, value.name);
+        });
+
+        // Handle on delete click.
+        $("#page-mod-syllabus-edit").on('click', 'a.deleteline', function(event) {
+            event.preventDefault();
+            var identifier = $(this).data('id');
+            var repeatname = $(this).data('repeat');
+            var element = $(this);
             str.get_strings([
-                { key: 'collapseall'},
-                { key: 'expandall'}]
-            ).done(
+                {key: 'confirm', component: 'moodle'},
+                {key: 'confirmdeleteline', component: 'mod_syllabus'},
+                {key: 'delete', component: 'moodle'},
+                {key: 'cancel', component: 'moodle'}
+            ]).done(function(strings) {
+                notification.confirm(
+                    strings[0],
+                    strings[1],
+                    strings[2],
+                    strings[3],
+                    function() {
+                        var linetodelete = element.closest('tr');
+                        linetodelete.remove();
+                        self.nbrepeat[identifier]--;
+                        self.reorderlines(identifier, repeatname);
+                    }
+                );
+            }).fail(notification.exception);
+        });
+        // Handle on add click.
+        $("#page-mod-syllabus-edit").on('click', '.addline', function(event) {
+            event.preventDefault();
+            var identifier = $(this).data('id');
+            var repeatname = $(this).data('repeat');
+            var hiddentr = $("table#" + identifier + " tr.hidden");
+            hiddentr.clone().addClass('newline').insertBefore("table#" + identifier + " tr.hidden");
+            $("#" + identifier + " .newline [name^='" + identifier + "_']").each(function() {
+                var name = $(this).attr('name');
+                var patt = /newindex/g;
+                var index = self.nbrepeat[identifier] + 1;
+                var newname = name.replace(patt, index.toString());
+                $(this).attr('name', newname);
+            });
+            $('.newline').removeClass('newline hidden');
+            self.nbrepeat[identifier]++;
+            self.reorderlines(identifier, repeatname);
+            // Re-apply datepicker.
+            Y.use("moodle-form-dateselector",function() {
+                M.form.dateselector.init_date_selectors(self.configdatepicker);
+            });
+        });
+    };
+
+    /**
+     * Reorder lines.
+     *
+     * @name   reorderlines
+     * @return {Void}
+     * @function
+     */
+    SyllabusForm.prototype.reorderlines = function (id, namerepeat) {
+        var self = this;
+        $("#" + id + " tbody tr:not(.hidden)").each(function(index) {
+            $(this).find("[name^='" + id + "_']").each(function() {
+                var name = $(this).attr('name');
+                var patt = /\[[\d]\]/g;
+                var newname = name.replace(patt, '[' + index.toString() + ']');
+                $(this).attr('name', newname);
+            });
+        });
+        $('input[name="' + namerepeat + '"]').val(self.nbrepeat[id]);
+    };
+
+    /**
+     * Syllabus tabs form.
+     *
+     * @name   tabsinit
+     * @return {Void}
+     * @function
+     */
+    SyllabusForm.prototype.tabsinit = function () {
+        str.get_strings([
+            {key: 'collapseall'},
+            {key: 'expandall'}]
+                ).done(
                 function (strings) {
                     var collapseall = strings[0];
                     var expandall = strings[1];
                     // Collapse/Expand all.
-                    $(".syllabus").on('click', '.collapsible-actions a', function(event) {
+                    $(".syllabus").on('click', '.collapsible-actions a', function (event) {
                         event.preventDefault();
                         var tabid = $(this).closest('div.tab-pane').attr('id');
                         if ($(this).hasClass('collapse-all')) {
@@ -49,14 +163,14 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                         }
                     });
 
-                    $(".syllabus").on('click', 'ul.nav-tabs li.nav-item a', function(event) {
+                    $(".syllabus").on('click', 'ul.nav-tabs li.nav-item a', function (event) {
                         event.preventDefault();
                         var tabid = $(this).data('tab');
                         $('input[name="rubric"]').val(tabid);
                     });
 
                     // Single collapse/expand.
-                    $('.syllabus legend a.fheader').on('click', function(event) {
+                    $('.syllabus legend a.fheader').on('click', function (event) {
                         event.preventDefault();
                         var id_fieldset = $(this).attr('aria-controls');
                         var expanded = $(this).attr('aria-expanded');
@@ -69,7 +183,7 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                         $('#' + id_fieldset).toggleClass('collapsed');
                         var allcollapsed = true;
                         var allexpanded = true;
-                        $('.syllabus #' + tabid + ' fieldset.collapsible').each(function() {
+                        $('.syllabus #' + tabid + ' fieldset.collapsible').each(function () {
                             allcollapsed = $(this).hasClass('collapsed') && allcollapsed;
                             allexpanded = !$(this).hasClass('collapsed') && allexpanded;
                         });
@@ -85,7 +199,12 @@ define(['jquery', 'core/str', 'core/notification'], function($, str, notificatio
                         }
                     });
                 }
-            ).fail(notification.exception);
+        ).fail(notification.exception);
+    };
+
+    return  {
+        init: function (configdatepicker, configmanageline) {
+            new SyllabusForm(configdatepicker, configmanageline);
         }
     };
 });

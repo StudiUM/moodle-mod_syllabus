@@ -43,6 +43,9 @@ abstract class rubric {
     /** @var moodleform $form the syllabus form. */
     protected $form;
 
+    /** @var array $customdata the form custom data. */
+    protected $customdata;
+
     /** @var array The text area options. */
     const TEXTAREAOPTIONS = ['cols' => 64, 'rows' => 3];
 
@@ -60,10 +63,12 @@ abstract class rubric {
      *
      * @param Syllabus $syllabus
      * @param moodleform $form
+     * @param array $customdata
      */
-    public function __construct($syllabus, $form) {
+    public function __construct($syllabus, $form, $customdata) {
         $this->syllabus = $syllabus;
         $this->form = $form;
+        $this->customdata = $customdata;
     }
 
     /**
@@ -109,5 +114,24 @@ abstract class rubric {
         $html .= \html_writer::end_tag('fieldset');
 
         return $html;
+    }
+
+    /**
+     * Get HTML add button.
+     *
+     * @param string $dataid
+     * @param string $datarepeat
+     * @return string HTML
+     */
+    public function button_add_html($dataid, $datarepeat = '') {
+        $linkcontent = \html_writer::start_tag('i', ['class' => 'icon fa fa-plus-square fa-fw']);
+        $linkcontent .= \html_writer::end_tag('i');
+        $linkcontent .= ' ' . get_string('add');
+        return \html_writer::link('#', $linkcontent, [
+                    'class' => 'btn btn-default small-button add addline',
+                    'role' => 'button',
+                    'data-id' => $dataid,
+                    'data-repeat' => $datarepeat
+                ]);
     }
 }

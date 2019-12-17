@@ -57,3 +57,52 @@
 .syllabus .colexpall-syllabus {
     margin-bottom: 10px;
 }
+.syllabus .managedates .col-md-3 {
+    width: 0px !important;
+    display: none;
+    max-width: 0px !important;
+}
+.textareadate {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.syllabus .managedates td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.syllabus .managedates td .col-md-9.form-inline.felement {
+    display: block;
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 100%;
+}
+.syllabus .btn.btn-default.small-button {
+    font-size: 0.7rem;
+    padding: .24rem .5rem;
+    margin-top: 6px;
+    margin-right: 5px;
+}
+.syllabus .btn.btn-default.small-button.add {
+    margin-bottom: 1rem;
+    margin-top: 0.1rem;
+}
+.syllabus a.deleteline .fa-trash {
+    font-size: 0.9rem;
+    color: red;
+}
+.syllabus .btn.btn-default.small-button .fa-plus-square {
+    font-size: 0.9rem;
+    color: #5cb85c;
+}
+@media (max-width: 1500px) {
+    .textareadate textarea {
+        max-width: 100px !important;
+        max-height: 70px !important;
+    }
+}
+@media (min-width: 1501px) and (max-width: 1800px) {
+    .textareadate textarea {
+        max-width: 155px !important;
+        max-height: 100px;
+    }
+}

@@ -27,9 +27,13 @@ require('../../config.php');
 
 $id = required_param('cmid', PARAM_INT);
 $rubric = optional_param('rubric', 'generalinformation', PARAM_TEXT);
+$nbrepeatsessioncal = optional_param('nbrepeatsessioncal', null, PARAM_INT);
+$nbrepeateval = optional_param('nbrepeatassessmentcal', null, PARAM_INT);
 
 $cm = get_coursemodule_from_id('syllabus', $id, 0, true, MUST_EXIST);
 $context = context_module::instance($cm->id, MUST_EXIST);
+require_capability('mod/syllabus:addinstance', $context);
+
 $syllabus = $DB->get_record('syllabus', array('id' => $cm->instance), '*', MUST_EXIST);
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
 $url = new moodle_url("/mod/syllabus/edit.php", array('cmid' => $cm->id));
@@ -45,7 +49,11 @@ $PAGE->set_activity_record($syllabus);
 $syllabuspersistent = new \mod_syllabus\syllabus($syllabus->id);
 $formoptions = [
     'persistent' => $syllabuspersistent,
-    'rubric' => $rubric
+    'rubric' => $rubric,
+    'nbrepeat' => [
+        'nbrepeatsessioncal' => $nbrepeatsessioncal,
+        'nbrepeatassessmentcal' => $nbrepeateval
+    ]
 ];
 
 $mform = new \mod_syllabus\form\syllabus($url, $formoptions);
@@ -54,24 +62,31 @@ $mform = new \mod_syllabus\form\syllabus($url, $formoptions);
 if ($mform->is_cancelled()) {
     redirect($redirecturl);
 }
-$databuttons = $mform->get_data_buttons();
+$alldata = $mform->get_all_data();
 // Get form data.
 $data = $mform->get_submitted_data();
 if ($data) {
     // Update syllabus.
-    $syllabuspersistent->from_record($data);
+    $persistantdata = $syllabuspersistent->clean_record($data);
+    $syllabuspersistent->from_record($persistantdata);
     $syllabuspersistent->update();
 
     $params = array(
         'context' => $context,
         'objectid' => $syllabus->id
     );
+    // Update sessions calendar.
+    \mod_syllabus\calendarsession::update_sessionscalendar($syllabuspersistent, $alldata);
+
+    // Update assessments calendar.
+    \mod_syllabus\evaluation::update_evaluations($syllabuspersistent, $alldata);
+
     $event = \mod_syllabus\event\syllabus_updated::create($params);
     $event->add_record_snapshot('syllabus', $syllabus);
     $event->trigger();
-    if (isset($databuttons['saveandpreview'])) {
+    if (isset($alldata['saveandpreview'])) {
         redirect($redirecturl);
-    } else if (isset($databuttons['saveandreturntocourse'])) {
+    } else if (isset($alldata['saveandreturntocourse'])) {
         $redirecturlcourse = new moodle_url("/course/view.php", array('id' => $course->id));
         redirect($redirecturlcourse);
     }

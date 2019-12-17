@@ -26,11 +26,7 @@ namespace mod_syllabus;
 
 defined('MOODLE_INTERNAL') || die();
 
-use coding_exception;
-use context_course;
-use context_user;
-use comment;
-use lang_string;
+use \core\persistent;
 
 /**
  * Class for loading/storing calendar sessions from the DB.
@@ -50,9 +46,85 @@ class calendarsession extends persistent {
      */
     protected static function define_properties() {
         return array(
-            'id' => array(
+            'syllabusid' => array(
                 'type' => PARAM_INT,
             ),
+            'date' => array(
+                'type' => PARAM_INT
+            ),
+            'title' => array(
+                'type' => PARAM_TEXT
+            ),
+            'content' => array(
+                'type' => PARAM_TEXT
+            ),
+            'activity' => array(
+                'type' => PARAM_TEXT
+            ),
+            'readingandworks' => array(
+                'type' => PARAM_TEXT
+            ),
+            'formativeevaluations' => array(
+                'type' => PARAM_TEXT,
+                'default' => null,
+                'null' => NULL_ALLOWED,
+            ),
+            'evaluations' => array(
+                'type' => PARAM_TEXT
+            )
         );
+    }
+
+    /**
+     * Count the number of sessions calendar for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return int
+     */
+    public static function count_records_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::count_records($filters);
+    }
+
+    /**
+     * Get sessions calendar for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return calendarsession[] array of calendarsession
+     */
+    public static function list_sessionscalendar_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::get_records($filters, 'date');
+    }
+
+    /**
+     * Update sessions calendar for a syllabus.
+     *
+     * @param  syllabus $syllabus The syllabus
+     * @param  array $data data form
+     */
+    public static function update_sessionscalendar($syllabus, $data) {
+        global $DB;
+        $filters = array('syllabusid' => $syllabus->get('id'));
+        $DB->delete_records(static::TABLE, $filters);
+
+        $nbrecords = $data['nbrepeatsessioncal'];
+        if ($nbrecords > 0) {
+            for ($i = 0; $i < $nbrecords; $i++) {
+                $record = new \stdClass();
+                $record->date = $data['calendarsession_date'][$i];
+                $record->title = $data['calendarsession_title'][$i];
+                $record->content = $data['calendarsession_content'][$i];
+                $record->activity = $data['calendarsession_activity'][$i];
+                $record->readingandworks = $data['calendarsession_readingandworks'][$i];
+                if ($syllabus->get('syllabustype') == syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+                    $record->formativeevaluations = $data['calendarsession_formativeevaluations'][$i];
+                }
+                $record->evaluations = $data['calendarsession_evaluations'][$i];
+                $record->syllabusid = $syllabus->get('id');
+                $sessioncal = new calendarsession(0, $record);
+                $sessioncal->create();
+            }
+        }
     }
 }

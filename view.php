@@ -71,8 +71,8 @@ echo $output->heading(format_string($syllabus->name), 2);
 
 if (has_capability('mod/syllabus:addinstance', $context)) {
     echo $output->container_start('text-right');
-    echo $output->single_button(new moodle_url('/mod/syllabus/edit.php?', ['cmid' => $PAGE->cm->id]),
-            get_string('enterdata', 'syllabus'));
+    echo \html_writer::link(new moodle_url('/mod/syllabus/edit.php?', ['cmid' => $PAGE->cm->id]),
+            get_string('enterdata', 'syllabus'), ['class' => 'btn btn-secondary']);
     echo $output->container_end();
 }
 

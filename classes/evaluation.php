@@ -26,11 +26,7 @@ namespace mod_syllabus;
 
 defined('MOODLE_INTERNAL') || die();
 
-use coding_exception;
-use context_course;
-use context_user;
-use comment;
-use lang_string;
+use \core\persistent;
 
 /**
  * Class for loading/storing evaluation from the DB.
@@ -50,9 +46,77 @@ class evaluation extends persistent {
      */
     protected static function define_properties() {
         return array(
-            'id' => array(
+            'syllabusid' => array(
                 'type' => PARAM_INT,
             ),
+            'evaluationdate' => array(
+                'type' => PARAM_INT
+            ),
+            'activities' => array(
+                'type' => PARAM_TEXT
+            ),
+            'learningobjectives' => array(
+                'type' => PARAM_TEXT,
+                'default' => null,
+                'null' => NULL_ALLOWED
+            ),
+            'evaluationcriteria' => array(
+                'type' => PARAM_TEXT
+            ),
+            'weightings' => array(
+                'type' => PARAM_TEXT
+            )
         );
+    }
+
+    /**
+     * Count the number of assessments calendar for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return int
+     */
+    public static function count_records_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::count_records($filters);
+    }
+
+    /**
+     * Get assessments calendar for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return evaluation[] array of evaluation
+     */
+    public static function list_evaluations_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::get_records($filters, 'evaluationdate');
+    }
+
+    /**
+     * Update assessments calendar for a syllabus.
+     *
+     * @param  syllabus $syllabus The syllabus
+     * @param  array $data data form
+     */
+    public static function update_evaluations($syllabus, $data) {
+        global $DB;
+        $filters = array('syllabusid' => $syllabus->get('id'));
+        $DB->delete_records(static::TABLE, $filters);
+
+        $nbrecords = $data['nbrepeatassessmentcal'];
+        if ($nbrecords > 0) {
+            for ($i = 0; $i < $nbrecords; $i++) {
+                $record = new \stdClass();
+                $record->evaluationdate = $data['assessmentcalendar_evaluationdate'][$i];
+                $record->activities = $data['assessmentcalendar_activities'][$i];
+                $record->evaluationcriteria = $data['assessmentcalendar_evaluationcriteria'][$i];
+                $record->weightings = $data['assessmentcalendar_weightings'][$i];
+                if ($syllabus->get('syllabustype') == syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+                    $record->learningobjectives = $data['assessmentcalendar_learningobjectives'][$i];
+                }
+                $record->syllabusid = $syllabus->get('id');
+                $sessioncal = new evaluation(0, $record);
+                $sessioncal->create();
+            }
+        }
     }
 }

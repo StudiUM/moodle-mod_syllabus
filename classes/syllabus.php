@@ -294,6 +294,24 @@ class syllabus extends persistent {
     }
 
     /**
+     * Clean record for persistence.
+     *
+     * Unset all unknown properties.
+     * @param \stdClass $record
+     * @return array return clean record.
+     */
+    public static function clean_record($record) {
+        $recordarray = (array) $record;
+        $properties = self::define_properties();
+        foreach ($recordarray as $key => $value) {
+            if (!key_exists($key, $properties)) {
+                unset($record->$key);
+            }
+        }
+        return $record;
+    }
+
+    /**
      * Prefill syllabus with default values.
      *
      * @param \stdClass $record
@@ -304,5 +322,41 @@ class syllabus extends persistent {
             $record->{$field} = get_string($field . 'default', 'mod_syllabus');
         }
         return $record;
+    }
+
+    /**
+     * Count the session calendar for this syllabus.
+     *
+     * @return int
+     */
+    public function count_sessionscalendar() {
+        return \mod_syllabus\calendarsession::count_records_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Get the sessions calendar for this syllabus.
+     *
+     * @return sessioncalendar[] Array of session calendar objects
+     */
+    public function get_sessionscalendar() {
+        return \mod_syllabus\calendarsession::list_sessionscalendar_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Count the session calendar for this syllabus.
+     *
+     * @return int
+     */
+    public function count_assessmentscalendar() {
+        return \mod_syllabus\evaluation::count_records_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Get the assessments calendar for this syllabus.
+     *
+     * @return evaluation[] Array of assessments calendar objects
+     */
+    public function get_assessmentscalendar() {
+        return \mod_syllabus\evaluation::list_evaluations_for_syllabus($this->get('id'));
     }
 }
