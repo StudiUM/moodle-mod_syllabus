@@ -359,4 +359,40 @@ class syllabus extends persistent {
     public function get_assessmentscalendar() {
         return \mod_syllabus\evaluation::list_evaluations_for_syllabus($this->get('id'));
     }
+
+    /**
+     * Count teachers for this syllabus.
+     *
+     * @return int
+     */
+    public function count_teachers() {
+        return \mod_syllabus\teacher::count_records_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Count contacts for this syllabus.
+     *
+     * @return int
+     */
+    public function count_contacts() {
+        return \mod_syllabus\contact::count_records_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Get the contacts for this syllabus.
+     *
+     * @return contact[] Array of contact objects
+     */
+    public function get_contacts() {
+        return \mod_syllabus\contact::list_contacts_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Get the teachers for this syllabus.
+     *
+     * @return teacher[] Array of teacher objects
+     */
+    public function get_teachers() {
+        return \mod_syllabus\teacher::list_teachers_for_syllabus($this->get('id'));
+    }
 }

@@ -26,11 +26,7 @@ namespace mod_syllabus;
 
 defined('MOODLE_INTERNAL') || die();
 
-use coding_exception;
-use context_course;
-use context_user;
-use comment;
-use lang_string;
+use \core\persistent;
 
 /**
  * Class for loading/storing teacher from the DB.
@@ -50,9 +46,74 @@ class teacher extends persistent {
      */
     protected static function define_properties() {
         return array(
-            'id' => array(
+            'syllabusid' => array(
                 'type' => PARAM_INT,
             ),
+            'name' => array(
+                'type' => PARAM_TEXT
+            ),
+            'title' => array(
+                'type' => PARAM_TEXT,
+                'default' => null,
+                'null' => NULL_ALLOWED,
+            ),
+            'contactinformation' => array(
+                'type' => PARAM_TEXT
+            ),
+            'availability' => array(
+                'type' => PARAM_TEXT,
+                'default' => null,
+                'null' => NULL_ALLOWED,
+            )
         );
+    }
+
+    /**
+     * Count the number of teachers for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return int
+     */
+    public static function count_records_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::count_records($filters);
+    }
+
+    /**
+     * Get teachers  for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return teacher[] array of teacher
+     */
+    public static function list_teachers_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::get_records($filters);
+    }
+
+
+    /**
+     * Update teachers for a syllabus.
+     *
+     * @param  syllabus $syllabus The syllabus
+     * @param  array $data data form
+     */
+    public static function update_teachers($syllabus, $data) {
+        global $DB;
+        $filters = array('syllabusid' => $syllabus->get('id'));
+        $DB->delete_records(static::TABLE, $filters);
+
+        $nbrecords = $data['nbrepeatteachers'];
+        if ($nbrecords > 0) {
+            for ($i = 0; $i < $nbrecords; $i++) {
+                $record = new \stdClass();
+                $record->name = $data['teacher_name'][$i];
+                $record->title = $data['teacher_title'][$i];
+                $record->contactinformation = $data['teacher_contactinformation'][$i];
+                $record->availability = $data['teacher_availability'][$i];
+                $record->syllabusid = $syllabus->get('id');
+                $teacher = new teacher(0, $record);
+                $teacher->create();
+            }
+        }
     }
 }

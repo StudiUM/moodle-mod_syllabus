@@ -26,11 +26,7 @@ namespace mod_syllabus;
 
 defined('MOODLE_INTERNAL') || die();
 
-use coding_exception;
-use context_course;
-use context_user;
-use comment;
-use lang_string;
+use \core\persistent;
 
 /**
  * Class for loading/storing contact from the DB.
@@ -50,9 +46,73 @@ class contact extends persistent {
      */
     protected static function define_properties() {
         return array(
-            'id' => array(
+            'syllabusid' => array(
                 'type' => PARAM_INT,
             ),
+            'name' => array(
+                'type' => PARAM_TEXT
+            ),
+            'duty' => array(
+                'type' => PARAM_TEXT,
+                'default' => null,
+                'null' => NULL_ALLOWED,
+            ),
+            'contactinformation' => array(
+                'type' => PARAM_TEXT
+            ),
+            'availability' => array(
+                'type' => PARAM_TEXT,
+                'default' => null,
+                'null' => NULL_ALLOWED,
+            )
         );
+    }
+
+    /**
+     * Count the number of contacts for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return int
+     */
+    public static function count_records_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::count_records($filters);
+    }
+
+    /**
+     * Get contacts  for a syllabus.
+     *
+     * @param  int $syllabusid The syllabus ID
+     * @return contact[] array of contact
+     */
+    public static function list_contacts_for_syllabus($syllabusid) {
+        $filters = array('syllabusid' => $syllabusid);
+        return self::get_records($filters);
+    }
+
+    /**
+     * Update contacts for a syllabus.
+     *
+     * @param  syllabus $syllabus The syllabus
+     * @param  array $data data form
+     */
+    public static function update_contacts($syllabus, $data) {
+        global $DB;
+        $filters = array('syllabusid' => $syllabus->get('id'));
+        $DB->delete_records(static::TABLE, $filters);
+
+        $nbrecords = $data['nbrepeatcontacts'];
+        if ($nbrecords > 0) {
+            for ($i = 0; $i < $nbrecords; $i++) {
+                $record = new \stdClass();
+                $record->name = $data['contact_name'][$i];
+                $record->duty = $data['contact_duty'][$i];
+                $record->contactinformation = $data['contact_contactinformation'][$i];
+                $record->availability = $data['contact_availability'][$i];
+                $record->syllabusid = $syllabus->get('id');
+                $contact = new contact(0, $record);
+                $contact->create();
+            }
+        }
     }
 }

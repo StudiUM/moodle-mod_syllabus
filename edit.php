@@ -29,6 +29,8 @@ $id = required_param('cmid', PARAM_INT);
 $rubric = optional_param('rubric', 'generalinformation', PARAM_TEXT);
 $nbrepeatsessioncal = optional_param('nbrepeatsessioncal', null, PARAM_INT);
 $nbrepeateval = optional_param('nbrepeatassessmentcal', null, PARAM_INT);
+$nbrepeatteachers = optional_param('nbrepeatteachers', null, PARAM_INT);
+$nbrepeatcontacts = optional_param('nbrepeatcontacts', null, PARAM_INT);
 
 $cm = get_coursemodule_from_id('syllabus', $id, 0, true, MUST_EXIST);
 $context = context_module::instance($cm->id, MUST_EXIST);
@@ -52,7 +54,9 @@ $formoptions = [
     'rubric' => $rubric,
     'nbrepeat' => [
         'nbrepeatsessioncal' => $nbrepeatsessioncal,
-        'nbrepeatassessmentcal' => $nbrepeateval
+        'nbrepeatassessmentcal' => $nbrepeateval,
+        'nbrepeatteachers' => $nbrepeatteachers,
+        'nbrepeatcontacts' => $nbrepeatcontacts
     ]
 ];
 
@@ -80,6 +84,12 @@ if ($data) {
 
     // Update assessments calendar.
     \mod_syllabus\evaluation::update_evaluations($syllabuspersistent, $alldata);
+
+    // Update teachers.
+    \mod_syllabus\teacher::update_teachers($syllabuspersistent, $alldata);
+
+    // Update contacts.
+    \mod_syllabus\contact::update_contacts($syllabuspersistent, $alldata);
 
     $event = \mod_syllabus\event\syllabus_updated::create($params);
     $event->add_record_snapshot('syllabus', $syllabus);

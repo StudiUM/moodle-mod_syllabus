@@ -87,7 +87,7 @@
     margin-top: 0.1rem;
 }
 .syllabus a.deleteline .fa-trash {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     color: red;
 }
 .syllabus .btn.btn-default.small-button .fa-plus-square {
@@ -95,14 +95,25 @@
     color: #5cb85c;
 }
 @media (max-width: 1500px) {
-    .textareadate textarea {
+    .syllabus .textareadate textarea {
         max-width: 100px !important;
         max-height: 70px !important;
     }
+    .syllabus .textareaperson textarea {
+        max-width: 150px !important;
+        max-height: 100px !important;
+    }
 }
 @media (min-width: 1501px) and (max-width: 1800px) {
-    .textareadate textarea {
+    .syllabus .textareadate textarea {
         max-width: 155px !important;
         max-height: 100px;
     }
+    .syllabus .textareaperson textarea {
+       max-width: 200px !important;
+       max-height: 130px;
+    }
+}
+.syllabus .personinputname input {
+    width: 100%;
 }

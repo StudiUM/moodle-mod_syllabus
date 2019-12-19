@@ -84,6 +84,112 @@ class generalinformation extends rubric {
         $this->form->setType('weeklyworkload', PARAM_TEXT);
         $this->form->addElement('html', $this->fieldset_html_end());
 
+        // Teacher.
+        // Set the nbrepeat.
+        $this->form->addElement('hidden', 'nbrepeatteachers');
+        $this->form->setType('nbrepeatteachers', PARAM_INT);
+        if ($this->customdata['nbrepeat']['nbrepeatteachers'] !== null) {
+            $nbrepeat = $this->customdata['nbrepeat']['nbrepeatteachers'];
+        } else {
+            $nbrepeat = $this->syllabus->count_teachers();
+        }
+        $this->form->setDefault('nbrepeatteachers', $nbrepeat);
+        $this->form->addElement('html',
+                $this->fieldset_html_start('teacher', get_string('teacher', 'mod_syllabus')));
+        $textareaoptions = ['cols' => 22, 'rows' => 4];
+        $table = \html_writer::start_tag('table', ['class' => 'generaltable fullwidth managedates', 'id' => 'teacher']);
+        $table .= \html_writer::start_tag('thead');
+        $table .= \html_writer::start_tag('tr');
+
+        $headers = ['name', 'title', 'contactinformation', 'availability'];
+        foreach ($headers as $header) {
+            $table .= \html_writer::start_tag('th');
+            $table .= get_string('teacher_' . $header, 'mod_syllabus');
+            $table .= \html_writer::end_tag('th');
+        }
+
+        $table .= \html_writer::start_tag('th');
+        $table .= \html_writer::end_tag('th');
+        $table .= \html_writer::end_tag('tr');
+        $table .= \html_writer::end_tag('thead');
+
+        $table .= \html_writer::start_tag('tbody');
+
+        $this->form->addElement('html', $table);
+        $deletelabel = get_string('delete');
+        $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
+        $link = \html_writer::link('#', $action, ['class' => 'deleteline',
+            'data-id' => "teacher", 'data-repeat' => 'nbrepeatteachers']);
+
+        for ($i = 0; $i < $nbrepeat; $i++) {
+            $this->build_teacher_line($i, $link, $textareaoptions);
+        }
+
+        // Hidden for adding line.
+        $this->build_teacher_line('newindex', $link, $textareaoptions, true);
+
+        $this->form->addElement('html', '</tbody>');
+        $this->form->addElement('html', '</table>');
+
+        $this->form->addElement('html', '<div class="text-right">');
+        $this->form->addElement('html', $this->button_add_html('teacher', 'nbrepeatteachers'));
+        $this->form->addElement('html', '</div>');
+
+        $this->form->addElement('html', $this->fieldset_html_end());
+
+        // Contact.
+        // Set the nbrepeat.
+        $this->form->addElement('hidden', 'nbrepeatcontacts');
+        $this->form->setType('nbrepeatcontacts', PARAM_INT);
+        if ($this->customdata['nbrepeat']['nbrepeatcontacts'] !== null) {
+            $nbrepeat = $this->customdata['nbrepeat']['nbrepeatcontacts'];
+        } else {
+            $nbrepeat = $this->syllabus->count_contacts();
+        }
+        $this->form->setDefault('nbrepeatcontacts', $nbrepeat);
+        $this->form->addElement('html',
+                $this->fieldset_html_start('contact', get_string('contact', 'mod_syllabus')));
+        $textareaoptions = ['cols' => 22, 'rows' => 4];
+        $table = \html_writer::start_tag('table', ['class' => 'generaltable fullwidth managedates', 'id' => 'contact']);
+        $table .= \html_writer::start_tag('thead');
+        $table .= \html_writer::start_tag('tr');
+
+        $headers = ['name', 'duty', 'contactinformation', 'availability'];
+        foreach ($headers as $header) {
+            $table .= \html_writer::start_tag('th');
+            $table .= get_string('contact_' . $header, 'mod_syllabus');
+            $table .= \html_writer::end_tag('th');
+        }
+
+        $table .= \html_writer::start_tag('th');
+        $table .= \html_writer::end_tag('th');
+        $table .= \html_writer::end_tag('tr');
+        $table .= \html_writer::end_tag('thead');
+
+        $table .= \html_writer::start_tag('tbody');
+
+        $this->form->addElement('html', $table);
+        $deletelabel = get_string('delete');
+        $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
+        $link = \html_writer::link('#', $action, ['class' => 'deleteline',
+            'data-id' => "contact", 'data-repeat' => 'nbrepeatcontacts']);
+
+        for ($i = 0; $i < $nbrepeat; $i++) {
+            $this->build_contact_line($i, $link, $textareaoptions);
+        }
+
+        // Hidden for adding line.
+        $this->build_contact_line('newindex', $link, $textareaoptions, true);
+
+        $this->form->addElement('html', '</tbody>');
+        $this->form->addElement('html', '</table>');
+
+        $this->form->addElement('html', '<div class="text-right">');
+        $this->form->addElement('html', $this->button_add_html('contact', 'nbrepeatcontacts'));
+        $this->form->addElement('html', '</div>');
+
+        $this->form->addElement('html', $this->fieldset_html_end());
+
         // Course description.
         $this->form->addElement('html', $this->fieldset_html_start('desccours', get_string('coursedesc', 'mod_syllabus')));
         $this->form->addElement('editor', 'simpledescription',
@@ -97,5 +203,85 @@ class generalinformation extends rubric {
         $this->form->addElement('editor', 'placeinprogram', get_string('placeinprogram', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('placeinprogram', PARAM_CLEANHTML);
         $this->form->addElement('html', $this->fieldset_html_end());
+    }
+
+    /**
+     * Build teacher line (tr).
+     *
+     * @param string $index
+     * @param string $linkdelete
+     * @param string $textareaoptions
+     * @param boolean $hidden
+     * @return string HTML
+     */
+    protected function build_teacher_line($index, $linkdelete, $textareaoptions, $hidden = false) {
+        $class = ($hidden) ? "class='hidden'" : '';
+        $this->form->addElement('html', "<tr $class>");
+
+        $this->form->addElement('html', '<td class="personinputname">');
+        $this->form->addElement('text', 'teacher_name[' . $index . ']', '', ['class' => 'personinputname']);
+        $this->form->setType('teacher_name', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td class="textareaperson">');
+        $this->form->addElement('textarea', 'teacher_title[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('teacher_title', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td class="textareaperson">');
+        $this->form->addElement('textarea', 'teacher_contactinformation[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('teacher_contactinformation', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td class="textareaperson">');
+        $this->form->addElement('textarea', 'teacher_availability[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('teacher_availability', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td>');
+        $this->form->addElement('html', $linkdelete);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '</tr>');
+    }
+
+    /**
+     * Build contact line (tr).
+     *
+     * @param string $index
+     * @param string $linkdelete
+     * @param string $textareaoptions
+     * @param boolean $hidden
+     * @return string HTML
+     */
+    protected function build_contact_line($index, $linkdelete, $textareaoptions, $hidden = false) {
+        $class = ($hidden) ? "class='hidden'" : '';
+        $this->form->addElement('html', "<tr $class>");
+
+        $this->form->addElement('html', '<td class="personinputname">');
+        $this->form->addElement('text', 'contact_name[' . $index . ']', '');
+        $this->form->setType('contact_name', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td class="textareaperson">');
+        $this->form->addElement('textarea', 'contact_duty[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('contact_title', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td class="textareaperson">');
+        $this->form->addElement('textarea', 'contact_contactinformation[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('contact_contactinformation', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td class="textareaperson">');
+        $this->form->addElement('textarea', 'contact_availability[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('contact_availability', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '<td>');
+        $this->form->addElement('html', $linkdelete);
+        $this->form->addElement('html', '</td>');
+
+        $this->form->addElement('html', '</tr>');
     }
 }

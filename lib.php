@@ -73,8 +73,8 @@ function syllabus_reset_userdata($data) {
  * @return int new syllabus instance id
  */
 function syllabus_add_instance($data, $mform) {
-    global $DB, $USER;
-
+    global $DB, $USER, $CFG;
+    require_once($CFG->dirroot.'/user/lib.php');
     $cmid        = $data->coursemodule;
     // Fill course data.
     $course = get_course($data->course);
@@ -98,6 +98,33 @@ function syllabus_add_instance($data, $mform) {
     // Prefill static data.
     $data = \mod_syllabus\syllabus::prefill($data);
     $data->id = $DB->insert_record('syllabus', $data);
+    // Add editingteachers.
+    if ($id = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'))) {
+        $rawdata = user_get_participants($data->course, 0, 0, $id, 0, -1, '');
+        foreach ($rawdata as $user) {
+            $record = new \stdClass();
+            $record->name = fullname($user);
+            $record->contactinformation = $user->email;
+            $record->syllabusid = $data->id;
+            $teacher = new \mod_syllabus\teacher(0, $record);
+            $teacher->create();
+        }
+        $rawdata->close();
+    }
+    // Add teachers (contacts).
+    $teachers = [];
+    if ($id = $DB->get_field('role', 'id', array('shortname' => 'teacher'))) {
+        $rawdata = user_get_participants($data->course, 0, 0, $id, 0, -1, '');
+        foreach ($rawdata as $user) {
+            $record = new \stdClass();
+            $record->name = fullname($user);
+            $record->contactinformation = $user->email;
+            $record->syllabusid = $data->id;
+            $contact = new \mod_syllabus\contact(0, $record);
+            $contact->create();
+        }
+        $rawdata->close();
+    }
 
     // We need to use context now, so we need to make sure all needed info is already in db.
     $DB->set_field('course_modules', 'instance', $data->id, array('id' => $cmid));

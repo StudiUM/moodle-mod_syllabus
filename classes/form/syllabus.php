@@ -89,7 +89,9 @@ class syllabus extends persistent {
                     'configdatepicker' => $this->get_config_for_datepicker(),
                     'configmanageline' => [
                         ['name' => 'nbrepeatassessmentcal', 'identifier' => 'assessmentcalendar'],
-                        ['name' => 'nbrepeatsessioncal', 'identifier' => 'calendarsession']
+                        ['name' => 'nbrepeatsessioncal', 'identifier' => 'calendarsession'],
+                        ['name' => 'nbrepeatteachers', 'identifier' => 'teacher'],
+                        ['name' => 'nbrepeatcontacts', 'identifier' => 'contact']
                     ]
                 ]);
     }
@@ -230,6 +232,36 @@ class syllabus extends persistent {
                 $learningobjectives = "assessmentcalendar_learningobjectives[$i]";
                 $data->$learningobjectives = $record->get('learningobjectives');
             }
+            $i++;
+        }
+
+        // Set teachers data.
+        $teachers = $this->get_persistent()->get_teachers();
+        $i = 0;
+        foreach ($teachers as $record) {
+            $name = "teacher_name[$i]";
+            $data->$name = $record->get('name');
+            $title = "teacher_title[$i]";
+            $data->$title = $record->get('title');
+            $contactinformation = "teacher_contactinformation[$i]";
+            $data->$contactinformation = $record->get('contactinformation');
+            $availability = "teacher_availability[$i]";
+            $data->$availability = $record->get('availability');
+            $i++;
+        }
+
+        // Set contacts data.
+        $contacts = $this->get_persistent()->get_contacts();
+        $i = 0;
+        foreach ($contacts as $record) {
+            $name = "contact_name[$i]";
+            $data->$name = $record->get('name');
+            $title = "contact_duty[$i]";
+            $data->$title = $record->get('duty');
+            $contactinformation = "contact_contactinformation[$i]";
+            $data->$contactinformation = $record->get('contactinformation');
+            $availability = "contact_availability[$i]";
+            $data->$availability = $record->get('availability');
             $i++;
         }
 
