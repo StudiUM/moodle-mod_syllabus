@@ -94,9 +94,9 @@ if ($data) {
     $event = \mod_syllabus\event\syllabus_updated::create($params);
     $event->add_record_snapshot('syllabus', $syllabus);
     $event->trigger();
-    if (isset($alldata['saveandpreview'])) {
+    if ($alldata['typeofsubmit'] == 'saveandpreview') {
         redirect($redirecturl);
-    } else if (isset($alldata['saveandreturntocourse'])) {
+    } else if ($alldata['typeofsubmit'] == 'saveandreturntocourse') {
         $redirecturlcourse = new moodle_url("/course/view.php", array('id' => $course->id));
         redirect($redirecturlcourse);
     }

@@ -41,29 +41,51 @@ class generalinformation extends rubric {
      * Build elements for rubric.
      */
     public function build_form_rubric() {
+        global $OUTPUT;
+
+        // Check if it is an official course.
+        // Some fields must be frozen if they are prefilled, but not frozen (and mandatory) otherwise.
+        $isofficialcourse = false;
+        $idnumber = $this->syllabus->get('idnumber');
+        // Option to add to required fields.
+        $reqoptoffical = array();
+        if (!empty($idnumber) && !empty(udem_get_session($idnumber))) {
+            $isofficialcourse = true;
+        } else {
+            $reqoptoffical = self::REQUIREDOPTIONS;
+        }
+        $reqoptshortstring = array_merge(array('size' => '8'), self::REQUIREDOPTIONS);
 
         $this->form->addElement('html', $this->fieldset_html_start('cours', 'Cours'));
-        $this->form->addElement('text', 'title', get_string('title', 'mod_syllabus'), self::INPUTOPTIONS);
+
+        $this->form->addElement('text', 'title', get_string('title', 'mod_syllabus'),
+            array_merge(self::INPUTOPTIONS, $reqoptoffical));
         $this->form->setType('title', PARAM_TEXT);
 
-        $this->form->addElement('text', 'creditnb', get_string('creditnb', 'mod_syllabus'), array('size' => '8'));
+        $this->form->addElement('text', 'creditnb', get_string('creditnb', 'mod_syllabus'), $reqoptshortstring);
         $this->form->setType('creditnb', PARAM_TEXT);
-        $this->form->addElement('text', 'idnumber', get_string('idnumber', 'mod_syllabus'), array('size' => '16'));
+        $this->form->addRule('creditnb', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('text', 'idnumber', get_string('idnumber', 'mod_syllabus'),
+            array_merge(array('size' => '16'), $reqoptoffical));
         $this->form->setType('idnumber', PARAM_TEXT);
 
-        $this->form->addElement('text', 'moodlecourseurl', get_string('moodlecourseurl', 'mod_syllabus'), self::URLINPUTOPTIONS);
+        $this->form->addElement('text', 'moodlecourseurl', get_string('moodlecourseurl', 'mod_syllabus'),
+            array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS));
         $this->form->setType('moodlecourseurl', PARAM_URL);
+        $this->form->addRule('moodlecourseurl', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'), self::INPUTOPTIONS);
+        $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'),
+            array_merge(self::INPUTOPTIONS, self::REQUIREDOPTIONS));
         $this->form->setType('facultydept', PARAM_TEXT);
+        $this->form->addRule('facultydept', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'trimester', get_string('trimester', 'mod_syllabus'), array('size' => '8'));
+        $this->form->addElement('text', 'trimester', get_string('trimester', 'mod_syllabus'), $reqoptshortstring);
         $this->form->setType('trimester', PARAM_TEXT);
+        $this->form->addRule('trimester', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'courseyear', get_string('courseyear', 'mod_syllabus'), array('size' => '8'));
+        $this->form->addElement('text', 'courseyear', get_string('courseyear', 'mod_syllabus'), $reqoptshortstring);
         $this->form->setType('courseyear', PARAM_TEXT);
-
-        $this->form->freeze(['title', 'idnumber', 'moodlecourseurl', 'facultydept', 'trimester', 'courseyear']);
+        $this->form->addRule('courseyear', get_string('required'), 'required', null, 'server');
 
         $radio = array();
         $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('campusbased', 'mod_syllabus'),
@@ -86,7 +108,8 @@ class generalinformation extends rubric {
 
         // Teacher.
         // Set the nbrepeat.
-        $this->form->addElement('hidden', 'nbrepeatteachers');
+        $title = get_string('generalinformation', 'mod_syllabus');
+        $this->form->addElement('hidden', 'nbrepeatteachers', null, array('data-morethanone' => 'true', 'data-tabname' => $title));
         $this->form->setType('nbrepeatteachers', PARAM_INT);
         if ($this->customdata['nbrepeat']['nbrepeatteachers'] !== null) {
             $nbrepeat = $this->customdata['nbrepeat']['nbrepeatteachers'];
@@ -101,10 +124,13 @@ class generalinformation extends rubric {
         $table .= \html_writer::start_tag('thead');
         $table .= \html_writer::start_tag('tr');
 
-        $headers = ['name', 'title', 'contactinformation', 'availability'];
-        foreach ($headers as $header) {
+        $headers = ['name' => true, 'title' => false, 'contactinformation' => true, 'availability' => true];
+        foreach ($headers as $header => $isrequired) {
             $table .= \html_writer::start_tag('th');
             $table .= get_string('teacher_' . $header, 'mod_syllabus');
+            if ($isrequired) {
+                $table .= ' '.$OUTPUT->pix_icon('req', get_string('required'));
+            }
             $table .= \html_writer::end_tag('th');
         }
 
@@ -192,17 +218,51 @@ class generalinformation extends rubric {
 
         // Course description.
         $this->form->addElement('html', $this->fieldset_html_start('desccours', get_string('coursedesc', 'mod_syllabus')));
-        $this->form->addElement('editor', 'simpledescription',
-                get_string('simpledescription', 'mod_syllabus'), self::EDITOROPTIONS);
-        $this->form->setType('simpledescription', PARAM_CLEANHTML);
-        $this->form->disabledIf('simpledescription', null);
 
+        if (!$isofficialcourse) {
+            $this->form->addElement('html', \html_writer::start_div('',
+                array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'simpledescription'))));
+        }
+        $this->form->addElement('editor', 'simpledescription',
+                get_string('simpledescription', 'mod_syllabus'), array_merge(self::EDITOROPTIONS, $reqoptoffical));
+        $this->form->setType('simpledescription', PARAM_CLEANHTML);
+        if (!$isofficialcourse) {
+            $this->form->addElement('html', \html_writer::end_div());
+        }
+
+        $this->form->addElement('html', \html_writer::start_div('',
+            array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'detaileddescription'))));
         $this->form->addElement('editor', 'detaileddescription',
-                get_string('detaileddescription', 'mod_syllabus'), self::EDITOROPTIONS);
+            get_string('detaileddescription', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('detaileddescription', PARAM_CLEANHTML);
+        $this->form->addRule('detaileddescription', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('html', \html_writer::end_div());
+
+        $this->form->addElement('html', \html_writer::start_div('',
+            array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'placeinprogram'))));
         $this->form->addElement('editor', 'placeinprogram', get_string('placeinprogram', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('placeinprogram', PARAM_CLEANHTML);
+        $this->form->addRule('placeinprogram', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('html', \html_writer::end_div());
+
         $this->form->addElement('html', $this->fieldset_html_end());
+
+        // If it is an official course.
+        if ($isofficialcourse) {
+            $this->form->freeze(['title', 'idnumber', 'moodlecourseurl', 'facultydept', 'trimester', 'courseyear']);
+
+            // Editor fields can't be frozen the same way as simple fields.
+            $this->form->disabledIf('simpledescription', 'idnumber', 'neq', '');
+        } else {
+            // The fields are not frozen and are mandatory.
+            $this->form->addRule('idnumber', get_string('required'), 'required', null, 'server');
+            $this->form->addRule('title', get_string('required'), 'required', null, 'server');
+            $this->form->addRule('simpledescription', get_string('required'), 'required', null, 'server');
+            $this->form->addRule('moodlecourseurl', get_string('required'), 'required', null, 'server');
+            $this->form->addRule('facultydept', get_string('required'), 'required', null, 'server');
+            $this->form->addRule('trimester', get_string('required'), 'required', null, 'server');
+            $this->form->addRule('courseyear', get_string('required'), 'required', null, 'server');
+        }
     }
 
     /**
@@ -219,7 +279,8 @@ class generalinformation extends rubric {
         $this->form->addElement('html', "<tr $class>");
 
         $this->form->addElement('html', '<td class="personinputname">');
-        $this->form->addElement('text', 'teacher_name[' . $index . ']', '', ['class' => 'personinputname']);
+        $this->form->addElement('text', 'teacher_name[' . $index . ']', '',
+            array_merge(['class' => 'personinputname'], self::REQUIREDOPTIONS));
         $this->form->setType('teacher_name', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
@@ -229,12 +290,14 @@ class generalinformation extends rubric {
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareaperson">');
-        $this->form->addElement('textarea', 'teacher_contactinformation[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'teacher_contactinformation[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
         $this->form->setType('teacher_contactinformation', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareaperson">');
-        $this->form->addElement('textarea', 'teacher_availability[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'teacher_availability[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
         $this->form->setType('teacher_availability', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 

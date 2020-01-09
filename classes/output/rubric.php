@@ -55,8 +55,11 @@ abstract class rubric {
     /** @var array input options. */
     const INPUTOPTIONS = ['size' => '64'];
 
-    /** @var array input options. */
+    /** @var array url input options. */
     const URLINPUTOPTIONS = ['size' => '50'];
+
+    /** @var array required field options */
+    const REQUIREDOPTIONS = ['data-required' => 'true'];
 
     /**
      * Constructor for rubric.

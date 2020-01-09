@@ -41,9 +41,12 @@ class sessionscalendar extends rubric {
      * Build elements for rubric.
      */
     public function build_form_rubric() {
+        global $OUTPUT;
 
         // Set the nbrepeat.
-        $this->form->addElement('hidden', 'nbrepeatsessioncal');
+        $title = get_string('sessionscalendar', 'mod_syllabus');
+        $this->form->addElement('hidden', 'nbrepeatsessioncal', null,
+            array('data-morethanone' => 'true', 'data-tabname' => $title));
         $this->form->setType('nbrepeatsessioncal', PARAM_INT);
         if ($this->customdata['nbrepeat']['nbrepeatsessioncal'] !== null) {
             $nbrepeat = $this->customdata['nbrepeat']['nbrepeatsessioncal'];
@@ -57,14 +60,18 @@ class sessionscalendar extends rubric {
         $table .= \html_writer::start_tag('thead');
         $table .= \html_writer::start_tag('tr');
 
-        $headers = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
+        $headers = ['dates' => true, 'titles' => false, 'contents' => true, 'activities' => true, 'readingandworks' => false,
+            'formativeevaluations' => false, 'evaluations' => false];
         if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            unset($headers[5]);
+            unset($headers['formativeevaluations']);
         }
 
-        foreach ($headers as $header) {
+        foreach ($headers as $header => $isrequired) {
             $table .= \html_writer::start_tag('th');
             $table .= get_string('sessionscalendar_' . $header, 'mod_syllabus');
+            if ($isrequired) {
+                $table .= ' '.$OUTPUT->pix_icon('req', get_string('required'));
+            }
             $table .= \html_writer::end_tag('th');
         }
 
@@ -115,34 +122,36 @@ class sessionscalendar extends rubric {
 
         $this->form->addElement('html', '<td class="textareadate">');
         $this->form->addElement('textarea', 'calendarsession_title[' . $index . ']', '', $textareaoptions);
-        $this->form->setType('titredate', PARAM_TEXT);
+        $this->form->setType('calendarsession_title', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_content[' . $index . ']', '', $textareaoptions);
-        $this->form->setType('contenu', PARAM_TEXT);
+        $this->form->addElement('textarea', 'calendarsession_content[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
+        $this->form->setType('calendarsession_content', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_activity[' . $index . ']', '', $textareaoptions);
-        $this->form->setType('activite', PARAM_TEXT);
+        $this->form->addElement('textarea', 'calendarsession_activity[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
+        $this->form->setType('calendarsession_activity', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
         $this->form->addElement('textarea', 'calendarsession_readingandworks[' . $index . ']', '', $textareaoptions);
-        $this->form->setType('lecturetravaux', PARAM_TEXT);
+        $this->form->setType('calendarsession_readingandworks', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
             $this->form->addElement('html', '<td class="textareadate">');
             $this->form->addElement('textarea', 'calendarsession_formativeevaluations[' . $index . ']', '', $textareaoptions);
-            $this->form->setType('evalform', PARAM_TEXT);
+            $this->form->setType('calendarsession_formativeevaluations', PARAM_TEXT);
             $this->form->addElement('html', '</td>');
         }
 
         $this->form->addElement('html', '<td class="textareadate">');
         $this->form->addElement('textarea', 'calendarsession_evaluations[' . $index . ']', '', $textareaoptions);
-        $this->form->setType('eval', PARAM_TEXT);
+        $this->form->setType('calendarsession_evaluations', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td>');

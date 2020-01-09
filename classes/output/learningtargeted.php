@@ -45,10 +45,19 @@ class learningtargeted extends rubric {
         if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
             $label = get_string('educationalintentions_cmp', 'mod_syllabus');
         }
+        $this->form->addElement('html', \html_writer::start_div('',
+            array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'educationalintentions'))));
         $this->form->addElement('editor', 'educationalintentions', $label, self::EDITOROPTIONS);
         $this->form->setType('educationalintentions', PARAM_CLEANHTML);
+        $this->form->addRule('educationalintentions', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('html', \html_writer::end_div());
+
+        $this->form->addElement('html', \html_writer::start_div('',
+            array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'learningobjectives'))));
         $this->form->addElement('editor', 'learningobjectives',
                 get_string('learningobjectives', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('learningobjectives', PARAM_CLEANHTML);
+        $this->form->addRule('learningobjectives', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('html', \html_writer::end_div());
     }
 }

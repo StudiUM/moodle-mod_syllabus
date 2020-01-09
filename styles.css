@@ -82,6 +82,10 @@
     margin-top: 6px;
     margin-right: 5px;
 }
+.syllabus .btn.btn-default.small-button.is-invalid {
+    border-color: #dc3545;
+    border-width: 2px;
+}
 .syllabus .btn.btn-default.small-button.add {
     margin-bottom: 1rem;
     margin-top: 0.1rem;
@@ -93,6 +97,9 @@
 .syllabus .btn.btn-default.small-button .fa-plus-square {
     font-size: 0.9rem;
     color: #5cb85c;
+}
+.syllabus .mceIframeContainer.is-invalid {
+    border-color: #dc3545;
 }
 @media (max-width: 1500px) {
     .syllabus .textareadate textarea {

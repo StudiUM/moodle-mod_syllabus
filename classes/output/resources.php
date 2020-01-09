@@ -44,12 +44,21 @@ class resources extends rubric {
         // Mandatoryresources.
         $this->form->addElement('html',
                 $this->fieldset_html_start('mandatoryresources', get_string('mandatoryresources', 'mod_syllabus')));
-        $this->form->addElement('editor', 'mandatoryresourcedocuments',
-                get_string('mandatoryresourcedocuments', 'mod_syllabus'), self::EDITOROPTIONS);
-        $this->form->setType('mandatoryresourcedocuments', PARAM_CLEANHTML);
 
+        $this->form->addElement('html', \html_writer::start_div('',
+            array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'mandatoryresourcedocuments'))));
+        $this->form->addElement('editor', 'mandatoryresourcedocuments', get_string('mandatoryresourcedocuments', 'mod_syllabus'),
+            self::EDITOROPTIONS);
+        $this->form->setType('mandatoryresourcedocuments', PARAM_CLEANHTML);
+        $this->form->addRule('mandatoryresourcedocuments', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('html', \html_writer::end_div());
+
+        $this->form->addElement('html', \html_writer::start_div('',
+            array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'librarybooks'))));
         $this->form->addElement('editor', 'librarybooks', get_string('librarybooks', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('librarybooks', PARAM_CLEANHTML);
+        $this->form->addRule('librarybooks', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('html', \html_writer::end_div());
 
         $this->form->addElement('editor', 'equipment', get_string('equipment', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('equipment', PARAM_CLEANHTML);
@@ -77,26 +86,33 @@ class resources extends rubric {
         $this->form->addElement('html', $this->fieldset_html_end());
 
         // Supportsuccess.
+        $urloptionsrequired = array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS);
+
         $this->form->addElement('html',
                 $this->fieldset_html_start('supportsuccess', get_string('supportsuccess', 'mod_syllabus')));
 
         $this->form->addElement('text', 'writtencommunicationcenter',
-                get_string('writtencommunicationcenter', 'mod_syllabus'), self::URLINPUTOPTIONS);
+                get_string('writtencommunicationcenter', 'mod_syllabus'), $urloptionsrequired);
         $this->form->setType('writtencommunicationcenter', PARAM_URL);
+        $this->form->addRule('writtencommunicationcenter', get_string('required'), 'required', null, 'server');
 
         $this->form->addElement('text', 'successstudentcenter',
-                get_string('successstudentcenter', 'mod_syllabus'), self::URLINPUTOPTIONS);
+                get_string('successstudentcenter', 'mod_syllabus'), $urloptionsrequired);
         $this->form->setType('successstudentcenter', PARAM_URL);
+        $this->form->addRule('successstudentcenter', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'sourcequote', get_string('sourcequote', 'mod_syllabus'), self::URLINPUTOPTIONS);
+        $this->form->addElement('text', 'sourcequote', get_string('sourcequote', 'mod_syllabus'), $urloptionsrequired);
         $this->form->setType('sourcequote', PARAM_URL);
+        $this->form->addRule('sourcequote', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'udemlibraries', get_string('udemlibraries', 'mod_syllabus'), self::URLINPUTOPTIONS);
+        $this->form->addElement('text', 'udemlibraries', get_string('udemlibraries', 'mod_syllabus'), $urloptionsrequired);
         $this->form->setType('udemlibraries', PARAM_URL);
+        $this->form->addRule('udemlibraries', get_string('required'), 'required', null, 'server');
 
         $this->form->addElement('text', 'studentswithdisabilities',
-                get_string('studentswithdisabilities', 'mod_syllabus'), self::URLINPUTOPTIONS);
+                get_string('studentswithdisabilities', 'mod_syllabus'), $urloptionsrequired);
         $this->form->setType('studentswithdisabilities', PARAM_URL);
+        $this->form->addRule('studentswithdisabilities', get_string('required'), 'required', null, 'server');
 
         $this->form->addElement('editor', 'supportsuccessothers',
                 get_string('supportsuccessothers', 'mod_syllabus'), self::EDITOROPTIONS);

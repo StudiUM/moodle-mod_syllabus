@@ -61,9 +61,10 @@ class reminders extends rubric {
         // Technolgies use.
         $this->form->addElement('html', $this->fieldset_html_start('techuses', get_string('techuses', 'mod_syllabus')));
 
-        $this->form->addElement('textarea', 'courseregistration',
-                get_string('courseregistration', 'mod_syllabus'), self::TEXTAREAOPTIONS);
+        $this->form->addElement('textarea', 'courseregistration', get_string('courseregistration', 'mod_syllabus'),
+            array_merge(self::TEXTAREAOPTIONS, self::REQUIREDOPTIONS));
         $this->form->setType('courseregistration', PARAM_TEXT);
+        $this->form->addRule('courseregistration', get_string('required'), 'required', null, 'server');
 
         $this->form->addElement('textarea', 'notetaking',
                 get_string('notetaking', 'mod_syllabus'), self::TEXTAREAOPTIONS);

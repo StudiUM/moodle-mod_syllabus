@@ -41,11 +41,15 @@ class assessments extends rubric {
      * Build elements for rubric.
      */
     public function build_form_rubric() {
+        global $OUTPUT;
+
+        $title = get_string('assessments', 'mod_syllabus');
         // Subrubric assessment calendar.
         $this->form->addElement('html',
                 $this->fieldset_html_start('assessmentcalendar', get_string('assessmentcalendar', 'mod_syllabus')));
         // Set the nbrepeat.
-        $this->form->addElement('hidden', 'nbrepeatassessmentcal');
+        $this->form->addElement('hidden', 'nbrepeatassessmentcal', null,
+                array('data-morethanone' => 'true', 'data-tabname' => $title));
         $this->form->setType('nbrepeatassessmentcal', PARAM_INT);
         if ($this->customdata['nbrepeat']['nbrepeatassessmentcal'] !== null) {
             $nbrepeat = $this->customdata['nbrepeat']['nbrepeatassessmentcal'];
@@ -59,14 +63,18 @@ class assessments extends rubric {
         $table .= \html_writer::start_tag('thead');
         $table .= \html_writer::start_tag('tr');
 
-        $headers = ['dates', 'activities', 'learningobjectives', 'evaluationcriteria', 'weightings'];
+        $headers = ['dates' => true, 'activities' => true, 'learningobjectives' => true, 'evaluationcriteria' => false,
+            'weightings' => true];
         if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            unset($headers[2]);
+            unset($headers['learningobjectives']);
         }
 
-        foreach ($headers as $header) {
+        foreach ($headers as $header => $isrequired) {
             $table .= \html_writer::start_tag('th');
             $table .= get_string('assessmentcalendar_' . $header, 'mod_syllabus');
+            if ($isrequired) {
+                $table .= ' ' . $OUTPUT->pix_icon('req', get_string('required'));
+            }
             $table .= \html_writer::end_tag('th');
         }
 
@@ -140,19 +148,21 @@ class assessments extends rubric {
     protected function build_assessmentscalendar_line($index, $linkdelete, $textareaoptions, $hidden = false) {
         $class = ($hidden) ? "class='hidden'" : '';
         $this->form->addElement('html', "<tr $class>");
-        $startyearopt = ['startyear' => date('Y', strtotime('-1 year'))];
+        $startyearopt = array_merge(['startyear' => date('Y', strtotime('-1 year'))], self::REQUIREDOPTIONS);
         $this->form->addElement('html', '<td>');
         $this->form->addElement('date_selector', 'assessmentcalendar_evaluationdate[' . $index . ']', '', $startyearopt);
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'assessmentcalendar_activities[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'assessmentcalendar_activities[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
         $this->form->setType('assessmentcalendar_activities', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
         if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
             $this->form->addElement('html', '<td class="textareadate">');
-            $this->form->addElement('textarea', 'assessmentcalendar_learningobjectives[' . $index . ']', '', $textareaoptions);
+            $this->form->addElement('textarea', 'assessmentcalendar_learningobjectives[' . $index . ']', '',
+                array_merge($textareaoptions, self::REQUIREDOPTIONS));
             $this->form->setType('assessmentcalendar_learningobjectives', PARAM_TEXT);
             $this->form->addElement('html', '</td>');
         }
@@ -163,7 +173,8 @@ class assessments extends rubric {
         $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'assessmentcalendar_weightings[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'assessmentcalendar_weightings[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
         $this->form->setType('assessmentcalendar_weightings', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 

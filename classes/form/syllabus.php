@@ -76,13 +76,20 @@ class syllabus extends persistent {
         $this->_form->addElement('html', \html_writer::end_div());
 
         $buttonarray = array();
-        $buttonarray[] = $this->_form->createElement('submit', 'saveandcontinue', get_string('saveandcontinue', 'mod_syllabus'));
-        $buttonarray[] = $this->_form->createElement('submit', 'saveandpreview', get_string('saveandpreview', 'mod_syllabus'));
-        $buttonarray[] = $this->_form->createElement('submit',
-                'saveandreturntocourse', get_string('saveandreturntocourse', 'mod_syllabus'));
+        $attrsubmit = array('data-submitbtn' => 'true');
+        $buttonarray[] = $this->_form->createElement('button', 'saveandcontinue',
+            get_string('saveandcontinue', 'mod_syllabus'), $attrsubmit);
+        $buttonarray[] = $this->_form->createElement('button', 'saveandpreview',
+            get_string('saveandpreview', 'mod_syllabus'), $attrsubmit);
+        $buttonarray[] = $this->_form->createElement('button',
+            'saveandreturntocourse', get_string('saveandreturntocourse', 'mod_syllabus'), $attrsubmit);
         $buttonarray[] = $this->_form->createElement('cancel');
         $this->_form->addGroup($buttonarray, 'buttonar', '', array(' '), false);
         $this->_form->closeHeaderBefore('buttonar');
+
+        $this->_form->addElement('hidden', 'typeofsubmit');
+        $this->_form->setType('typeofsubmit', PARAM_TEXT);
+        $this->_form->setDefault('typeofsubmit', '');
 
         $PAGE->requires->js_call_amd('mod_syllabus/syllabusform', 'init',
                 [
@@ -92,7 +99,8 @@ class syllabus extends persistent {
                         ['name' => 'nbrepeatsessioncal', 'identifier' => 'calendarsession'],
                         ['name' => 'nbrepeatteachers', 'identifier' => 'teacher'],
                         ['name' => 'nbrepeatcontacts', 'identifier' => 'contact']
-                    ]
+                    ],
+                    'fieldfortypeofsubmit' => 'typeofsubmit'
                 ]);
     }
 
@@ -130,7 +138,8 @@ class syllabus extends persistent {
             if ($this->currenttab === $tab['id']) {
                 $classdiv .= " active";
             }
-            $attributes = ['id' => $tab['id'], 'role' => 'tabpanel'];
+            $title = get_string($tab['id'], 'mod_syllabus');
+            $attributes = ['id' => $tab['id'], 'role' => 'tabpanel', 'data-tabname' => $title];
             $this->_form->addElement('html', \html_writer::start_div($classdiv, $attributes));
             if ($tab['subrubric'] === true) {
                 $this->_form->addElement('html', $this->get_collapseexpand_html());
