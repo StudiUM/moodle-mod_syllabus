@@ -124,3 +124,6 @@
 .syllabus .personinputname input {
     width: 100%;
 }
+#page-mod-syllabus-view .actionbuttons {
+    margin-left: 0.2rem;
+}

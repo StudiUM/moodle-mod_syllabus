@@ -40,9 +40,11 @@ if ($s) {
     $cm = get_coursemodule_from_id('syllabus', $id, 0, true, MUST_EXIST);
     $syllabus = $DB->get_record('syllabus', array('id' => $cm->instance), '*', MUST_EXIST);
 }
+$syllabuspersistent = new \mod_syllabus\syllabus($syllabus->id);
 
 $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
 
+$PAGE->set_url('/mod/syllabus/view.php', array('id' => $cm->id));
 require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/syllabus:view', $context);
@@ -57,8 +59,6 @@ $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('syllabus', $syllabus);
 $event->trigger();
 
-$PAGE->set_url('/mod/syllabus/view.php', array('id' => $cm->id));
-
 $PAGE->set_title($course->shortname . ': '. $syllabus->name);
 $PAGE->set_heading($course->fullname);
 $PAGE->set_activity_record($syllabus);
@@ -69,11 +69,20 @@ echo $output->header();
 
 echo $output->heading(format_string($syllabus->name), 2);
 
-if (has_capability('mod/syllabus:addinstance', $context)) {
-    echo $output->container_start('text-right');
-    echo \html_writer::link(new moodle_url('/mod/syllabus/edit.php?', ['cmid' => $PAGE->cm->id]),
-            get_string('enterdata', 'syllabus'), ['class' => 'btn btn-secondary']);
-    echo $output->container_end();
+echo $output->container_start('text-right');
+
+$pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent);
+$pdfurl = $pdfmanager->getpdflink();
+if (!empty($pdfurl)) {
+    $link = \html_writer::link($pdfurl, get_string('downloadpdf', 'syllabus'), ['class' => 'btn btn-secondary']);
+    echo \html_writer::span($link, 'actionbuttons');
 }
+if (has_capability('mod/syllabus:addinstance', $context)) {
+    $link = \html_writer::link(new moodle_url('/mod/syllabus/edit.php?', ['cmid' => $PAGE->cm->id]),
+            get_string('enterdata', 'syllabus'), ['class' => 'btn btn-secondary']);
+    echo \html_writer::span($link, 'actionbuttons');
+}
+
+echo $output->container_end();
 
 echo $output->footer();

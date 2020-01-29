@@ -275,3 +275,28 @@ function udem_get_session($idnumber) {
     }
     return null;
 }
+
+/**
+ * Serve the files.
+ *
+ * @param stdClass $course the course object
+ * @param stdClass $cm the course module object
+ * @param stdClass $context the context
+ * @param string $filearea the name of the file area
+ * @param array $args extra arguments (itemid, path)
+ * @param bool $forcedownload whether or not force download
+ * @param array $options additional options affecting the file serving
+ * @return bool false if the file not found, just send the file otherwise and do not return anything
+ */
+function mod_syllabus_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = array()) {
+    // Only serve the file if the user can access the course and course module.
+    require_login($course, false, $cm);
+
+    $fs = get_file_storage();
+    $relativepath = implode('/', $args);
+    $fullpath = "/$context->id/mod_syllabus/$filearea/$relativepath";
+    if (!$file = $fs->get_file_by_hash(sha1($fullpath)) or $file->is_directory()) {
+        return false;
+    }
+    send_stored_file($file, 0, 0, $forcedownload, $options);
+}

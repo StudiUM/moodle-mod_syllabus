@@ -94,6 +94,10 @@ if ($data) {
     $event = \mod_syllabus\event\syllabus_updated::create($params);
     $event->add_record_snapshot('syllabus', $syllabus);
     $event->trigger();
+
+    $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent, $alldata);
+    $pdfmanager->generate();
+
     if ($alldata['typeofsubmit'] == 'saveandpreview') {
         redirect($redirecturl);
     } else if ($alldata['typeofsubmit'] == 'saveandreturntocourse') {

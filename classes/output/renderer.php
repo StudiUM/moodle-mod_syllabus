@@ -39,4 +39,31 @@ use plugin_renderer_base;
  */
 class renderer extends plugin_renderer_base {
 
+    /** @var stdClass $exporteddata Exported data ready to be used in templates. */
+    protected $exporteddata = null;
+
+    /**
+     * Prepare the data to export to templates.
+     *
+     * @param view_syllabus_page $page
+     * @return stdClass
+     */
+    protected function get_exporteddata(view_syllabus_page $page) {
+        if (is_null($this->exporteddata)) {
+            $this->exporteddata = $page->export_for_template($this);
+        }
+        return $this->exporteddata;
+    }
+
+    /**
+     * Defer to template for a specific section.
+     *
+     * @param view_syllabus_page $page
+     * @param string $section Name of the section (also name of the template file).
+     * @return string html for the page
+     */
+    public function render_section(view_syllabus_page $page, $section) {
+        $data = $this->get_exporteddata($page);
+        return parent::render_from_template('mod_syllabus/'.$section, $data);
+    }
 }
