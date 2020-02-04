@@ -66,4 +66,15 @@ class renderer extends plugin_renderer_base {
         $data = $this->get_exporteddata($page);
         return parent::render_from_template('mod_syllabus/'.$section, $data);
     }
+
+    /**
+     * Returns the default value for the versionnotes field.
+     *
+     * @param boolean $plain
+     * @return string html
+     */
+    public function render_versionnotesdefault($plain) {
+        $data = array('plaineditor' => $plain);
+        return parent::render_from_template('mod_syllabus/versionnotesdefault', $data);
+    }
 }

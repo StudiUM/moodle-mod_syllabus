@@ -145,5 +145,6 @@ class restore_syllabus_activity_structure_step extends restore_activity_structur
     protected function after_execute() {
         // Add syllabus related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_syllabus', 'intro', null);
+        $this->add_related_files('mod_syllabus', 'versionnotes', null);
     }
 }

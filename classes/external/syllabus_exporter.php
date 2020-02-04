@@ -52,6 +52,15 @@ class syllabus_exporter extends \core\external\persistent_exporter {
             'intro',
             $this->persistent->get('id')
         );
+
+        $this->data->versionnotes = file_rewrite_pluginfile_urls(
+            $this->persistent->get('versionnotes'),
+            'pluginfile.php',
+            $related['context']->id,
+            'mod_syllabus',
+            'versionnotes',
+            $this->persistent->get('id')
+        );
     }
 
     /**

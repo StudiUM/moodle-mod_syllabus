@@ -62,7 +62,7 @@ class restore_syllabus_activity_task extends restore_activity_task {
     static public function define_decode_contents() {
         $contents = array();
 
-        $contents[] = new restore_decode_content('syllabus', array('intro'), 'syllabus');
+        $contents[] = new restore_decode_content('syllabus', array('intro', 'versionnotes'), 'syllabus');
 
         return $contents;
     }

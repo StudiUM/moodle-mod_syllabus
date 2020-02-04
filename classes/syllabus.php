@@ -122,6 +122,12 @@ class syllabus extends persistent {
             'introformat' => array(
                 'type' => PARAM_INT
             ),
+            'versionnotes' => array(
+                'type' => PARAM_RAW
+            ),
+            'versionnotesformat' => array(
+                'type' => PARAM_INT
+            ),
             'creditnb' => array(
                 'type' => PARAM_TEXT
             ),

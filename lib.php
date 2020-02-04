@@ -79,7 +79,17 @@ function syllabus_add_instance($data, $mform) {
     // Fill course data.
     $data = syllabus_fill_course_data($data);
     $data->trainingtype = \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED;
-    $data->usermodified = $USER->id;;
+    $data->usermodified = $USER->id;
+
+    $cmid = $data->coursemodule;
+    $context = context_module::instance($cmid);
+
+    if ($draftitemid = $data->versionnoteseditor['itemid']) {
+        $data->versionnotes = file_save_draft_area_files($draftitemid, $context->id, 'mod_syllabus', 'versionnotes',
+                0, syllabus_get_editor_options($context), $data->versionnoteseditor['text']);
+        $data->versionnotesformat = $data->versionnoteseditor['format'];
+    }
+
     // Prefill static data.
     $data = \mod_syllabus\syllabus::prefill($data);
     $data->id = $DB->insert_record('syllabus', $data);
@@ -130,6 +140,13 @@ function syllabus_update_instance($data, $mform) {
     global $CFG, $DB;
 
     $cmid        = $data->coursemodule;
+    $context = context_module::instance($cmid);
+
+    if ($draftitemid = $data->versionnoteseditor['itemid']) {
+        $data->versionnotes = file_save_draft_area_files($draftitemid, $context->id, 'mod_syllabus', 'versionnotes',
+                0, syllabus_get_editor_options($context), $data->versionnoteseditor['text']);
+        $data->versionnotesformat = $data->versionnoteseditor['format'];
+    }
 
     $data->timemodified = time();
     $data->id           = $data->instance;
@@ -259,6 +276,17 @@ function udem_get_session($idnumber) {
         return $trimestre[$session];
     }
     return null;
+}
+
+/**
+ * Returns the option for the editor to use in the activity parameters form.
+ * @param context $context
+ * @return array
+ */
+function syllabus_get_editor_options($context) {
+    global $CFG;
+    return array('subdirs' => 1, 'maxbytes' => $CFG->maxbytes, 'maxfiles' => -1, 'changeformat' => 1, 'context' => $context,
+        'noclean' => 1, 'trusttext' => 0);
 }
 
 /**

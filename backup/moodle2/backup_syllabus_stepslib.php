@@ -47,7 +47,8 @@ class backup_syllabus_activity_structure_step extends backup_activity_structure_
         // Define each element separated.
 
         $syllabus = new backup_nested_element('syllabus', array('id'), array(
-            'usermodified', 'timecreated', 'timemodified', 'name', 'intro', 'introformat', 'syllabustype', 'title', 'creditnb',
+            'usermodified', 'timecreated', 'timemodified', 'name', 'intro', 'introformat', 'versionnotes', 'versionnotesformat',
+            'syllabustype', 'title', 'creditnb',
             'idnumber', 'moodlecourseurl', 'facultydept', 'trimester', 'courseyear', 'trainingtype', 'courseconduct',
             'weeklyworkload', 'simpledescription', 'detaileddescription', 'placeinprogram', 'educationalintentions',
             'learningobjectives', 'evaluationabsence', 'workdeposits', 'authorizedmaterial', 'languagequality', 'successthreshold',
@@ -99,6 +100,7 @@ class backup_syllabus_activity_structure_step extends backup_activity_structure_
 
         // Define file annotations.
         $syllabus->annotate_files('mod_syllabus', 'intro', null); // This file area does not have an itemid.
+        $syllabus->annotate_files('mod_syllabus', 'versionnotes', null); // This file area does not have an itemid.
 
         // Return the root element (syllabus), wrapped into standard activity structure.
         return $this->prepare_activity_structure($syllabus);

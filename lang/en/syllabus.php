@@ -156,6 +156,23 @@ $string['trimester'] = 'Trimestre';
 $string['trimesterend'] = 'Fin du trimestre';
 $string['udemlibraries'] = 'Services des bibliothèques UdeM';
 $string['udemlibrariesdefault'] = 'http://www.bib.umontreal.ca/services/default.htm';
+$string['versionnotes'] = 'Notes de versions';
+$string['versionnotesdefault'] = '<table width="100%">
+        <tbody>
+            <tr>
+                <th>Numéro de version</th>
+                <th>Date</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>';
+$string['versionnotesdefaultplain'] = "Numéro de version |       Date      |   Notes  \n             1                    |                     | ";
+$string['versionnotes_help'] = 'Ce champ permet de saisir des commentaires sur la version du plan de cours, et n\'est pas visible par les étudiants. Pour informer les étudiants des modifications apportées au plan de cours, vous pouvez utiliser le champ Description.';
 $string['websites'] = 'Sites Internet';
 $string['weeklyworkload'] = 'Charge de travail hebdomadaire';
 $string['winter'] = 'Hiver';
