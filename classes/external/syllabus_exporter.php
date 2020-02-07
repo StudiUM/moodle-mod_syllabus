@@ -36,6 +36,25 @@ defined('MOODLE_INTERNAL') || die();
 class syllabus_exporter extends \core\external\persistent_exporter {
 
     /**
+     * Constructor - saves the persistent object, and the related objects.
+     *
+     * @param \core\persistent $persistent
+     * @param array $related
+     */
+    public function __construct($persistent, $related = array()) {
+        parent::__construct($persistent, $related);
+
+        $this->data->intro = file_rewrite_pluginfile_urls(
+            $this->persistent->get('intro'),
+            'pluginfile.php',
+            $related['context']->id,
+            'mod_syllabus',
+            'intro',
+            $this->persistent->get('id')
+        );
+    }
+
+    /**
      * Returns the specific class the persistent should be an instance of.
      *
      * @return string

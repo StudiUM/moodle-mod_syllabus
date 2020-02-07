@@ -45,22 +45,105 @@ class restore_syllabus_activity_structure_step extends restore_activity_structur
 
         $paths = array();
         $paths[] = new restore_path_element('syllabus', '/activity/syllabus');
+        $paths[] = new restore_path_element('syllabus_calendarsession', '/activity/syllabus/calendarsessions/calendarsession');
+        $paths[] = new restore_path_element('syllabus_contact', '/activity/syllabus/contacts/contact');
+        $paths[] = new restore_path_element('syllabus_evaluation', '/activity/syllabus/evaluations/evaluation');
+        $paths[] = new restore_path_element('syllabus_teacher', '/activity/syllabus/teachers/teacher');
 
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
     /**
-     * Process syllabus
+     * Process syllabus.
      *
      * @param stdClass $data
      */
     protected function process_syllabus($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+        $data->course = $this->get_courseid();
+
+        // Fill some fields from course information.
+        $data = syllabus_fill_course_data($data);
+
+        // Insert the syllabus record.
+        $newitemid = $DB->insert_record('syllabus', $data);
+        // Immediately after inserting "activity" record, call this.
+        $this->apply_activity_instance($newitemid);
+    }
+
+    /**
+     * Process syllabus calendar session.
+     *
+     * @param stdClass $data
+     */
+    protected function process_syllabus_calendarsession($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->syllabusid = $this->get_new_parentid('syllabus');
+
+        $newitemid = $DB->insert_record('syllabus_calendarsession', $data);
+    }
+
+    /**
+     * Process syllabus contact.
+     *
+     * @param stdClass $data
+     */
+    protected function process_syllabus_contact($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->syllabusid = $this->get_new_parentid('syllabus');
+
+        $newitemid = $DB->insert_record('syllabus_contact', $data);
+    }
+
+    /**
+     * Process syllabus evaluation.
+     *
+     * @param stdClass $data
+     */
+    protected function process_syllabus_evaluation($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->syllabusid = $this->get_new_parentid('syllabus');
+
+        $newitemid = $DB->insert_record('syllabus_evaluation', $data);
+    }
+
+    /**
+     * Process syllabus teacher.
+     *
+     * @param stdClass $data
+     */
+    protected function process_syllabus_teacher($data) {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->syllabusid = $this->get_new_parentid('syllabus');
+
+        $newitemid = $DB->insert_record('syllabus_teacher', $data);
     }
 
     /**
      * After execute function.
      */
     protected function after_execute() {
+        // Add syllabus related files, no need to match by itemname (just internally handled context).
+        $this->add_related_files('mod_syllabus', 'intro', null);
     }
 }

@@ -49,6 +49,7 @@ class backup_syllabus_activity_task extends backup_activity_task {
      * Defines a backup step to store the instance data in the syllabus.xml file
      */
     protected function define_my_steps() {
+        $this->add_step(new backup_syllabus_activity_structure_step('syllabus_structure', 'syllabus.xml'));
     }
 
     /**
@@ -58,5 +59,6 @@ class backup_syllabus_activity_task extends backup_activity_task {
      * @return string the content with the URLs encoded
      */
     static public function encode_content_links($content) {
+        return $content;
     }
 }

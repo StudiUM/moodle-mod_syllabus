@@ -50,6 +50,7 @@ class restore_syllabus_activity_task extends restore_activity_task {
      * Define (add) particular steps this activity can have.
      */
     protected function define_my_steps() {
+        $this->add_step(new restore_syllabus_activity_structure_step('syllabus_structure', 'syllabus.xml'));
     }
 
     /**

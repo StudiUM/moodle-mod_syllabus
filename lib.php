@@ -77,24 +77,9 @@ function syllabus_add_instance($data, $mform) {
     require_once($CFG->dirroot.'/user/lib.php');
     $cmid        = $data->coursemodule;
     // Fill course data.
-    $course = get_course($data->course);
-    $category = \core_course_category::get($course->category);
-    $data->title = $course->fullname;
-    $data->idnumber = $course->idnumber;
-    $data->facultydept = $category->get_nested_name(false);
-    if ($date = udem_get_session_date($course->idnumber)) {
-        $d = new \DateTime();
-        $d->setTimestamp($date);
-        $data->courseyear = $d->format('Y');
-    }
-    if ($session = udem_get_session($course->idnumber)) {
-        $data->trimester = get_string($session, 'mod_syllabus');
-    }
-    $data->simpledescription = $course->summary;
+    $data = syllabus_fill_course_data($data);
     $data->trainingtype = \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED;
-    $data->usermodified = $USER->id;
-    $urlcourse = new \moodle_url("/course/view.php", array('id' => $data->course));
-    $data->moodlecourseurl = $urlcourse->out();
+    $data->usermodified = $USER->id;;
     // Prefill static data.
     $data = \mod_syllabus\syllabus::prefill($data);
     $data->id = $DB->insert_record('syllabus', $data);
@@ -299,4 +284,30 @@ function mod_syllabus_pluginfile($course, $cm, $context, $filearea, $args, $forc
         return false;
     }
     send_stored_file($file, 0, 0, $forcedownload, $options);
+}
+
+/**
+ * Fill some initial data from the course, in the syllabus instance.
+ * @param stdClass $data
+ * @return stdClass
+ */
+function syllabus_fill_course_data($data) {
+    $course = get_course($data->course);
+    $category = \core_course_category::get($course->category);
+    $data->title = $course->fullname;
+    $data->idnumber = $course->idnumber;
+    $data->facultydept = $category->get_nested_name(false);
+    if ($date = udem_get_session_date($course->idnumber)) {
+        $d = new \DateTime();
+        $d->setTimestamp($date);
+        $data->courseyear = $d->format('Y');
+    }
+    if ($session = udem_get_session($course->idnumber)) {
+        $data->trimester = get_string($session, 'mod_syllabus');
+    }
+    $data->simpledescription = $course->summary;
+    $urlcourse = new \moodle_url("/course/view.php", array('id' => $data->course));
+    $data->moodlecourseurl = $urlcourse->out();
+
+    return $data;
 }
