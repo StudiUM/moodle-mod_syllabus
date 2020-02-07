@@ -60,14 +60,21 @@ class sessionscalendar extends rubric {
         $table .= \html_writer::start_tag('thead');
         $table .= \html_writer::start_tag('tr');
 
-        $headers = ['dates' => true, 'titles' => false, 'contents' => true, 'activities' => true, 'readingandworks' => false,
-            'formativeevaluations' => false, 'evaluations' => false];
+        $headers = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
+        $headersrequired = ['dates', 'contents', 'activities'];
+        $headerswithhelp = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
+        if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            unset($headers[5]);
+        }
 
-        foreach ($headers as $header => $isrequired) {
+        foreach ($headers as $header) {
             $table .= \html_writer::start_tag('th');
             $table .= get_string('sessionscalendar_' . $header, 'mod_syllabus');
-            if ($isrequired) {
+            if (in_array($header, $headersrequired)) {
                 $table .= ' '.$OUTPUT->pix_icon('req', get_string('required'));
+            }
+            if (in_array($header, $headerswithhelp)) {
+                $table .= $OUTPUT->help_icon('sessionscalendar_' . $header, 'mod_syllabus');
             }
             $table .= \html_writer::end_tag('th');
         }

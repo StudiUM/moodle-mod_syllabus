@@ -61,6 +61,7 @@ class mod_syllabus_mod_form extends moodleform_mod {
                 null, get_string('syllabuscompetencies', 'mod_syllabus'), \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES);
         $mform->addGroup($radio, 'syllabustype', get_string('syllabustype', 'mod_syllabus'), ' ', false);
         $mform->setDefault('syllabustype', \mod_syllabus\syllabus::SYLLABUS_TYPE_OBJECTIVES);
+        $mform->addHelpButton('syllabustype', 'syllabustype', 'mod_syllabus');
         $this->standard_intro_elements();
 
         $mform->addElement('editor', 'versionnoteseditor', get_string('versionnotes', 'mod_syllabus'), null,

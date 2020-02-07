@@ -42,7 +42,9 @@ class learningtargeted extends rubric {
      */
     public function build_form_rubric() {
         $label = get_string('educationalintentions', 'mod_syllabus');
-        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+        $syllabustype = $this->syllabus->get('syllabustype');
+
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
             $label = get_string('educationalintentions_cmp', 'mod_syllabus');
         }
         $this->form->addElement('html', \html_writer::start_div('',
@@ -50,6 +52,11 @@ class learningtargeted extends rubric {
         $this->form->addElement('editor', 'educationalintentions', $label, self::EDITOROPTIONS);
         $this->form->setType('educationalintentions', PARAM_CLEANHTML);
         $this->form->addRule('educationalintentions', get_string('required'), 'required', null, 'server');
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('educationalintentions', 'educationalintentions_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('educationalintentions', 'educationalintentions', 'mod_syllabus');
+        }
         $this->form->addElement('html', \html_writer::end_div());
 
         $this->form->addElement('html', \html_writer::start_div('',
@@ -57,6 +64,11 @@ class learningtargeted extends rubric {
         $this->form->addElement('editor', 'learningobjectives',
                 get_string('learningobjectives', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('learningobjectives', PARAM_CLEANHTML);
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('learningobjectives', 'learningobjectives_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('learningobjectives', 'learningobjectives', 'mod_syllabus');
+        }
         $this->form->addRule('learningobjectives', get_string('required'), 'required', null, 'server');
         $this->form->addElement('html', \html_writer::end_div());
     }

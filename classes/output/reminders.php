@@ -55,6 +55,7 @@ class reminders extends rubric {
         $this->form->addElement('textarea', 'teachingevaluation',
                 get_string('teachingevaluation', 'mod_syllabus'), self::TEXTAREAOPTIONS);
         $this->form->setType('teachingevaluation', PARAM_TEXT);
+        $this->form->addHelpButton('teachingevaluation', 'teachingevaluation', 'mod_syllabus');
 
         $this->form->addElement('html', $this->fieldset_html_end());
 
@@ -64,11 +65,13 @@ class reminders extends rubric {
         $this->form->addElement('textarea', 'courseregistration', get_string('courseregistration', 'mod_syllabus'),
             array_merge(self::TEXTAREAOPTIONS, self::REQUIREDOPTIONS));
         $this->form->setType('courseregistration', PARAM_TEXT);
+        $this->form->addHelpButton('courseregistration', 'courseregistration', 'mod_syllabus');
         $this->form->addRule('courseregistration', get_string('required'), 'required', null, 'server');
 
         $this->form->addElement('textarea', 'notetaking',
                 get_string('notetaking', 'mod_syllabus'), self::TEXTAREAOPTIONS);
         $this->form->setType('notetaking', PARAM_TEXT);
+        $this->form->addHelpButton('notetaking', 'notetaking', 'mod_syllabus');
 
         $this->form->addElement('html', $this->fieldset_html_end());
     }

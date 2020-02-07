@@ -74,6 +74,7 @@ class generalinformation extends rubric {
             array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS, array('maxlength' => 255)));
         $this->form->setType('moodlecourseurl', PARAM_URL);
         $this->form->addRule('moodlecourseurl', get_string('required'), 'required', null, 'server');
+        $this->form->addHelpButton('moodlecourseurl', 'moodlecourseurl', 'mod_syllabus');
 
         $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'),
             array_merge(self::INPUTOPTIONS, self::REQUIREDOPTIONS, array('maxlength' => 255)));
@@ -101,12 +102,16 @@ class generalinformation extends rubric {
                 \mod_syllabus\syllabus::TRAINING_TYPE_BIMODAL);
         $this->form->addGroup($radio, 'trainingtype', get_string('trainingtype', 'mod_syllabus'), ' ', false);
         $this->form->setDefault('trainingtype', \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED);
+        $this->form->addHelpButton('trainingtype', 'trainingtype', 'mod_syllabus');
 
         $this->form->addElement('textarea', 'courseconduct', get_string('courseconduct', 'mod_syllabus'), self::TEXTAREAOPTIONS);
         $this->form->setType('courseconduct', PARAM_TEXT);
+        $this->form->addHelpButton('courseconduct', 'courseconduct', 'mod_syllabus');
 
         $this->form->addElement('textarea', 'weeklyworkload', get_string('weeklyworkload', 'mod_syllabus'), self::TEXTAREAOPTIONS);
         $this->form->setType('weeklyworkload', PARAM_TEXT);
+        $this->form->addHelpButton('weeklyworkload', 'weeklyworkload', 'mod_syllabus');
+
         $this->form->addElement('html', $this->fieldset_html_end());
 
         // Teacher.
@@ -127,12 +132,17 @@ class generalinformation extends rubric {
         $table .= \html_writer::start_tag('thead');
         $table .= \html_writer::start_tag('tr');
 
-        $headers = ['name' => true, 'title' => false, 'contactinformation' => true, 'availability' => true];
-        foreach ($headers as $header => $isrequired) {
+        $headers = ['name', 'title', 'contactinformation', 'availability'];
+        $headersrequired = ['name', 'contactinformation', 'availability'];
+        $headerswithhelp = ['name', 'contactinformation', 'availability'];
+        foreach ($headers as $header) {
             $table .= \html_writer::start_tag('th');
             $table .= get_string('teacher_' . $header, 'mod_syllabus');
-            if ($isrequired) {
+            if (in_array($header, $headersrequired)) {
                 $table .= ' '.$OUTPUT->pix_icon('req', get_string('required'));
+            }
+            if (in_array($header, $headerswithhelp)) {
+                $table .= $OUTPUT->help_icon('teacher_' . $header, 'mod_syllabus');
             }
             $table .= \html_writer::end_tag('th');
         }
@@ -184,9 +194,13 @@ class generalinformation extends rubric {
         $table .= \html_writer::start_tag('tr');
 
         $headers = ['name', 'duty', 'contactinformation', 'availability'];
+        $headerswithhelp = ['name', 'duty', 'contactinformation', 'availability'];
         foreach ($headers as $header) {
             $table .= \html_writer::start_tag('th');
             $table .= get_string('contact_' . $header, 'mod_syllabus');
+            if (in_array($header, $headerswithhelp)) {
+                $table .= $OUTPUT->help_icon('contact_' . $header, 'mod_syllabus');
+            }
             $table .= \html_writer::end_tag('th');
         }
 
@@ -228,17 +242,25 @@ class generalinformation extends rubric {
             $this->form->addElement('editor', 'simpledescription',
                 get_string('simpledescription', 'mod_syllabus'), array_merge(self::EDITOROPTIONS, $reqoptoffical));
             $this->form->setType('simpledescription', PARAM_CLEANHTML);
+            $this->form->addHelpButton('simpledescription', 'simpledescription', 'mod_syllabus');
             $this->form->addElement('html', \html_writer::end_div());
         } else {
             $this->form->addElement('static', 'simpledescription_static', get_string('simpledescription', 'mod_syllabus'),
                 $this->syllabus->get('simpledescription'));
         }
 
+        $syllabustype = $this->syllabus->get('syllabustype');
+
         $this->form->addElement('html', \html_writer::start_div('',
             array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'detaileddescription'))));
         $this->form->addElement('editor', 'detaileddescription',
             get_string('detaileddescription', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('detaileddescription', PARAM_CLEANHTML);
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('detaileddescription', 'detaileddescription_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('detaileddescription', 'detaileddescription', 'mod_syllabus');
+        }
         $this->form->addRule('detaileddescription', get_string('required'), 'required', null, 'server');
         $this->form->addElement('html', \html_writer::end_div());
 
@@ -246,6 +268,11 @@ class generalinformation extends rubric {
             array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'placeinprogram'))));
         $this->form->addElement('editor', 'placeinprogram', get_string('placeinprogram', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('placeinprogram', PARAM_CLEANHTML);
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('placeinprogram', 'placeinprogram_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('placeinprogram', 'placeinprogram_obj', 'mod_syllabus');
+        }
         $this->form->addRule('placeinprogram', get_string('required'), 'required', null, 'server');
         $this->form->addElement('html', \html_writer::end_div());
 
