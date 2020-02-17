@@ -15,29 +15,147 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    Missing required fields template.
+    General information template section.
 
     Context variables required for this template:
-    * hasonetab - boolean
-    * hasmoreonetab - boolean
-    * tabs - array
+    * All syllabus properties, plus :
+    * hasteacher - boolean
+    * teacherslist - array
+    * hascontact - boolean
+    * contactslist - array
+    * trainingtype - string
 }}
 
-<h2>Rubrique 1</h2>
-<p>{{ title }}</p>
-<p>{{ trimester }}</p>
-<p>{{ courseyear }}</p>
+<h3>{{#str}} generalinformation, mod_syllabus {{/str}}</h3>
 
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec nunc fermentum, ornare turpis convallis, blandit felis. Vestibulum quis viverra ex. Aenean vestibulum egestas sapien non venenatis. Pellentesque lectus ante, malesuada eu diam et, tempor interdum ante. Sed condimentum ac dolor in suscipit. Ut eget iaculis dui, at volutpat dui. Vivamus laoreet ipsum sed tortor eleifend sollicitudin. Integer eu diam velit. Quisque sem purus, sodales quis magna ut, dignissim finibus est. Proin lorem nisl, volutpat at libero vel, pellentesque cursus libero.</p>
+{{! Section Information générale - Cours }}
+<h4>{{#str}} course {{/str}}</h4>
+<div class="syllabus_info_block greyborder">
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} title, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{title}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} creditnb, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{creditnb}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} idnumber, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{idnumber}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} facultydept, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{facultydept}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} trimester, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{trimester}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} courseyear, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{courseyear}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} trainingtype, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{trainingtypename}}</div>
+    </div>
+    {{#courseconduct}}
+        <div class="row">
+            <div class="col-12 col-md-3">{{#str}} courseconduct, mod_syllabus {{/str}}</div>
+            <div class="col-12 col-md-9">{{courseconduct}}</div>
+        </div>
+    {{/courseconduct}}
+    {{#weeklyworkload}}
+        <div class="row">
+            <div class="col-12 col-md-3">{{#str}} weeklyworkload, mod_syllabus {{/str}}</div>
+            <div class="col-12 col-md-9">{{weeklyworkload}}</div>
+        </div>
+    {{/weeklyworkload}}
+</div>
 
-<p>Ut nisl lacus, fringilla eget sem eu, rhoncus accumsan sapien. In hac habitasse platea dictumst. In vel augue suscipit, dictum nisl non, pulvinar turpis. Integer turpis justo, mattis vel venenatis quis, rutrum ultrices diam. Sed ultricies porta mauris, a dictum turpis sodales eget. In tellus est, tristique nec diam eu, ullamcorper euismod massa. Quisque luctus velit ac mi accumsan vulputate.</p>
+{{! Section Information générale - Enseignant }}
+{{#hasteacher}}
+    <h4>{{#str}} teacher, mod_syllabus {{/str}}</h4>
+    {{#teacherslist}}
+        <div class="syllabus_info_block">
+            <div class="row greyborder">
+                <div class="col-12 col-md-2 greybackground">
+                    <div class="row">
+                        <div class="col-12">{{name}}</div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-10">
+                    {{#title}}
+                        <div class="row">
+                            <div class="col-12 col-md-3">{{#str}} teacher_title, mod_syllabus {{/str}}</div>
+                            <div class="col-12 col-md-9">{{title}}</div>
+                        </div>
+                    {{/title}}
+                    <div class="row">
+                        <div class="col-12 col-md-3">{{#str}} teacher_contactinformation, mod_syllabus {{/str}}</div>
+                        <div class="col-12 col-md-9">{{contactinformation}}</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-3">{{#str}} teacher_availability, mod_syllabus {{/str}}</div>
+                        <div class="col-12 col-md-9">{{availability}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/teacherslist}}
+{{/hasteacher}}
 
-<p>Suspendisse potenti. Nam porttitor pulvinar diam, nec consequat sem tempor id. Nunc ut ante vel tortor fringilla faucibus venenatis sit amet nisl. Ut finibus in mi ac lobortis. Curabitur odio mi, euismod eu malesuada vel, pretium non nulla. Suspendisse potenti. Integer a luctus elit. Duis eu leo finibus justo accumsan porttitor nec eget velit. Morbi semper risus id sem dapibus, quis mattis augue pellentesque. Pellentesque mattis lorem erat. Nulla vel neque quis lorem hendrerit tempor quis non mi. Suspendisse potenti.</p>
+{{! Section Information générale - Personne-ressource }}
+{{#hascontact}}
+    <h4>{{#str}} contact, mod_syllabus {{/str}}</h4>
+    {{#contactslist}}
+       <div class="syllabus_info_block">
+            <div class="row greyborder">
+                <div class="col-12 col-md-2 greybackground">
+                    {{#name}}
+                        <div class="row">
+                            <div class="col-12">{{name}}</div>
+                        </div>
+                    {{/name}}
+                </div>
+                <div class="col-12 col-md-10">
+                    {{#duty}}
+                        <div class="row">
+                            <div class="col-12 col-md-3">{{#str}} contact_duty, mod_syllabus {{/str}}</div>
+                            <div class="col-12 col-md-9">{{duty}}</div>
+                        </div>
+                    {{/duty}}
+                    {{#contactinformation}}
+                        <div class="row">
+                            <div class="col-12 col-md-3">{{#str}} contact_contactinformation, mod_syllabus {{/str}}</div>
+                            <div class="col-12 col-md-9">{{contactinformation}}</div>
+                        </div>
+                    {{/contactinformation}}
+                    {{#availability}}
+                        <div class="row">
+                            <div class="col-12 col-md-3">{{#str}} contact_availability, mod_syllabus {{/str}}</div>
+                            <div class="col-12 col-md-9">{{availability}}</div>
+                        </div>
+                    {{/availability}}
+                </div>
+            </div>
+        </div>
+    {{/contactslist}}
+{{/hascontact}}
 
-<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet turpis pharetra, lobortis erat a, sollicitudin nibh. In viverra faucibus fermentum. Aenean vitae finibus orci. Duis id nunc eget massa facilisis interdum eu non mauris. Morbi condimentum ipsum pellentesque, faucibus odio et, efficitur tortor. In ut augue vel massa posuere sodales.</p>
-
-<p>Pellentesque convallis vestibulum nibh, ut sodales augue vulputate quis. Integer vel sem id ligula dignissim posuere. Ut sed porttitor felis. Vestibulum dapibus nibh semper ante varius scelerisque. Aenean molestie tempus mi, eu iaculis elit lacinia non. Praesent blandit posuere massa, ac congue ante volutpat quis. Suspendisse volutpat in ex sed ullamcorper. Nulla dignissim arcu sed leo accumsan iaculis. Vestibulum eget sapien blandit, aliquam nisl sit amet, aliquet urna. Quisque placerat sed lectus nec vulputate. Mauris non accumsan purus. </p>
-
-<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc sit amet turpis pharetra, lobortis erat a, sollicitudin nibh. In viverra faucibus fermentum. Aenean vitae finibus orci. Duis id nunc eget massa facilisis interdum eu non mauris. Morbi condimentum ipsum pellentesque, faucibus odio et, efficitur tortor. In ut augue vel massa posuere sodales.</p>
-
-<p>Pellentesque convallis vestibulum nibh, ut sodales augue vulputate quis. Integer vel sem id ligula dignissim posuere. Ut sed porttitor felis. Vestibulum dapibus nibh semper ante varius scelerisque. Aenean molestie tempus mi, eu iaculis elit lacinia non. Praesent blandit posuere massa, ac congue ante volutpat quis. Suspendisse volutpat in ex sed ullamcorper. Nulla dignissim arcu sed leo accumsan iaculis. Vestibulum eget sapien blandit, aliquam nisl sit amet, aliquet urna. Quisque placerat sed lectus nec vulputate. Mauris non accumsan purus. </p>
+{{! Section Information générale - Description du cours }}
+<h4>{{#str}} coursedesc, mod_syllabus {{/str}}</h4>
+<div class="syllabus_info_block greyborder">
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} simpledescription, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{{simpledescription}}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} detaileddescription, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{{detaileddescription}}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} placeinprogram, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{{placeinprogram}}}</div>
+    </div>
+</div>

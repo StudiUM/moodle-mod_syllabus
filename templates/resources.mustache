@@ -1,0 +1,143 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    Resources template section.
+
+    Context variables required for this template:
+    * mandatoryresourcedocuments
+    * librarybooks
+    * equipment
+    * hasadditionalresources - boolean
+    * additionalresourcedocuments
+    * websites
+    * guides
+    * additionalresourceothers
+    * writtencommunicationcenter
+    * successstudentcenter
+    * sourcequote
+    * udemlibraries
+    * studentswithdisabilities
+    * supportsuccessothers
+}}
+
+<h3>{{#str}} resources, mod_syllabus {{/str}}</h3>
+
+{{! Section Ressources - Ressources obligatoires }}
+<h4>{{#str}} mandatoryresources, mod_syllabus {{/str}}</h4>
+<div class="syllabus_info_block greyborder">
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} mandatoryresourcedocuments, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{{mandatoryresourcedocuments}}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} librarybooks, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{{librarybooks}}}</div>
+    </div>
+    {{#equipment}}
+        <div class="row">
+            <div class="col-12 col-md-3">{{#str}} equipment, mod_syllabus {{/str}}</div>
+            <div class="col-12 col-md-9">{{{equipment}}}</div>
+        </div>
+    {{/equipment}}
+</div>
+
+{{! Section facultative : Ressources - Ressources complémentaires }}
+{{#hasadditionalresources}}
+    <h4>{{#str}} additionalresources, mod_syllabus {{/str}}</h4>
+    <div class="syllabus_info_block greyborder">
+        {{#additionalresourcedocuments}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} additionalresourcedocuments, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{{additionalresourcedocuments}}}</div>
+            </div>
+        {{/additionalresourcedocuments}}
+        {{#websites}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} websites, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{{websites}}}</div>
+            </div>
+        {{/websites}}
+        {{#guides}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} guides, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{{guides}}}</div>
+            </div>
+        {{/guides}}
+        {{#additionalresourceothers}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} additionalresourceothers, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{{additionalresourceothers}}}</div>
+            </div>
+        {{/additionalresourceothers}}
+    </div>
+{{/hasadditionalresources}}
+
+{{! Section Ressources - Soutien à la réussite }}
+<h4>{{#str}} supportsuccess, mod_syllabus {{/str}}</h4>
+<div class="syllabus_info_block greyborder">
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} writtencommunicationcenter, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">
+            <a  href="{{writtencommunicationcenter}}" 
+                title="{{#str}} writtencommunicationcenter, mod_syllabus {{/str}}">
+                    {{writtencommunicationcenter}}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} successstudentcenter, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">
+            <a  href="{{successstudentcenter}}" 
+                title="{{#str}} successstudentcenter, mod_syllabus {{/str}}">
+                    {{successstudentcenter}}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} sourcequote, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">
+            <a  href="{{sourcequote}}" 
+                title="{{#str}} sourcequote, mod_syllabus {{/str}}">
+                    {{sourcequote}}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} udemlibraries, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">
+            <a  href="{{udemlibraries}}" 
+                title="{{#str}} udemlibraries, mod_syllabus {{/str}}">
+                    {{udemlibraries}}
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} studentswithdisabilities, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">
+            <a  href="{{studentswithdisabilities}}" 
+                title="{{#str}} studentswithdisabilities, mod_syllabus {{/str}}">
+                    {{studentswithdisabilities}}
+            </a>
+        </div>
+    </div>
+    {{#supportsuccessothers}}
+        <div class="row">
+            <div class="col-12 col-md-3">{{#str}} supportsuccessothers, mod_syllabus {{/str}}</div>
+            <div class="col-12 col-md-9">{{{supportsuccessothers}}}</div>
+        </div>
+    {{/supportsuccessothers}}
+</div>

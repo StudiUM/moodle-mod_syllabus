@@ -1,0 +1,75 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    Reminders template section.
+
+    Context variables required for this template:
+    * registrationmodification
+    * resignationdeadline
+    * trimesterend
+    * teachingevaluation
+    * courseregistration
+    * notetaking
+}}
+
+<h3>{{#str}} reminders, mod_syllabus {{/str}}</h3>
+
+{{! Section facultative : Rappels - Dates importantes }}
+{{#hasimportantdates}}
+    <h4>{{#str}} importantdates, mod_syllabus {{/str}}</h4>
+    <div class="syllabus_info_block greyborder">
+        {{#registrationmodification}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} registrationmodification, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{#userdate}} {{registrationmodification}}, {{#str}} strftimedate {{/str}} {{/userdate}}</div>
+            </div>
+        {{/registrationmodification}}
+        {{#resignationdeadline}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} resignationdeadline, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{#userdate}} {{resignationdeadline}}, {{#str}} strftimedate {{/str}} {{/userdate}}</div>
+            </div>
+        {{/resignationdeadline}}
+        {{#trimesterend}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} trimesterend, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{#userdate}} {{trimesterend}}, {{#str}} strftimedate {{/str}} {{/userdate}}</div>
+            </div>
+        {{/trimesterend}}
+        {{#teachingevaluation}}
+            <div class="row">
+                <div class="col-12 col-md-3">{{#str}} teachingevaluation, mod_syllabus {{/str}}</div>
+                <div class="col-12 col-md-9">{{teachingevaluation}}</div>
+            </div>
+        {{/teachingevaluation}}
+    </div>
+{{/hasimportantdates}}
+
+{{! Section Rappels - Utilisation des technologies en classe }}
+<h4>{{#str}} techuses, mod_syllabus {{/str}}</h4>
+<div class="syllabus_info_block greyborder">
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} courseregistration, mod_syllabus {{/str}}</div>
+        <div class="col-12 col-md-9">{{courseregistration}}</div>
+    </div>
+    {{#notetaking}}
+        <div class="row">
+            <div class="col-12 col-md-3">{{#str}} notetaking, mod_syllabus {{/str}}</div>
+            <div class="col-12 col-md-9">{{notetaking}}</div>
+        </div>
+    {{/notetaking}}
+</div>

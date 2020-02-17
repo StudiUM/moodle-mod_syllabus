@@ -15,22 +15,13 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    Learning targeted template section.
-
-    Context variables required for this template:
-    * educationalintentions
-    * learningobjectives
+    This is the main Syllabus view that integrates all the template sections.
 }}
 
-<h3>{{#str}} learningtargeted, mod_syllabus {{/str}}</h3>
-
-<div class="syllabus_info_block greyborder">
-    <div class="row">
-        <div class="col-12 col-md-3">{{#str}} educationalintentions_cmp, mod_syllabus {{/str}}</div>
-        <div class="col-12 col-md-9">{{{educationalintentions}}}</div>
-    </div>
-    <div class="row">
-        <div class="col-12 col-md-3">{{#str}} learningobjectives, mod_syllabus {{/str}}</div>
-        <div class="col-12 col-md-9">{{{learningobjectives}}}</div>
-    </div>
-</div>
+{{> mod_syllabus/generalinformation }}
+{{> mod_syllabus/learningtargeted }}
+{{> mod_syllabus/sessionscalendar }}
+{{> mod_syllabus/evaluations }}
+{{> mod_syllabus/reminders }}
+{{> mod_syllabus/resources }}
+{{> mod_syllabus/regfrmwkinstitpolicies }}

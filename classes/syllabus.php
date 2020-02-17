@@ -349,7 +349,7 @@ class syllabus extends persistent {
     }
 
     /**
-     * Count the session calendar for this syllabus.
+     * Count the evaluations for this syllabus.
      *
      * @return int
      */
@@ -358,9 +358,9 @@ class syllabus extends persistent {
     }
 
     /**
-     * Get the assessments calendar for this syllabus.
+     * Get the evaluations for this syllabus.
      *
-     * @return evaluation[] Array of assessments calendar objects
+     * @return evaluation[] Array of evaluation objects
      */
     public function get_assessmentscalendar() {
         return \mod_syllabus\evaluation::list_evaluations_for_syllabus($this->get('id'));
@@ -373,6 +373,15 @@ class syllabus extends persistent {
      */
     public function count_teachers() {
         return \mod_syllabus\teacher::count_records_for_syllabus($this->get('id'));
+    }
+
+    /**
+     * Get the teachers for this syllabus.
+     *
+     * @return teacher[] Array of teacher objects
+     */
+    public function get_teachers() {
+        return \mod_syllabus\teacher::list_teachers_for_syllabus($this->get('id'));
     }
 
     /**
@@ -394,11 +403,24 @@ class syllabus extends persistent {
     }
 
     /**
-     * Get the teachers for this syllabus.
+     * Get the string value for this syllabus training type.
      *
-     * @return teacher[] Array of teacher objects
+     * @return string syllabus training type name
      */
-    public function get_teachers() {
-        return \mod_syllabus\teacher::list_teachers_for_syllabus($this->get('id'));
+    public function get_trainingtypename() {
+        switch ($this->get('trainingtype')) {
+            case self::TRAINING_TYPE_CAMPUSBASED:
+                return get_string('campusbased', 'mod_syllabus');
+                break;
+            case self::TRAINING_TYPE_ONLINE:
+                return get_string('online', 'mod_syllabus');
+                break;
+            case self::TRAINING_TYPE_HYBDRID:
+                return get_string('hybrid', 'mod_syllabus');
+                break;
+            case self::TRAINING_TYPE_BIMODAL:
+                return get_string('bimodal', 'mod_syllabus');
+                break;
+        }
     }
 }

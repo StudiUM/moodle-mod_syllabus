@@ -1,3 +1,46 @@
+.syllabus h3 {
+    margin-top: 2rem;
+}
+.syllabus h4 {
+    font-weight: 500;
+    color: var(--white, white);
+    background-color: var(--primary, #1177d1);
+    padding: 0.25rem;
+    margin: 0.625rem 0 0 0;
+}
+.syllabus .syllabus_info_block {
+    margin-bottom: 0.5rem;
+    overflow-wrap: break-word;
+}
+.syllabus .syllabus_info_block .row:nth-child(even) {
+    background-color: #d6effc;
+}
+.syllabus .syllabus_info_block .row div {
+    padding: 0.25rem;
+}
+.syllabus .syllabus_info_block .row div:first-child {
+    font-weight: 600;
+}
+.syllabus .syllabus_info_block .greybackground + div .row div:not(:first-child) {
+    font-weight: initial;
+}
+.syllabus .greyborder {
+    border: 1px solid #ced4da;
+}
+.syllabus .syllabus_info_block .greybackground {
+    background-color: rgba(0,0,0,.05);
+}
+.syllabus .syllabus_info_block .greybackground + div {
+    padding: 0;
+}
+.syllabus .syllabus_info_block .greybackground + div .row {
+    padding: 0;
+}
+.syllabus .view_action_buttons {
+    display:flex;
+    justify-content: flex-end;
+    margin: 0.625rem 0;
+}
 .syllabus .nav-tabs .nav-link.active, .syllabus  .nav-tabs .nav-item.show .nav-link {
     color: #fff;
     background-color: #006bb6;

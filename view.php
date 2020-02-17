@@ -20,7 +20,7 @@
  * @package    mod_syllabus
  * @copyright  2019 Université de Montréal
  * @author     Issam Taboubi <issam.taboubi@umontreal.ca>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 require('../../config.php');
@@ -69,10 +69,13 @@ echo $output->header();
 
 echo $output->heading(format_string($syllabus->name), 2);
 
-echo $output->container_start('text-right');
+echo $output->container_start('syllabus');
 
 $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent);
 $pdfurl = $pdfmanager->getpdflink();
+
+// View action buttons.
+echo html_writer::start_tag('div', ['class' => 'view_action_buttons']);
 if (!empty($pdfurl)) {
     $link = \html_writer::link($pdfurl, get_string('downloadpdf', 'syllabus'), ['class' => 'btn btn-secondary']);
     echo \html_writer::span($link, 'actionbuttons');
@@ -82,6 +85,11 @@ if (has_capability('mod/syllabus:addinstance', $context)) {
             get_string('enterdata', 'syllabus'), ['class' => 'btn btn-secondary']);
     echo \html_writer::span($link, 'actionbuttons');
 }
+echo html_writer::end_tag('div');
+
+// Syllabus HTML View.
+$syllabuspage = new \mod_syllabus\output\view_syllabus_page($syllabuspersistent, $context);
+echo $output->render_section($syllabuspage, 'syllabus');
 
 echo $output->container_end();
 
