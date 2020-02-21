@@ -1,0 +1,128 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    Resources template section.
+
+    Context variables required for this template:
+    * mandatoryresourcedocuments
+    * librarybooks
+    * equipment
+    * hasadditionalresources - boolean
+    * additionalresourcedocuments
+    * websites
+    * guides
+    * additionalresourceothers
+    * writtencommunicationcenter
+    * successstudentcenter
+    * sourcequote
+    * udemlibraries
+    * studentswithdisabilities
+    * supportsuccessothers
+}}
+
+<h3>{{#str}} resources, mod_syllabus {{/str}}</h3>
+
+{{! Section Ressources - Ressources obligatoires }}
+<h4>{{#str}} mandatoryresources, mod_syllabus {{/str}}</h4>
+<table class="greyborder">
+    <tr>
+        <th>{{#str}} mandatoryresourcedocuments, mod_syllabus {{/str}}</th>
+        <td>{{{mandatoryresourcedocuments}}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} librarybooks, mod_syllabus {{/str}}</th>
+        <td>{{{librarybooks}}}</td>
+    </tr>
+    {{#equipment}}
+        <tr>
+            <th>{{#str}} equipment, mod_syllabus {{/str}}</th>
+            <td>{{{equipment}}}</td>
+        </tr>
+    {{/equipment}}
+</table>
+
+{{! Section facultative : Ressources - Ressources complémentaires }}
+{{#hasadditionalresources}}
+    <h4>{{#str}} additionalresources, mod_syllabus {{/str}}</h4>
+    <table class="greyborder">
+        {{#additionalresourcedocuments}}
+            <tr {{#iseven_additionalresourcedocuments}}class="even"{{/iseven_additionalresourcedocuments}}>
+                <th>{{#str}} additionalresourcedocuments, mod_syllabus {{/str}}</th>
+                <td>{{{additionalresourcedocuments}}}</td>
+            </tr>
+        {{/additionalresourcedocuments}}
+        {{#websites}}
+            <tr {{#iseven_websites}}class="even"{{/iseven_websites}}>
+                <th>{{#str}} websites, mod_syllabus {{/str}}</th>
+                <td>{{{websites}}}</td>
+            </tr>
+        {{/websites}}
+        {{#guides}}
+            <tr {{#iseven_guides}}class="even"{{/iseven_guides}}>
+                <th>{{#str}} guides, mod_syllabus {{/str}}</th>
+                <td>{{{guides}}}</td>
+            </tr>
+        {{/guides}}
+        {{#additionalresourceothers}}
+            <tr {{#iseven_additionalresourceothers}}class="even"{{/iseven_additionalresourceothers}}>
+                <th>{{#str}} additionalresourceothers, mod_syllabus {{/str}}</th>
+                <td>{{{additionalresourceothers}}}</td>
+            </tr>
+        {{/additionalresourceothers}}
+    </table>
+{{/hasadditionalresources}}
+
+{{! Section Ressources - Soutien à la réussite }}
+<h4>{{#str}} supportsuccess, mod_syllabus {{/str}}</h4>
+<table class="greyborder">
+    <tr>
+        <th>{{#str}} writtencommunicationcenter, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{writtencommunicationcenter}}" title="{{#str}} writtencommunicationcenter, mod_syllabus {{/str}}">{{writtencommunicationcenter}}</a>
+        </td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} successstudentcenter, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{successstudentcenter}}" title="{{#str}} successstudentcenter, mod_syllabus {{/str}}">{{successstudentcenter}}</a>
+        </td>
+    </tr>
+    <tr>
+        <th>{{#str}} sourcequote, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{sourcequote}}" title="{{#str}} sourcequote, mod_syllabus {{/str}}">{{sourcequote}}</a>
+        </td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} udemlibraries, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{udemlibraries}}" title="{{#str}} udemlibraries, mod_syllabus {{/str}}">{{udemlibraries}}</a>
+        </td>
+    </tr>
+    <tr>
+        <th>{{#str}} studentswithdisabilities, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{studentswithdisabilities}}" title="{{#str}} studentswithdisabilities, mod_syllabus {{/str}}">{{studentswithdisabilities}}</a>
+        </td>
+    </tr>
+    {{#supportsuccessothers}}
+        <tr class="even">
+            <th>{{#str}} supportsuccessothers, mod_syllabus {{/str}}</th>
+            <td>{{{supportsuccessothers}}}</td>
+        </tr>
+    {{/supportsuccessothers}}
+</table>

@@ -1,0 +1,75 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    Reminders template section.
+
+    Context variables required for this template:
+    * registrationmodification
+    * resignationdeadline
+    * trimesterend
+    * teachingevaluation
+    * courseregistration
+    * notetaking
+}}
+
+<h3>{{#str}} reminders, mod_syllabus {{/str}}</h3>
+
+{{! Section facultative : Rappels - Dates importantes }}
+{{#hasimportantdates}}
+    <h4>{{#str}} importantdates, mod_syllabus {{/str}}</h4>
+    <table class="greyborder">
+        {{#registrationmodification}}
+            <tr {{#iseven_registrationmodification}}class="even"{{/iseven_registrationmodification}}>
+                <th>{{#str}} registrationmodification, mod_syllabus {{/str}}</th>
+                <td>{{#userdate}} {{registrationmodification}}, {{#str}} strftimedate {{/str}} {{/userdate}}</td>
+            </tr>
+        {{/registrationmodification}}
+        {{#resignationdeadline}}
+            <tr {{#iseven_resignationdeadline}}class="even"{{/iseven_resignationdeadline}}>
+                <th>{{#str}} resignationdeadline, mod_syllabus {{/str}}</th>
+                <td>{{#userdate}} {{resignationdeadline}}, {{#str}} strftimedate {{/str}} {{/userdate}}</td>
+            </tr>
+        {{/resignationdeadline}}
+        {{#trimesterend}}
+            <tr {{#iseven_trimesterend}}class="even"{{/iseven_trimesterend}}>
+                <th>{{#str}} trimesterend, mod_syllabus {{/str}}</th>
+                <td>{{#userdate}} {{trimesterend}}, {{#str}} strftimedate {{/str}} {{/userdate}}</td>
+            </tr>
+        {{/trimesterend}}
+        {{#teachingevaluation}}
+            <tr {{#iseven_teachingevaluation}}class="even"{{/iseven_teachingevaluation}}>
+                <th>{{#str}} teachingevaluation, mod_syllabus {{/str}}</th>
+                <td>{{teachingevaluation}}</td>
+            </tr>
+        {{/teachingevaluation}}
+    </table>
+{{/hasimportantdates}}
+
+{{! Section Rappels - Utilisation des technologies en classe }}
+<h4>{{#str}} techuses, mod_syllabus {{/str}}</h4>
+<table class="greyborder">
+    <tr>
+        <th>{{#str}} courseregistration, mod_syllabus {{/str}}</th>
+        <td>{{courseregistration}}</td>
+    </tr>
+    {{#notetaking}}
+        <tr class="even">
+            <th>{{#str}} notetaking, mod_syllabus {{/str}}</th>
+            <td>{{notetaking}}</td>
+        </tr>
+    {{/notetaking}}
+</table>

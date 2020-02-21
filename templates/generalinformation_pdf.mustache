@@ -1,0 +1,165 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    General information template section.
+
+    Context variables required for this template:
+    * All syllabus properties, plus :
+    * hasteacher - boolean
+    * teacherslist - array
+    * hascontact - boolean
+    * contactslist - array
+    * trainingtype - string
+}}
+
+<h3>{{#str}} generalinformation, mod_syllabus {{/str}}</h3>
+
+{{! Section Information générale - Cours }}
+<h4>{{#str}} course {{/str}}</h4>
+<table cellpadding="2" class="greyborder">
+    <tr>
+        <th>{{#str}} title, mod_syllabus {{/str}}</th>
+        <td>{{title}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} creditnb, mod_syllabus {{/str}}</th>
+        <td>{{creditnb}}</td>
+    </tr>
+    <tr>
+        <th>{{#str}} idnumber, mod_syllabus {{/str}}</th>
+        <td>{{idnumber}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} moodlecourseurl, mod_syllabus {{/str}}</th>
+        <td><a href="{{moodlecourseurl}}" title="{{#str}} moodlecourseurl, mod_syllabus {{/str}}">{{moodlecourseurl}}</a></td>
+    </tr>
+    <tr>
+        <th>{{#str}} facultydept, mod_syllabus {{/str}}</th>
+        <td>{{facultydept}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} trimester, mod_syllabus {{/str}}</th>
+        <td>{{trimester}}</td>
+    </tr>
+    <tr>
+        <th>{{#str}} courseyear, mod_syllabus {{/str}}</th>
+        <td>{{courseyear}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} trainingtype, mod_syllabus {{/str}}</th>
+        <td>{{trainingtypename}}</td>
+    </tr>
+    {{#courseconduct}}
+        <tr>
+            <th>{{#str}} courseconduct, mod_syllabus {{/str}}</th>
+            <td>{{courseconduct}}</td>
+        </tr>
+    {{/courseconduct}}
+    {{#weeklyworkload}}
+        <tr {{#courseconduct}}class="even"{{/courseconduct}}>
+            <th>{{#str}} weeklyworkload, mod_syllabus {{/str}}</th>
+            <td>{{weeklyworkload}}</td>
+        </tr>
+    {{/weeklyworkload}}
+</table>
+
+{{! Section Information générale - Enseignant }}
+{{#hasteacher}}
+    <h4>{{#str}} teacher, mod_syllabus {{/str}}</h4>
+    {{#teacherslist}}
+        <table class="greytable" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>
+                    {{name}}
+                </th>
+                <td>
+                    <table class="subtable" cellpadding="1">
+                        {{#title}}
+                            <tr {{#iseven_title}}class="even"{{/iseven_title}}>
+                                <th>{{#str}} teacher_title, mod_syllabus {{/str}}</th>
+                                <td>{{title}}</td>
+                            </tr>
+                        {{/title}}
+                        <tr {{#iseven_contactinformation}}class="even"{{/iseven_contactinformation}}>
+                            <th class="even">{{#str}} teacher_contactinformation, mod_syllabus {{/str}}</th>
+                            <td class="even">{{contactinformation}}</td>
+                        </tr>
+                        <tr {{#iseven_availability}}class="even"{{/iseven_availability}}>
+                            <th>{{#str}} teacher_availability, mod_syllabus {{/str}}</th>
+                            <td>{{availability}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {{^is_last}}<p class="spacer"></p>{{/is_last}}
+    {{/teacherslist}}
+{{/hasteacher}}
+
+{{! Section Information générale - Personne-ressource }}
+{{#hascontact}}
+    <h4>{{#str}} contact, mod_syllabus {{/str}}</h4>
+    {{#contactslist}}
+        <table class="greytable" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>
+                    {{name}}
+                </th>
+                <td>
+                    <table class="subtable" cellpadding="1">
+                        {{#duty}}
+                            <tr {{#iseven_duty}}class="even"{{/iseven_duty}}>
+                                <th>{{#str}} contact_duty, mod_syllabus {{/str}}</th>
+                                <td>{{duty}}</td>
+                            </tr>
+                        {{/duty}}
+                        {{#contactinformation}}
+                            <tr {{#iseven_contactinformation}}class="even"{{/iseven_contactinformation}}>
+                                <th class="even">{{#str}} contact_contactinformation, mod_syllabus {{/str}}</th>
+                                <td class="even">{{contactinformation}}</td>
+                            </tr>
+                        {{/contactinformation}}
+                        {{#availability}}
+                            <tr {{#iseven_availability}}class="even"{{/iseven_availability}}>
+                                <th>{{#str}} contact_availability, mod_syllabus {{/str}}</th>
+                                <td>{{availability}}</td>
+                            </tr>
+                        {{/availability}}
+                    </table>
+                </td>
+            </tr>
+        </table>
+        {{^is_last}}<p class="spacer"></p>{{/is_last}}
+    {{/contactslist}}
+{{/hascontact}}
+
+{{! Section Information générale - Description du cours }}
+<h4>{{#str}} coursedesc, mod_syllabus {{/str}}</h4>
+<table cellpadding="1" class="greyborder">
+    <tr>
+        <th>{{#str}} simpledescription, mod_syllabus {{/str}}</th>
+        <td>{{{simpledescription}}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} detaileddescription, mod_syllabus {{/str}}</th>
+        <td>{{{detaileddescription}}}</td>
+    </tr>
+    <tr>
+        <th>{{#str}} placeinprogram, mod_syllabus {{/str}}</th>
+        <td>{{{placeinprogram}}}</td>
+    </tr>
+</table>

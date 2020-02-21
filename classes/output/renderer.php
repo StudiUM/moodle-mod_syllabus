@@ -68,6 +68,18 @@ class renderer extends plugin_renderer_base {
     }
 
     /**
+     * Defer to template for a specific section of the PDF file.
+     *
+     * @param view_syllabus_page $page
+     * @param string $section Name of the section (add "_pdf" to get the name of the template file).
+     * @return string html for the page
+     */
+    public function render_section_pdf(view_syllabus_page $page, $section) {
+        $data = $this->get_exporteddata($page);
+        return parent::render_from_template('mod_syllabus/'.$section."_pdf", $data);
+    }
+
+    /**
      * Returns the default value for the versionnotes field.
      *
      * @param boolean $plain

@@ -54,4 +54,58 @@ class evaluation_exporter extends \core\external\persistent_exporter {
             'context' => 'context'
         ];
     }
+
+    /**
+     * Returns the definition of other contact propreties.
+     *
+     * @return array
+     */
+    public static function define_other_properties() {
+        return array(
+            'iseven_activities' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_learningobjectives' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_evaluationcriteria' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_weightings' => array(
+                'type' => PARAM_BOOL
+            ),
+            'is_last' => array(
+                'type' => PARAM_BOOL
+            )
+        );
+    }
+
+    /**
+     * Returns other contact properties :
+     *  iseven_activities - boolean
+     *  iseven_learningobjectives - boolean
+     *  iseven_evaluationcriteria - boolean
+     *  iseven_weightings - boolean
+     *  is_last - boolean
+     *
+     * @param  renderer_base $output
+     * @return array
+     */
+    protected function get_other_values(\renderer_base $output) {
+        $otherproperties = new \stdClass();
+
+        $otherproperties->iseven_activities = false;
+        $otherproperties->iseven_learningobjectives = true;
+        $otherproperties->iseven_evaluationcriteria = false;
+        $otherproperties->iseven_weightings = true;
+        // This property will be changed later for the last element.
+        $otherproperties->is_last = false;
+
+        // Evaluationcriteria is not mandatory, all others are.
+        if (empty($this->persistent->get('evaluationcriteria'))) {
+            $otherproperties->iseven_weightings = false;
+        }
+
+        return (array) $otherproperties;
+    }
 }

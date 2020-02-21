@@ -126,6 +126,45 @@ class syllabus_exporter extends \core\external\persistent_exporter {
             ),
             'hasadditionalresources' => array(
                 'type' => PARAM_BOOL
+            ),
+            'iseven_evaluationabsence' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_workdeposits' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_authorizedmaterial' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_languagequality' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_successthreshold' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_registrationmodification' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_resignationdeadline' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_trimesterend' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_teachingevaluation' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_additionalresourcedocuments' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_websites' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_guides' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_additionalresourceothers' => array(
+                'type' => PARAM_BOOL
             )
         );
     }
@@ -163,9 +202,13 @@ class syllabus_exporter extends \core\external\persistent_exporter {
                 'context' => $this->related['context']
             ];
             $teacherslist = $this->persistent->get_teachers();
-            foreach ($teacherslist as $teacher) {
+            foreach ($teacherslist as $index => $teacher) {
                 $exporter = new teacher_exporter($teacher, $relateds);
-                $othersyllabusproperties->teacherslist[] = $exporter->export($output);
+                $exportedteacher = $exporter->export($output);
+                if ($index == count($teacherslist) - 1) {
+                    $exportedteacher->is_last = true;
+                }
+                $othersyllabusproperties->teacherslist[] = $exportedteacher;
             }
         }
 
@@ -182,9 +225,13 @@ class syllabus_exporter extends \core\external\persistent_exporter {
                 'context' => $this->related['context']
             ];
             $contactslist = $this->persistent->get_contacts();
-            foreach ($contactslist as $contact) {
+            foreach ($contactslist as $index => $contact) {
                 $exporter = new contact_exporter($contact, $relateds);
-                $othersyllabusproperties->contactslist[] = $exporter->export($output);
+                $exportedcontact = $exporter->export($output);
+                if ($index == count($contactslist) - 1) {
+                    $exportedcontact->is_last = true;
+                }
+                $othersyllabusproperties->contactslist[] = $exportedcontact;
             }
         }
 
@@ -223,9 +270,27 @@ class syllabus_exporter extends \core\external\persistent_exporter {
                 'context' => $this->related['context']
             ];
             $evaluationslist = $this->persistent->get_assessmentscalendar();
-            foreach ($evaluationslist as $evaluation) {
+            foreach ($evaluationslist as $index => $evaluation) {
                 $exporter = new evaluation_exporter($evaluation, $relateds);
-                $othersyllabusproperties->evaluationslist[] = $exporter->export($output);
+                $exportedevaluation = $exporter->export($output);
+                if ($index == count($evaluationslist) - 1) {
+                    $exportedevaluation->is_last = true;
+                }
+                $othersyllabusproperties->evaluationslist[] = $exportedevaluation;
+            }
+        }
+
+        // Verifying which fields appear as odd/even in the Evaluation - Rules Assessments section.
+        $fields = array('evaluationabsence', 'workdeposits', 'authorizedmaterial', 'languagequality', 'successthreshold');
+        $fieldiseven = false;
+        foreach ($fields as $field) {
+            $varname = "iseven_".$field;
+            if (!empty($this->persistent->get($field))) {
+                $othersyllabusproperties->$varname = $fieldiseven;
+                $fieldiseven = !$fieldiseven;
+            } else {
+                // Initialise to default value.
+                $othersyllabusproperties->$varname = false;
             }
         }
 
@@ -238,6 +303,20 @@ class syllabus_exporter extends \core\external\persistent_exporter {
                 $othersyllabusproperties->hasimportantdates = false;
         }
 
+        // Verifying which fields appear as odd/even in the Reminders - Important dates section (all non mandatory fields).
+        $fields = array('registrationmodification', 'resignationdeadline', 'trimesterend', 'teachingevaluation');
+        $fieldiseven = false;
+        foreach ($fields as $field) {
+            $varname = "iseven_".$field;
+            if (!empty($this->persistent->get($field))) {
+                $othersyllabusproperties->$varname = $fieldiseven;
+                $fieldiseven = !$fieldiseven;
+            } else {
+                // Initialise to default value.
+                $othersyllabusproperties->$varname = false;
+            }
+        }
+
         // Verifying if we have additional resources in the resources section.
         $othersyllabusproperties->hasadditionalresources = true;
         if (empty($this->persistent->get('additionalresourcedocuments')) &&
@@ -245,6 +324,20 @@ class syllabus_exporter extends \core\external\persistent_exporter {
             empty($this->persistent->get('guides')) &&
             empty($this->persistent->get('additionalresourceothers'))) {
                 $othersyllabusproperties->hasadditionalresources = false;
+        }
+
+        // Verifying which fields appear as odd/even in the Resources - Complementary resources (all non mandatory fields).
+        $fields = array('additionalresourcedocuments', 'websites', 'guides', 'additionalresourceothers');
+        $fieldiseven = false;
+        foreach ($fields as $field) {
+            $varname = "iseven_".$field;
+            if (!empty($this->persistent->get($field))) {
+                $othersyllabusproperties->$varname = $fieldiseven;
+                $fieldiseven = !$fieldiseven;
+            } else {
+                // Initialise to default value.
+                $othersyllabusproperties->$varname = false;
+            }
         }
 
         return (array) $othersyllabusproperties;

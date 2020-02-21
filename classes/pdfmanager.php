@@ -69,6 +69,10 @@ class pdfmanager {
         $doc->setPrintHeader(true);
         $doc->setHeaderMargin(8);
         $doc->setHeaderData('mod/syllabus/pix/logo_udem.png', 40, get_string('syllabus', 'mod_syllabus'));
+        $doc->setImageScale(1.75);
+        $vspaces = array();
+        $vspaces['h4'] = array(0 => array('h' => 1, 'n' => 3), 1 => array('h' => 0, 'n' => 0));
+        $doc->setHtmlVSpace($vspaces);
 
         // Create the first page.
         $doc->AddPage();
@@ -78,7 +82,11 @@ class pdfmanager {
         // Render all sections.
         $this->addsection($doc, $page, $output, 'generalinformation');
         $this->addsection($doc, $page, $output, 'learningtargeted');
-        // TODO Ajouter les autres sections
+        $this->addsection($doc, $page, $output, 'sessionscalendar');
+        $this->addsection($doc, $page, $output, 'evaluations');
+        $this->addsection($doc, $page, $output, 'reminders');
+        $this->addsection($doc, $page, $output, 'resources');
+        $this->addsection($doc, $page, $output, 'regfrmwkinstitpolicies');
 
         // Save the file permanently on disk.
         $filename = $this->getpdffilename();
@@ -136,9 +144,72 @@ class pdfmanager {
      */
     private function addsection($doc, $page, $output, $sectionname) {
         $doc->setDestination($sectionname);
-        $doc->Bookmark(get_string($sectionname, 'mod_syllabus'), 0, 0, '', '', array(0, 0, 0), -1, '#'.$sectionname);
-        $htmlcontent = $output->render_section($page, $sectionname);
+        if ($sectionname == 'evaluations') {
+            $strsectionname = get_string('assessments', 'mod_syllabus');
+        } else {
+            $strsectionname = get_string($sectionname, 'mod_syllabus');
+        }
+        $doc->Bookmark($strsectionname, 0, 0, '', '', array(0, 0, 0), -1, '#'.$sectionname);
+
+        // CSS and HTML should be rendered by the same writeHTML function.
+        $htmlcontent = $this->getcss();
+        $htmlcontent .= $output->render_section_pdf($page, $sectionname);
         $doc->writeHTML($htmlcontent);
     }
 
+    /**
+     * Returns the inline css for the PDF file.
+     *
+     * @return string
+     */
+    private function getcss() {
+        $html = "<style>
+            h4 {
+                color: white;
+                background-color: #1177d1;
+                font-size: 12pt;
+                font-weight: bold;
+            }
+            tr.even td, tr.even th {
+                background-color: #d6effc;
+            }
+            p.spacer {
+                font-size: 0;
+            }
+            table.greyborder {
+                border: 2px solid #ced4da;
+            }
+            table.greyborder td {
+                width: 70%;
+                background-color: white;
+            }
+            table.greyborder th {
+                width: 30%;
+                font-weight: bold;
+                background-color: white;
+            }
+            table.greytable {
+                border: 2px solid #ced4da;
+                background-color: #f2f2f2;
+            }
+            table.greytable td {
+                width: 75%;
+            }
+            table.greytable th {
+                width: 25%;
+                font-weight: normal;
+            }
+            table.subtable {
+                background-color: white;
+            }
+            table.subtable th {
+                width: 30%;
+                font-weight: bold;
+            }
+            table.subtable td {
+                width: 70%;
+            }
+        </style>";
+        return $html;
+    }
 }

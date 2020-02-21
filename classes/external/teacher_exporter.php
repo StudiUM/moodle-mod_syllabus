@@ -54,4 +54,55 @@ class teacher_exporter extends \core\external\persistent_exporter {
             'context' => 'context'
         ];
     }
+
+    /**
+     * Returns the definition of other contact propreties.
+     *
+     * @return array
+     */
+    public static function define_other_properties() {
+        return array(
+            'iseven_title' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_contactinformation' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_availability' => array(
+                'type' => PARAM_BOOL
+            ),
+            'is_last' => array(
+                'type' => PARAM_BOOL
+            )
+        );
+    }
+
+    /**
+     * Returns other contact properties :
+     *  iseven_title - boolean
+     *  iseven_contactinformation - boolean
+     *  iseven_availability - boolean
+     *  is_last - boolean
+     *
+     * @param  renderer_base $output
+     * @return array
+     */
+    protected function get_other_values(\renderer_base $output) {
+        $otherproperties = new \stdClass();
+
+        $otherproperties->iseven_title = false;
+        $otherproperties->iseven_contactinformation = false;
+        $otherproperties->iseven_availability = false;
+        // This property will be changed later for the last element.
+        $otherproperties->is_last = false;
+
+        // Only title is not mandatory, the other fields are always shown.
+        if (empty($this->persistent->get('title'))) {
+            $otherproperties->iseven_availability = true;
+        } else {
+            $otherproperties->iseven_contactinformation = true;
+        }
+
+        return (array) $otherproperties;
+    }
 }

@@ -54,4 +54,59 @@ class contact_exporter extends \core\external\persistent_exporter {
             'context' => 'context'
         ];
     }
+
+    /**
+     * Returns the definition of other contact propreties.
+     *
+     * @return array
+     */
+    public static function define_other_properties() {
+        return array(
+            'iseven_duty' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_contactinformation' => array(
+                'type' => PARAM_BOOL
+            ),
+            'iseven_availability' => array(
+                'type' => PARAM_BOOL
+            ),
+            'is_last' => array(
+                'type' => PARAM_BOOL
+            )
+        );
+    }
+
+    /**
+     * Returns other contact properties :
+     *  iseven_duty - boolean
+     *  iseven_contactinformation - boolean
+     *  iseven_availability - boolean
+     *  is_last - boolean
+     *
+     * @param  renderer_base $output
+     * @return array
+     */
+    protected function get_other_values(\renderer_base $output) {
+        $otherproperties = new \stdClass();
+
+        // This property will be changed later for the last element.
+        $otherproperties->is_last = false;
+
+        // Verifying which fields appear as odd/even in the Resources - Complementary resources (all non mandatory fields).
+        $fields = array('duty', 'contactinformation', 'availability');
+        $fieldiseven = false;
+        foreach ($fields as $field) {
+            $varname = "iseven_".$field;
+            if (!empty($this->persistent->get($field))) {
+                $otherproperties->$varname = $fieldiseven;
+                $fieldiseven = !$fieldiseven;
+            } else {
+                // Initialise to default value.
+                $otherproperties->$varname = false;
+            }
+        }
+
+        return (array) $otherproperties;
+    }
 }

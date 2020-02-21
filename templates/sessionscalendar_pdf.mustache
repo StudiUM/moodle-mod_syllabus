@@ -1,0 +1,78 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    Sessions calendar template section.
+
+    Context variables required for this template:
+    * hassessions
+    * sessionslist
+        * date
+        * title
+        * content
+        * activity
+        * readingandworks
+        * formativeevaluations
+        * evaluations
+}}
+
+{{#hassessions}}
+    <h3>{{#str}} sessionscalendar, mod_syllabus {{/str}}</h3>
+    {{#sessionslist}}
+        <table class="greytable" cellpadding="0" cellspacing="0">
+            <tr>
+                <th>
+                    {{#userdate}} {{date}}, {{#str}} strftimedate {{/str}} {{/userdate}}
+                </th>
+                <td>
+                    <table class="subtable" cellpadding="1">
+                        {{#title}}
+                            <tr {{#iseven_title}}class="even"{{/iseven_title}}>
+                                <th>{{#str}} sessionscalendar_titles, mod_syllabus {{/str}}</th>
+                                <td>{{title}}</td>
+                            </tr>
+                        {{/title}}
+                        <tr {{#iseven_content}}class="even"{{/iseven_content}}>
+                            <th>{{#str}} sessionscalendar_contents, mod_syllabus {{/str}}</th>
+                            <td>{{content}}</td>
+                        </tr>
+                        <tr {{#iseven_activity}}class="even"{{/iseven_activity}}>
+                            <th>{{#str}} sessionscalendar_activities, mod_syllabus {{/str}}</th>
+                            <td>{{activity}}</td>
+                        </tr>
+                        {{#readingandworks}}
+                            <tr {{#iseven_readingandworks}}class="even"{{/iseven_readingandworks}}>
+                                <th>{{#str}} sessionscalendar_readingandworks, mod_syllabus {{/str}}</th>
+                                <td>{{readingandworks}}</td>
+                            </tr>
+                        {{/readingandworks}}
+                        {{#formativeevaluations}}
+                            <tr {{#iseven_formativeevaluations}}class="even"{{/iseven_formativeevaluations}}>
+                                <th>{{#str}} sessionscalendar_formativeevaluations, mod_syllabus {{/str}}</th>
+                                <td>{{formativeevaluations}}</td>
+                            </tr>
+                        {{/formativeevaluations}}
+                        <tr {{#iseven_evaluations}}class="even"{{/iseven_evaluations}}>
+                            <th>{{#str}} sessionscalendar_evaluations, mod_syllabus {{/str}}</th>
+                            <td>{{evaluations}}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p class="spacer"></p>
+    {{/sessionslist}}
+{{/hassessions}}

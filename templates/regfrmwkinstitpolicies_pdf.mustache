@@ -1,0 +1,71 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    Regulatory frameworks and institutional policies template section.
+
+    Context variables required for this template:
+    * studyregulations
+    * disabilitypolicy
+    * policyothers
+    * integritysite
+    * regulationsexplained
+    * integrityothers
+}}
+
+<h3>{{#str}} regfrmwkinstitpolicies, mod_syllabus {{/str}}</h3>
+
+{{! Section Cadres règlementaires et politiques institutionnelles - Règlements et politiques }}
+<h4>{{#str}} rulespolicy, mod_syllabus {{/str}}</h4>
+<table class="greyborder">
+    <tr>
+        <th>{{#str}} studyregulations, mod_syllabus {{/str}}</th>
+        <td>{{studyregulations}}</td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} disabilitypolicy, mod_syllabus {{/str}}</th>
+        <td>{{disabilitypolicy}}</td>
+    </tr>
+    {{#policyothers}}
+        <tr>
+            <th>{{#str}} policyothers, mod_syllabus {{/str}}</th>
+            <td>{{{policyothers}}}</td>
+        </tr>
+    {{/policyothers}}
+</table>
+
+{{! Section Cadres règlementaires et politiques institutionnelles - Intégrité, fraude et plagiat }}
+<h4>{{#str}} integrity, mod_syllabus {{/str}}</h4>
+<table class="greyborder">
+    <tr>
+        <th>{{#str}} integritysite, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{integritysite}}" title="{{#str}} integritysite, mod_syllabus {{/str}}">{{integritysite}}</a>
+        </td>
+    </tr>
+    <tr class="even">
+        <th>{{#str}} regulationsexplained, mod_syllabus {{/str}}</th>
+        <td>
+            <a href="{{regulationsexplained}}" title="{{#str}} regulationsexplained, mod_syllabus {{/str}}">{{regulationsexplained}}</a>
+        </td>
+    </tr>
+    {{#integrityothers}}
+        <tr>
+            <th>{{#str}} integrityothers, mod_syllabus {{/str}}</th>
+            <td>{{{integrityothers}}}</td>
+        </tr>
+    {{/integrityothers}}
+</table>
