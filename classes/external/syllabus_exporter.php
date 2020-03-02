@@ -296,9 +296,9 @@ class syllabus_exporter extends \core\external\persistent_exporter {
 
         // Verifying if we have important dates in the reminder section.
         $othersyllabusproperties->hasimportantdates = true;
-        if (is_null($this->persistent->get('registrationmodification')) &&
-            is_null($this->persistent->get('resignationdeadline')) &&
-            is_null($this->persistent->get('trimesterend')) &&
+        if (empty($this->persistent->get('registrationmodification')) &&
+            empty($this->persistent->get('resignationdeadline')) &&
+            empty($this->persistent->get('trimesterend')) &&
             empty($this->persistent->get('teachingevaluation'))) {
                 $othersyllabusproperties->hasimportantdates = false;
         }

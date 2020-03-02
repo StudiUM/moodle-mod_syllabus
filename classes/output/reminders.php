@@ -43,7 +43,7 @@ class reminders extends rubric {
     public function build_form_rubric() {
 
         $this->form->addElement('html', $this->fieldset_html_start('importantdates', get_string('importantdates', 'mod_syllabus')));
-        $startyearopt = ['startyear' => date('Y', strtotime('-1 year'))];
+        $startyearopt = ['startyear' => date('Y', strtotime('-1 year')), 'optional' => true];
         $this->form->addElement('date_selector', 'registrationmodification',
                 get_string('registrationmodification', 'mod_syllabus'), $startyearopt);
 
