@@ -61,6 +61,16 @@ class syllabus_exporter extends \core\external\persistent_exporter {
             'versionnotes',
             $this->persistent->get('id')
         );
+
+        // Keep the line returns and URLs in some fields.
+        $regexurl = '#(http|https)://[a-z0-9._/-]+#i';
+        $replacementurl = '<a href="$0" target="_blank">$0</a>';
+        $fields = array('courseconduct', 'weeklyworkload', 'teachingevaluation', 'courseregistration', 'notetaking',
+            'evaluationabsence', 'workdeposits', 'authorizedmaterial', 'languagequality', 'successthreshold');
+        foreach ($fields as $field) {
+            $this->data->{$field} = str_replace("\n", "<br>", $this->data->{$field});
+            $this->data->{$field} = preg_replace($regexurl, $replacementurl, $this->data->{$field});
+        }
     }
 
     /**
@@ -90,6 +100,9 @@ class syllabus_exporter extends \core\external\persistent_exporter {
      */
     public static function define_other_properties() {
         return array(
+            'is_syllabustype_competencies' => array(
+                'type' => PARAM_BOOL
+            ),
             'hasteacher' => array(
                 'type' => PARAM_BOOL
             ),
@@ -165,12 +178,40 @@ class syllabus_exporter extends \core\external\persistent_exporter {
             ),
             'iseven_additionalresourceothers' => array(
                 'type' => PARAM_BOOL
+            ),
+            'writtencommunicationcenter' => array(
+                'type' => PARAM_TEXT
+            ),
+            'successstudentcenter' => array(
+                'type' => PARAM_TEXT
+            ),
+            'sourcequote' => array(
+                'type' => PARAM_TEXT
+            ),
+            'udemlibraries' => array(
+                'type' => PARAM_TEXT
+            ),
+            'studentswithdisabilities' => array(
+                'type' => PARAM_TEXT
+            ),
+            'studyregulations' => array(
+                'type' => PARAM_CLEANHTML
+            ),
+            'disabilitypolicy' => array(
+                'type' => PARAM_CLEANHTML
+            ),
+            'integritysite' => array(
+                'type' => PARAM_TEXT
+            ),
+            'regulationsexplained' => array(
+                'type' => PARAM_TEXT
             )
         );
     }
 
     /**
      * Returns other syllabus properties:
+     * is_syllabustype_competencies - boolean
      * hasteacher - boolean
      * teacherslist - array
      * hascontact - boolean
@@ -182,12 +223,51 @@ class syllabus_exporter extends \core\external\persistent_exporter {
      * evaluationslist - array
      * hasimportantdates - bool
      * hasadditionalresources - bool
+     * iseven_evaluationabsence - bool
+     * iseven_workdeposits - bool
+     * iseven_authorizedmaterial - bool
+     * iseven_languagequality - bool
+     * iseven_successthreshold - bool
+     * iseven_registrationmodification - bool
+     * iseven_resignationdeadline - bool
+     * iseven_trimesterend - bool
+     * iseven_teachingevaluation - bool
+     * iseven_additionalresourcedocuments - bool
+     * iseven_websites - bool
+     * iseven_guides - bool
+     * iseven_additionalresourceothers - bool
+     * writtencommunicationcenter - text
+     * successstudentcenter - text
+     * sourcequote - text
+     * udemlibraries - text
+     * studentswithdisabilities - text
+     * studyregulations - text
+     * disabilitypolicy - text
+     * integritysite - text
+     * regulationsexplained - text
      *
      * @param  renderer_base $output
      * @return array
      */
     protected function get_other_values(\renderer_base $output) {
         $othersyllabusproperties = new \stdClass();
+
+        // Return prefilled not editable texts.
+        $othersyllabusproperties->writtencommunicationcenter = get_string('writtencommunicationcenterdefault', 'mod_syllabus');
+        $othersyllabusproperties->successstudentcenter = get_string('successstudentcenterdefault', 'mod_syllabus');
+        $othersyllabusproperties->sourcequote = get_string('sourcequotedefault', 'mod_syllabus');
+        $othersyllabusproperties->udemlibraries = get_string('udemlibrariesdefault', 'mod_syllabus');
+        $othersyllabusproperties->studentswithdisabilities = get_string('studentswithdisabilitiesdefault', 'mod_syllabus');
+        $othersyllabusproperties->studyregulations = get_string('studyregulationsdefault', 'mod_syllabus');
+        $othersyllabusproperties->disabilitypolicy = get_string('disabilitypolicydefault', 'mod_syllabus');
+        $othersyllabusproperties->integritysite = get_string('integritysitedefault', 'mod_syllabus');
+        $othersyllabusproperties->regulationsexplained = get_string('regulationsexplaineddefault', 'mod_syllabus');
+
+        if ($this->persistent->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $othersyllabusproperties->is_syllabustype_competencies = true;
+        } else {
+            $othersyllabusproperties->is_syllabustype_competencies = false;
+        }
 
         $othersyllabusproperties->hasteacher = false;
         $othersyllabusproperties->teacherslist = array();

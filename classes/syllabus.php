@@ -80,16 +80,7 @@ class syllabus extends persistent {
 
     /** @var array Prefilled fields. */
     protected static $prefilledfields = [
-        'courseregistration',
-        'writtencommunicationcenter',
-        'successstudentcenter',
-        'sourcequote',
-        'udemlibraries',
-        'studentswithdisabilities',
-        'studyregulations',
-        'disabilitypolicy',
-        'integritysite',
-        'regulationsexplained'
+        'courseregistration'
     ];
 
     /**
@@ -157,10 +148,10 @@ class syllabus extends persistent {
                 'default' => self::TRAINING_TYPE_CAMPUSBASED,
             ),
             'courseconduct' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'weeklyworkload' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'simpledescription' => array(
                 'type' => PARAM_CLEANHTML,
@@ -182,19 +173,19 @@ class syllabus extends persistent {
                 'type' => PARAM_CLEANHTML,
             ),
             'evaluationabsence' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'workdeposits' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'authorizedmaterial' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'languagequality' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'successthreshold' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'registrationmodification' => array(
                 'type' => PARAM_INT,
@@ -212,13 +203,13 @@ class syllabus extends persistent {
                 'null' => NULL_ALLOWED,
             ),
             'teachingevaluation' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'courseregistration' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'notetaking' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'mandatoryresourcedocuments' => array(
                 'type' => PARAM_CLEANHTML,
@@ -241,38 +232,11 @@ class syllabus extends persistent {
             'additionalresourceothers' => array(
                 'type' => PARAM_CLEANHTML,
             ),
-            'writtencommunicationcenter' => array(
-                'type' => PARAM_TEXT
-            ),
-            'successstudentcenter' => array(
-                'type' => PARAM_TEXT
-            ),
-            'sourcequote' => array(
-                'type' => PARAM_TEXT
-            ),
-            'udemlibraries' => array(
-                'type' => PARAM_TEXT
-            ),
-            'studentswithdisabilities' => array(
-                'type' => PARAM_TEXT
-            ),
             'supportsuccessothers' => array(
                 'type' => PARAM_CLEANHTML,
             ),
-            'studyregulations' => array(
-                'type' => PARAM_TEXT
-            ),
-            'disabilitypolicy' => array(
-                'type' => PARAM_TEXT
-            ),
             'policyothers' => array(
                 'type' => PARAM_CLEANHTML,
-            ),
-            'integritysite' => array(
-                'type' => PARAM_TEXT
-            ),
-            'regulationsexplained' => array(
-                'type' => PARAM_TEXT
             ),
             'integrityothers' => array(
                 'type' => PARAM_CLEANHTML,

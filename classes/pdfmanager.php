@@ -72,6 +72,7 @@ class pdfmanager {
         $doc->setImageScale(1.75);
         $vspaces = array();
         $vspaces['h4'] = array(0 => array('h' => 1, 'n' => 3), 1 => array('h' => 0, 'n' => 0));
+        $vspaces['p'] = array(0 => array('h' => 1, 'n' => 2), 1 => array('h' => 1, 'n' => 3));
         $doc->setHtmlVSpace($vspaces);
 
         // Create the first page.
@@ -174,7 +175,7 @@ class pdfmanager {
                 background-color: #d6effc;
             }
             p.spacer {
-                font-size: 0;
+                font-size: 0pt;
             }
             table.greyborder {
                 border: 2px solid #ced4da;
@@ -183,10 +184,16 @@ class pdfmanager {
                 width: 70%;
                 background-color: white;
             }
+            table.greyborder td.full {
+                width: 100%;
+            }
             table.greyborder th {
                 width: 30%;
                 font-weight: bold;
                 background-color: white;
+            }
+            p.normal {
+                font-weight: normal;
             }
             table.greytable {
                 border: 2px solid #ced4da;

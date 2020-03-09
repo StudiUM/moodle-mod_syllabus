@@ -26,7 +26,8 @@
 
 <table class="greyborder">
     <tr>
-        <th>{{#str}} educationalintentions_cmp, mod_syllabus {{/str}}</th>
+        {{#is_syllabustype_competencies}}<th>{{#str}} educationalintentions_cmp, mod_syllabus {{/str}}</th>{{/is_syllabustype_competencies}}
+        {{^is_syllabustype_competencies}}<th>{{#str}} educationalintentions, mod_syllabus {{/str}}</th>{{/is_syllabustype_competencies}}
         <td>{{{educationalintentions}}}</td>
     </tr>
     <tr class="even">

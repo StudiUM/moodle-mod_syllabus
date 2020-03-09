@@ -163,8 +163,8 @@ class syllabus extends persistent {
     protected function get_collapseexpand_html() {
         $html = \html_writer::start_div('colexpall-syllabus');
         $html .= \html_writer::start_div('collapsible-actions');
-        $html .= \html_writer::link('#', get_string('expandall'), ['role' => 'button',
-            'class' => 'collapseexpand expand-all', 'title' => get_string('clicktohideshow')]);
+        $html .= \html_writer::link('#', get_string('collapseall'), ['role' => 'button',
+            'class' => 'collapseexpand collapse-all', 'title' => get_string('clicktohideshow')]);
         $html .= \html_writer::end_div();
         $html .= \html_writer::end_div();
 

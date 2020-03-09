@@ -66,13 +66,13 @@
     {{#courseconduct}}
         <tr>
             <th>{{#str}} courseconduct, mod_syllabus {{/str}}</th>
-            <td>{{courseconduct}}</td>
+            <td>{{{courseconduct}}}</td>
         </tr>
     {{/courseconduct}}
     {{#weeklyworkload}}
         <tr {{#courseconduct}}class="even"{{/courseconduct}}>
             <th>{{#str}} weeklyworkload, mod_syllabus {{/str}}</th>
-            <td>{{weeklyworkload}}</td>
+            <td>{{{weeklyworkload}}}</td>
         </tr>
     {{/weeklyworkload}}
 </table>
@@ -91,22 +91,22 @@
                         {{#title}}
                             <tr {{#iseven_title}}class="even"{{/iseven_title}}>
                                 <th>{{#str}} teacher_title, mod_syllabus {{/str}}</th>
-                                <td>{{title}}</td>
+                                <td>{{{title}}}</td>
                             </tr>
                         {{/title}}
                         <tr {{#iseven_contactinformation}}class="even"{{/iseven_contactinformation}}>
                             <th class="even">{{#str}} teacher_contactinformation, mod_syllabus {{/str}}</th>
-                            <td class="even">{{contactinformation}}</td>
+                            <td class="even">{{{contactinformation}}}</td>
                         </tr>
                         <tr {{#iseven_availability}}class="even"{{/iseven_availability}}>
                             <th>{{#str}} teacher_availability, mod_syllabus {{/str}}</th>
-                            <td>{{availability}}</td>
+                            <td>{{{availability}}}</td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-        {{^is_last}}<p class="spacer"></p>{{/is_last}}
+        {{^is_last}}<p class="spacer"> </p>{{/is_last}}
     {{/teacherslist}}
 {{/hasteacher}}
 
@@ -124,26 +124,26 @@
                         {{#duty}}
                             <tr {{#iseven_duty}}class="even"{{/iseven_duty}}>
                                 <th>{{#str}} contact_duty, mod_syllabus {{/str}}</th>
-                                <td>{{duty}}</td>
+                                <td>{{{duty}}}</td>
                             </tr>
                         {{/duty}}
                         {{#contactinformation}}
                             <tr {{#iseven_contactinformation}}class="even"{{/iseven_contactinformation}}>
                                 <th class="even">{{#str}} contact_contactinformation, mod_syllabus {{/str}}</th>
-                                <td class="even">{{contactinformation}}</td>
+                                <td class="even">{{{contactinformation}}}</td>
                             </tr>
                         {{/contactinformation}}
                         {{#availability}}
                             <tr {{#iseven_availability}}class="even"{{/iseven_availability}}>
                                 <th>{{#str}} contact_availability, mod_syllabus {{/str}}</th>
-                                <td>{{availability}}</td>
+                                <td>{{{availability}}}</td>
                             </tr>
                         {{/availability}}
                     </table>
                 </td>
             </tr>
         </table>
-        {{^is_last}}<p class="spacer"></p>{{/is_last}}
+        {{^is_last}}<p class="spacer"> </p>{{/is_last}}
     {{/contactslist}}
 {{/hascontact}}
 

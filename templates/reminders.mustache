@@ -52,11 +52,12 @@
         {{/trimesterend}}
         {{#teachingevaluation}}
             <div class="row">
-                <div class="col-12 col-md-3">{{#str}} teachingevaluation, mod_syllabus {{/str}}</div>
-                <div class="col-12 col-md-9">{{teachingevaluation}}</div>
+                <div class="col-12 col-md-3">{{#str}} teachingevaluation, mod_syllabus {{/str}}<p class="normal">{{#str}} teachingevaluation_explanations, mod_syllabus {{/str}}</p></div>
+                <div class="col-12 col-md-9">{{{teachingevaluation}}}</div>
             </div>
         {{/teachingevaluation}}
     </div>
+    <p>{{#str}} importantdates_explanations, mod_syllabus {{/str}}</p>
 {{/hasimportantdates}}
 
 {{! Section Rappels - Utilisation des technologies en classe }}
@@ -64,12 +65,12 @@
 <div class="syllabus_info_block greyborder">
     <div class="row">
         <div class="col-12 col-md-3">{{#str}} courseregistration, mod_syllabus {{/str}}</div>
-        <div class="col-12 col-md-9">{{courseregistration}}</div>
+        <div class="col-12 col-md-9">{{{courseregistration}}}</div>
     </div>
     {{#notetaking}}
         <div class="row">
             <div class="col-12 col-md-3">{{#str}} notetaking, mod_syllabus {{/str}}</div>
-            <div class="col-12 col-md-9">{{notetaking}}</div>
+            <div class="col-12 col-md-9">{{{notetaking}}}</div>
         </div>
     {{/notetaking}}
 </div>

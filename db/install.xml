@@ -50,17 +50,8 @@
         <FIELD NAME="websites" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="guides" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="additionalresourceothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="writtencommunicationcenter" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="successstudentcenter" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="sourcequote" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="udemlibraries" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="studentswithdisabilities" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="supportsuccessothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="studyregulations" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="disabilitypolicy" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="policyothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="integritysite" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
-        <FIELD NAME="regulationsexplained" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
         <FIELD NAME="integrityothers" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>

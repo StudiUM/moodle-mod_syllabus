@@ -36,6 +36,25 @@ defined('MOODLE_INTERNAL') || die();
 class evaluation_exporter extends \core\external\persistent_exporter {
 
     /**
+     * Constructor - saves the persistent object, and the related objects.
+     *
+     * @param \core\persistent $persistent
+     * @param array $related
+     */
+    public function __construct($persistent, $related = array()) {
+        parent::__construct($persistent, $related);
+
+        // Keep the line returns and URLs in some fields.
+        $regexurl = '#(http|https)://[a-z0-9._/-]+#i';
+        $replacementurl = '<a href="$0" target="_blank">$0</a>';
+        $fields = array('activities', 'learningobjectives', 'evaluationcriteria', 'weightings');
+        foreach ($fields as $field) {
+            $this->data->{$field} = str_replace("\n", "<br>", $this->data->{$field});
+            $this->data->{$field} = preg_replace($regexurl, $replacementurl, $this->data->{$field});
+        }
+    }
+
+    /**
      * Returns the specific class the persistent should be an instance of.
      *
      * @return string

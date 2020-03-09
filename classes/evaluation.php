@@ -53,18 +53,18 @@ class evaluation extends persistent {
                 'type' => PARAM_INT
             ),
             'activities' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'learningobjectives' => array(
-                'type' => PARAM_TEXT,
+                'type' => PARAM_CLEANHTML,
                 'default' => null,
                 'null' => NULL_ALLOWED
             ),
             'evaluationcriteria' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'weightings' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             )
         );
     }

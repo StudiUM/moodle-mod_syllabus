@@ -222,12 +222,13 @@ class generalinformation extends rubric {
         if (!$isofficialcourse) {
             $this->form->addElement('html', \html_writer::start_div('',
                 array_merge(self::REQUIREDOPTIONS, array('data-editorfield' => 'simpledescription'))));
-        }
-        $this->form->addElement('editor', 'simpledescription',
+            $this->form->addElement('editor', 'simpledescription',
                 get_string('simpledescription', 'mod_syllabus'), array_merge(self::EDITOROPTIONS, $reqoptoffical));
-        $this->form->setType('simpledescription', PARAM_CLEANHTML);
-        if (!$isofficialcourse) {
+            $this->form->setType('simpledescription', PARAM_CLEANHTML);
             $this->form->addElement('html', \html_writer::end_div());
+        } else {
+            $this->form->addElement('static', 'simpledescription_static', get_string('simpledescription', 'mod_syllabus'),
+                $this->syllabus->get('simpledescription'));
         }
 
         $this->form->addElement('html', \html_writer::start_div('',

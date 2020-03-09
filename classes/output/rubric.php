@@ -87,12 +87,13 @@ abstract class rubric {
      * @param boolean $collapsed
      * @return string HTML fieldset
      */
-    public function fieldset_html_start($id, $label, $collapsed = true) {
-        $classcollapsed = ' collapsed';
-        $ariaexpanded = 'true';
-        if (!$collapsed) {
-            $classcollapsed = '';
+    public function fieldset_html_start($id, $label, $collapsed = false) {
+        if ($collapsed) {
+            $classcollapsed = ' collapsed';
             $ariaexpanded = 'false';
+        } else {
+            $classcollapsed = '';
+            $ariaexpanded = 'true';
         }
         $html = \html_writer::start_tag('fieldset', ['class' => 'clearfix collapsible' . $classcollapsed, 'id' => 'id_' . $id]);
         $html .= \html_writer::start_tag('legend', ['class' => 'ftoggler']);

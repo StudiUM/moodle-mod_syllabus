@@ -21,6 +21,9 @@
 .syllabus .syllabus_info_block .row div:first-child {
     font-weight: 600;
 }
+.syllabus .syllabus_info_block .row div:first-child.normal, .syllabus .syllabus_info_block .row div:first-child p.normal {
+    font-weight: initial;
+}
 .syllabus .syllabus_info_block .greybackground + div .row div:not(:first-child) {
     font-weight: initial;
 }

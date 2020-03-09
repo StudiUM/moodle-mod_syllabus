@@ -53,15 +53,15 @@ class teacher extends persistent {
                 'type' => PARAM_TEXT
             ),
             'title' => array(
-                'type' => PARAM_TEXT,
+                'type' => PARAM_CLEANHTML,
                 'default' => null,
                 'null' => NULL_ALLOWED,
             ),
             'contactinformation' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'availability' => array(
-                'type' => PARAM_TEXT,
+                'type' => PARAM_CLEANHTML,
                 'default' => null,
                 'null' => NULL_ALLOWED,
             )

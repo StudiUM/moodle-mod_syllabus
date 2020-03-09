@@ -42,37 +42,38 @@
                         {{#title}}
                             <tr {{#iseven_title}}class="even"{{/iseven_title}}>
                                 <th>{{#str}} sessionscalendar_titles, mod_syllabus {{/str}}</th>
-                                <td>{{title}}</td>
+                                <td>{{{title}}}</td>
                             </tr>
                         {{/title}}
                         <tr {{#iseven_content}}class="even"{{/iseven_content}}>
                             <th>{{#str}} sessionscalendar_contents, mod_syllabus {{/str}}</th>
-                            <td>{{content}}</td>
+                            <td>{{{content}}}</td>
                         </tr>
                         <tr {{#iseven_activity}}class="even"{{/iseven_activity}}>
                             <th>{{#str}} sessionscalendar_activities, mod_syllabus {{/str}}</th>
-                            <td>{{activity}}</td>
+                            <td>{{{activity}}}</td>
                         </tr>
                         {{#readingandworks}}
                             <tr {{#iseven_readingandworks}}class="even"{{/iseven_readingandworks}}>
                                 <th>{{#str}} sessionscalendar_readingandworks, mod_syllabus {{/str}}</th>
-                                <td>{{readingandworks}}</td>
+                                <td>{{{readingandworks}}}</td>
                             </tr>
                         {{/readingandworks}}
                         {{#formativeevaluations}}
                             <tr {{#iseven_formativeevaluations}}class="even"{{/iseven_formativeevaluations}}>
                                 <th>{{#str}} sessionscalendar_formativeevaluations, mod_syllabus {{/str}}</th>
-                                <td>{{formativeevaluations}}</td>
+                                <td>{{{formativeevaluations}}}</td>
                             </tr>
                         {{/formativeevaluations}}
                         <tr {{#iseven_evaluations}}class="even"{{/iseven_evaluations}}>
                             <th>{{#str}} sessionscalendar_evaluations, mod_syllabus {{/str}}</th>
-                            <td>{{evaluations}}</td>
+                            <td>{{{evaluations}}}</td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-        <p class="spacer"></p>
+        <p class="spacer"> </p>
     {{/sessionslist}}
+    <p>{{#str}} sessionscalendar_explanations, mod_syllabus {{/str}}</p>
 {{/hassessions}}

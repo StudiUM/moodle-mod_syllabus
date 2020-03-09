@@ -32,15 +32,18 @@
 <h4>{{#str}} rulespolicy, mod_syllabus {{/str}}</h4>
 <table class="greyborder">
     <tr>
-        <th>{{#str}} studyregulations, mod_syllabus {{/str}}</th>
-        <td>{{studyregulations}}</td>
+        <td colspan="2" class="full">{{#str}} rulespolicy_explanations, mod_syllabus {{/str}}</td>
     </tr>
     <tr class="even">
-        <th>{{#str}} disabilitypolicy, mod_syllabus {{/str}}</th>
-        <td>{{disabilitypolicy}}</td>
+        <th><p>{{#str}} studyregulations, mod_syllabus {{/str}}</p><p class="normal">{{#str}} studyregulations_explanations, mod_syllabus {{/str}}</p></th>
+        <td>{{{studyregulations}}}</td>
+    </tr>
+    <tr>
+        <th><p>{{#str}} disabilitypolicy, mod_syllabus {{/str}}</p><p class="normal">{{#str}} disabilitypolicy_explanations, mod_syllabus {{/str}}</p></th>
+        <td>{{{disabilitypolicy}}}</td>
     </tr>
     {{#policyothers}}
-        <tr>
+        <tr class="even">
             <th>{{#str}} policyothers, mod_syllabus {{/str}}</th>
             <td>{{{policyothers}}}</td>
         </tr>
@@ -51,19 +54,22 @@
 <h4>{{#str}} integrity, mod_syllabus {{/str}}</h4>
 <table class="greyborder">
     <tr>
+        <td colspan="2" class="full">{{#str}} integrity_explanations, mod_syllabus {{/str}}</td>
+    </tr>
+    <tr class="even">
         <th>{{#str}} integritysite, mod_syllabus {{/str}}</th>
         <td>
             <a href="{{integritysite}}" title="{{#str}} integritysite, mod_syllabus {{/str}}">{{integritysite}}</a>
         </td>
     </tr>
-    <tr class="even">
+    <tr>
         <th>{{#str}} regulationsexplained, mod_syllabus {{/str}}</th>
         <td>
             <a href="{{regulationsexplained}}" title="{{#str}} regulationsexplained, mod_syllabus {{/str}}">{{regulationsexplained}}</a>
         </td>
     </tr>
     {{#integrityothers}}
-        <tr>
+        <tr class="even">
             <th>{{#str}} integrityothers, mod_syllabus {{/str}}</th>
             <td>{{{integrityothers}}}</td>
         </tr>

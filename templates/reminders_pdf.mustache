@@ -52,11 +52,12 @@
         {{/trimesterend}}
         {{#teachingevaluation}}
             <tr {{#iseven_teachingevaluation}}class="even"{{/iseven_teachingevaluation}}>
-                <th>{{#str}} teachingevaluation, mod_syllabus {{/str}}</th>
-                <td>{{teachingevaluation}}</td>
+                <th><p>{{#str}} teachingevaluation, mod_syllabus {{/str}}</p><p class="normal">{{#str}} teachingevaluation_explanations, mod_syllabus {{/str}}</p></th>
+                <td>{{{teachingevaluation}}}</td>
             </tr>
         {{/teachingevaluation}}
     </table>
+    <p>{{#str}} importantdates_explanations, mod_syllabus {{/str}}</p>
 {{/hasimportantdates}}
 
 {{! Section Rappels - Utilisation des technologies en classe }}
@@ -64,12 +65,12 @@
 <table class="greyborder">
     <tr>
         <th>{{#str}} courseregistration, mod_syllabus {{/str}}</th>
-        <td>{{courseregistration}}</td>
+        <td>{{{courseregistration}}}</td>
     </tr>
     {{#notetaking}}
         <tr class="even">
             <th>{{#str}} notetaking, mod_syllabus {{/str}}</th>
-            <td>{{notetaking}}</td>
+            <td>{{{notetaking}}}</td>
         </tr>
     {{/notetaking}}
 </table>

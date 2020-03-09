@@ -32,12 +32,15 @@
 <h4>{{#str}} rulespolicy, mod_syllabus {{/str}}</h4>
 <div class="syllabus_info_block greyborder">
     <div class="row">
-        <div class="col-12 col-md-3">{{#str}} studyregulations, mod_syllabus {{/str}}</div>
-        <div class="col-12 col-md-9">{{studyregulations}}</div>
+        <div class="col-12 normal">{{#str}} rulespolicy_explanations, mod_syllabus {{/str}}</div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-3">{{#str}} disabilitypolicy, mod_syllabus {{/str}}</div>
-        <div class="col-12 col-md-9">{{disabilitypolicy}}</div>
+        <div class="col-12 col-md-3">{{#str}} studyregulations, mod_syllabus {{/str}}<p class="normal">{{#str}} studyregulations_explanations, mod_syllabus {{/str}}</p></div>
+        <div class="col-12 col-md-9">{{{studyregulations}}}</div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-3">{{#str}} disabilitypolicy, mod_syllabus {{/str}}<p class="normal">{{#str}} disabilitypolicy_explanations, mod_syllabus {{/str}}</p></div>
+        <div class="col-12 col-md-9">{{{disabilitypolicy}}}</div>
     </div>
     {{#policyothers}}
         <div class="row">
@@ -51,10 +54,14 @@
 <h4>{{#str}} integrity, mod_syllabus {{/str}}</h4>
 <div class="syllabus_info_block greyborder">
     <div class="row">
+        <div class="col-12 normal">{{#str}} integrity_explanations, mod_syllabus {{/str}}</div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-3">{{#str}} integritysite, mod_syllabus {{/str}}</div>
             <div class="col-12 col-md-9">
             <a  href="{{integritysite}}" 
-                title="{{#str}} integritysite, mod_syllabus {{/str}}">
+                title="{{#str}} integritysite, mod_syllabus {{/str}}"
+                target="_blank">
                     {{integritysite}}
             </a>
         </div>
@@ -63,7 +70,8 @@
         <div class="col-12 col-md-3">{{#str}} regulationsexplained, mod_syllabus {{/str}}</div>
             <div class="col-12 col-md-9">
             <a  href="{{regulationsexplained}}" 
-                title="{{#str}} regulationsexplained, mod_syllabus {{/str}}">
+                title="{{#str}} regulationsexplained, mod_syllabus {{/str}}"
+                target="_blank">
                     {{regulationsexplained}}
             </a>
         </div>

@@ -54,9 +54,7 @@ class backup_syllabus_activity_structure_step extends backup_activity_structure_
             'learningobjectives', 'evaluationabsence', 'workdeposits', 'authorizedmaterial', 'languagequality', 'successthreshold',
             'registrationmodification', 'resignationdeadline', 'trimesterend', 'teachingevaluation', 'courseregistration',
             'notetaking', 'mandatoryresourcedocuments', 'librarybooks', 'equipment', 'additionalresourcedocuments', 'websites',
-            'guides', 'additionalresourceothers', 'writtencommunicationcenter', 'successstudentcenter', 'sourcequote',
-            'udemlibraries', 'studentswithdisabilities', 'supportsuccessothers', 'studyregulations', 'disabilitypolicy',
-            'policyothers', 'integritysite', 'regulationsexplained', 'integrityothers'));
+            'guides', 'additionalresourceothers', 'supportsuccessothers', 'policyothers', 'integrityothers'));
 
         $calendarsessions = new backup_nested_element('calendarsessions');
 

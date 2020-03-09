@@ -185,14 +185,16 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
                         $('.syllabus legend a.fheader').on('click', function (event) {
                             event.preventDefault();
                             var id_fieldset = $(this).attr('aria-controls');
-                            var expanded = $(this).attr('aria-expanded');
                             var tabid = $(this).closest('div.tab-pane').attr('id');
-                            if (expanded === true) {
+
+                            $('#' + id_fieldset).toggleClass('collapsed');
+
+                            if ($('#' + id_fieldset).hasClass('collapsed')) {
                                 $(this).attr('aria-expanded', false);
                             } else {
                                 $(this).attr('aria-expanded', true);
                             }
-                            $('#' + id_fieldset).toggleClass('collapsed');
+
                             var allcollapsed = true;
                             var allexpanded = true;
                             $('.syllabus #' + tabid + ' fieldset.collapsible').each(function () {

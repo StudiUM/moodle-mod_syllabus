@@ -48,26 +48,27 @@
                 <div class="col-12 col-md-10">
                     <div class="row">
                         <div class="col-12 col-md-3">{{#str}} assessmentcalendar_activities, mod_syllabus {{/str}}</div>
-                        <div class="col-12 col-md-9">{{activities}}</div>
+                        <div class="col-12 col-md-9">{{{activities}}}</div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-3">{{#str}} assessmentcalendar_learningobjectives, mod_syllabus {{/str}}</div>
-                        <div class="col-12 col-md-9">{{learningobjectives}}</div>
+                        <div class="col-12 col-md-9">{{{learningobjectives}}}</div>
                     </div>
                     {{#evaluationcriteria}}
                         <div class="row">
                             <div class="col-12 col-md-3">{{#str}} assessmentcalendar_evaluationcriteria, mod_syllabus {{/str}}</div>
-                            <div class="col-12 col-md-9">{{evaluationcriteria}}</div>
+                            <div class="col-12 col-md-9">{{{evaluationcriteria}}}</div>
                         </div>
                     {{/evaluationcriteria}}
                     <div class="row">
                         <div class="col-12 col-md-3">{{#str}} assessmentcalendar_weightings, mod_syllabus {{/str}}</div>
-                        <div class="col-12 col-md-9">{{weightings}}</div>
+                        <div class="col-12 col-md-9">{{{weightings}}}</div>
                     </div>
                 </div>
             </div>
         </div>
     {{/evaluationslist}}
+    <p>{{#str}} evaluations_explanations, mod_syllabus {{/str}}</p>
 
     {{! Section Évaluations - Consignes et règles pour les évaluations }}
     <h4>{{#str}} rulesassessments, mod_syllabus {{/str}}</h4>
@@ -75,31 +76,31 @@
         {{#evaluationabsence}}
             <div class="row">
                 <div class="col-12 col-md-3">{{#str}} evaluationabsence_cmp, mod_syllabus {{/str}}</div>
-                <div class="col-12 col-md-9">{{evaluationabsence}}</div>
+                <div class="col-12 col-md-9">{{{evaluationabsence}}}</div>
             </div>
         {{/evaluationabsence}}
         {{#workdeposits}}
             <div class="row">
                 <div class="col-12 col-md-3">{{#str}} workdeposits, mod_syllabus {{/str}}</div>
-                <div class="col-12 col-md-9">{{workdeposits}}</div>
+                <div class="col-12 col-md-9">{{{workdeposits}}}</div>
             </div>
         {{/workdeposits}}
         {{#authorizedmaterial}}
             <div class="row">
                 <div class="col-12 col-md-3">{{#str}} authorizedmaterial, mod_syllabus {{/str}}</div>
-                <div class="col-12 col-md-9">{{authorizedmaterial}}</div>
+                <div class="col-12 col-md-9">{{{authorizedmaterial}}}</div>
             </div>
         {{/authorizedmaterial}}
         {{#languagequality}}
             <div class="row">
                 <div class="col-12 col-md-3">{{#str}} languagequality, mod_syllabus {{/str}}</div>
-                <div class="col-12 col-md-9">{{languagequality}}</div>
+                <div class="col-12 col-md-9">{{{languagequality}}}</div>
             </div>
         {{/languagequality}}
         {{#successthreshold}}
             <div class="row">
                 <div class="col-12 col-md-3">{{#str}} successthreshold, mod_syllabus {{/str}}</div>
-                <div class="col-12 col-md-9">{{successthreshold}}</div>
+                <div class="col-12 col-md-9">{{{successthreshold}}}</div>
             </div>
         {{/successthreshold}}
     </div>

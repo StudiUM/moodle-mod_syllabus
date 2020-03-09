@@ -91,28 +91,25 @@ class resources extends rubric {
         $this->form->addElement('html',
                 $this->fieldset_html_start('supportsuccess', get_string('supportsuccess', 'mod_syllabus')));
 
-        $this->form->addElement('text', 'writtencommunicationcenter',
-                get_string('writtencommunicationcenter', 'mod_syllabus'), $urloptionsrequired);
-        $this->form->setType('writtencommunicationcenter', PARAM_URL);
-        $this->form->addRule('writtencommunicationcenter', get_string('required'), 'required', null, 'server');
+        $url = get_string('writtencommunicationcenterdefault', 'mod_syllabus');
+        $text = get_string('writtencommunicationcenter', 'mod_syllabus');
+        $this->form->addElement('static', 'writtencommunicationcenter', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
-        $this->form->addElement('text', 'successstudentcenter',
-                get_string('successstudentcenter', 'mod_syllabus'), $urloptionsrequired);
-        $this->form->setType('successstudentcenter', PARAM_URL);
-        $this->form->addRule('successstudentcenter', get_string('required'), 'required', null, 'server');
+        $url = get_string('successstudentcenterdefault', 'mod_syllabus');
+        $text = get_string('successstudentcenter', 'mod_syllabus');
+        $this->form->addElement('static', 'successstudentcenter', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
-        $this->form->addElement('text', 'sourcequote', get_string('sourcequote', 'mod_syllabus'), $urloptionsrequired);
-        $this->form->setType('sourcequote', PARAM_URL);
-        $this->form->addRule('sourcequote', get_string('required'), 'required', null, 'server');
+        $url = get_string('sourcequotedefault', 'mod_syllabus');
+        $text = get_string('sourcequote', 'mod_syllabus');
+        $this->form->addElement('static', 'sourcequote', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
-        $this->form->addElement('text', 'udemlibraries', get_string('udemlibraries', 'mod_syllabus'), $urloptionsrequired);
-        $this->form->setType('udemlibraries', PARAM_URL);
-        $this->form->addRule('udemlibraries', get_string('required'), 'required', null, 'server');
+        $url = get_string('udemlibrariesdefault', 'mod_syllabus');
+        $text = get_string('udemlibraries', 'mod_syllabus');
+        $this->form->addElement('static', 'udemlibraries', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
-        $this->form->addElement('text', 'studentswithdisabilities',
-                get_string('studentswithdisabilities', 'mod_syllabus'), $urloptionsrequired);
-        $this->form->setType('studentswithdisabilities', PARAM_URL);
-        $this->form->addRule('studentswithdisabilities', get_string('required'), 'required', null, 'server');
+        $url = get_string('studentswithdisabilitiesdefault', 'mod_syllabus');
+        $text = get_string('studentswithdisabilities', 'mod_syllabus');
+        $this->form->addElement('static', 'studentswithdisabilities', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
         $this->form->addElement('editor', 'supportsuccessothers',
                 get_string('supportsuccessothers', 'mod_syllabus'), self::EDITOROPTIONS);

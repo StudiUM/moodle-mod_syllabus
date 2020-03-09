@@ -53,24 +53,24 @@ class calendarsession extends persistent {
                 'type' => PARAM_INT
             ),
             'title' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'content' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'activity' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'readingandworks' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             ),
             'formativeevaluations' => array(
-                'type' => PARAM_TEXT,
+                'type' => PARAM_CLEANHTML,
                 'default' => null,
                 'null' => NULL_ALLOWED,
             ),
             'evaluations' => array(
-                'type' => PARAM_TEXT
+                'type' => PARAM_CLEANHTML
             )
         );
     }

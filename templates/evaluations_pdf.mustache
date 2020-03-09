@@ -47,28 +47,29 @@
                     <table class="subtable" cellpadding="1">
                         <tr {{#iseven_activities}}class="even"{{/iseven_activities}}>
                             <th>{{#str}} assessmentcalendar_activities, mod_syllabus {{/str}}</th>
-                            <td>{{activities}}</td>
+                            <td>{{{activities}}}</td>
                         </tr>
                         <tr {{#iseven_learningobjectives}}class="even"{{/iseven_learningobjectives}}>
                             <th>{{#str}} assessmentcalendar_learningobjectives, mod_syllabus {{/str}}</th>
-                            <td>{{learningobjectives}}</td>
+                            <td>{{{learningobjectives}}}</td>
                         </tr>
                         {{#evaluationcriteria}}
                             <tr {{#iseven_evaluationcriteria}}class="even"{{/iseven_evaluationcriteria}}>
                                 <th>{{#str}} assessmentcalendar_evaluationcriteria, mod_syllabus {{/str}}</th>
-                                <td>{{evaluationcriteria}}</td>
+                                <td>{{{evaluationcriteria}}}</td>
                             </tr>
                         {{/evaluationcriteria}}
                         <tr {{#iseven_weightings}}class="even"{{/iseven_weightings}}>
                             <th>{{#str}} assessmentcalendar_weightings, mod_syllabus {{/str}}</th>
-                            <td>{{weightings}}</td>
+                            <td>{{{weightings}}}</td>
                         </tr>
                     </table>
                 </td>
             </tr>
         </table>
-        {{^is_last}}<p class="spacer"></p>{{/is_last}}
+        {{^is_last}}<p class="spacer"> </p>{{/is_last}}
     {{/evaluationslist}}
+    <p>{{#str}} evaluations_explanations, mod_syllabus {{/str}}</p>
 
     {{! Section Évaluations - Consignes et règles pour les évaluations }}
     <h4>{{#str}} rulesassessments, mod_syllabus {{/str}}</h4>
@@ -76,31 +77,31 @@
         {{#evaluationabsence}}
             <tr {{#iseven_evaluationabsence}}class="even"{{/iseven_evaluationabsence}}>
                 <th>{{#str}} evaluationabsence_cmp, mod_syllabus {{/str}}</th>
-                <td>{{evaluationabsence}}</td>
+                <td>{{{evaluationabsence}}}</td>
             </tr>
         {{/evaluationabsence}}
         {{#workdeposits}}
             <tr {{#iseven_workdeposits}}class="even"{{/iseven_workdeposits}}>
                 <th>{{#str}} workdeposits, mod_syllabus {{/str}}</th>
-                <td>{{workdeposits}}</td>
+                <td>{{{workdeposits}}}</td>
             </tr>
         {{/workdeposits}}
         {{#authorizedmaterial}}
             <tr {{#iseven_authorizedmaterial}}class="even"{{/iseven_authorizedmaterial}}>
                 <th>{{#str}} authorizedmaterial, mod_syllabus {{/str}}</th>
-                <td>{{authorizedmaterial}}</td>
+                <td>{{{authorizedmaterial}}}</td>
             </tr>
         {{/authorizedmaterial}}
         {{#languagequality}}
             <tr {{#iseven_languagequality}}class="even"{{/iseven_languagequality}}>
                 <th>{{#str}} languagequality, mod_syllabus {{/str}}</th>
-                <td>{{languagequality}}</td>
+                <td>{{{languagequality}}}</td>
             </tr>
         {{/languagequality}}
         {{#successthreshold}}
             <tr {{#iseven_successthreshold}}class="even"{{/iseven_successthreshold}}>
                 <th>{{#str}} successthreshold, mod_syllabus {{/str}}</th>
-                <td>{{successthreshold}}</td>
+                <td>{{{successthreshold}}}</td>
             </tr>
         {{/successthreshold}}
     </table>

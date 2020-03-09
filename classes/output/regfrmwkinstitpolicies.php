@@ -44,15 +44,10 @@ class regfrmwkinstitpolicies extends rubric {
         // Rules.
         $this->form->addElement('html', $this->fieldset_html_start('rulespolicy', get_string('rulespolicy', 'mod_syllabus')));
 
-        $this->form->addElement('textarea', 'studyregulations', get_string('studyregulations', 'mod_syllabus'),
-                array_merge(['cols' => 64, 'rows' => 5], self::REQUIREDOPTIONS));
-        $this->form->setType('studyregulations', PARAM_TEXT);
-        $this->form->addRule('studyregulations', get_string('required'), 'required', null, 'server');
-
-        $this->form->addElement('textarea', 'disabilitypolicy', get_string('disabilitypolicy', 'mod_syllabus'),
-                array_merge(['cols' => 64, 'rows' => 5], self::REQUIREDOPTIONS));
-        $this->form->setType('disabilitypolicy', PARAM_TEXT);
-        $this->form->addRule('disabilitypolicy', get_string('required'), 'required', null, 'server');
+        $this->form->addElement('static', 'studyregulations', get_string('studyregulations', 'mod_syllabus'),
+            get_string('studyregulationsdefault', 'mod_syllabus'));
+        $this->form->addElement('static', 'disabilitypolicy', get_string('disabilitypolicy', 'mod_syllabus'),
+            get_string('disabilitypolicydefault', 'mod_syllabus'));
 
         $this->form->addElement('editor', 'policyothers', get_string('policyothers', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('policyothers', PARAM_CLEANHTML);
@@ -62,15 +57,13 @@ class regfrmwkinstitpolicies extends rubric {
         // Integrity.
         $this->form->addElement('html', $this->fieldset_html_start('integrity', get_string('integrity', 'mod_syllabus')));
 
-        $this->form->addElement('text', 'integritysite', get_string('integritysite', 'mod_syllabus'),
-            array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS));
-        $this->form->setType('integritysite', PARAM_URL);
-        $this->form->addRule('integritysite', get_string('required'), 'required', null, 'server');
+        $url = get_string('integritysitedefault', 'mod_syllabus');
+        $text = get_string('integritysite', 'mod_syllabus');
+        $this->form->addElement('static', 'integritysite', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
-        $this->form->addElement('text', 'regulationsexplained', get_string('regulationsexplained', 'mod_syllabus'),
-            array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS));
-        $this->form->setType('regulationsexplained', PARAM_URL);
-        $this->form->addRule('regulationsexplained', get_string('required'), 'required', null, 'server');
+        $url = get_string('regulationsexplaineddefault', 'mod_syllabus');
+        $text = get_string('regulationsexplained', 'mod_syllabus');
+        $this->form->addElement('static', 'regulationsexplained', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
 
         $this->form->addElement('editor', 'integrityothers', get_string('integrityothers', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('integrityothers', PARAM_CLEANHTML);
