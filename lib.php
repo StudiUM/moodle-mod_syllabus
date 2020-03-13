@@ -339,3 +339,13 @@ function syllabus_fill_course_data($data) {
 
     return $data;
 }
+
+/**
+ * Returns the table name if this course module needs to be included
+ * in the syllabus collector search.
+ *
+ * @return string The table name
+ */
+function syllabus_syllabuscollector_include_search() {
+    return \mod_syllabus\syllabus::TABLE;
+}
