@@ -45,7 +45,7 @@ class mod_syllabus_mod_form extends moodleform_mod {
         $mform = $this->_form;
         $mform->addElement('header', 'general', get_string('general', 'form'));
         // Name.
-        $mform->addElement('text', 'name', get_string('name'), array('size' => '64'));
+        $mform->addElement('text', 'name', get_string('name'), array('size' => '64', 'maxlength' => 255));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {

@@ -24,12 +24,22 @@
     <table width="100%">
         <tbody>
             <tr>
-                <th>Numéro de version</th>
-                <th>Date</th>
-                <th>Notes</th>
+                <th>{{#str}} versionnotes_number, mod_syllabus {{/str}}</th>
+                <th>{{#str}} versionnotes_date, mod_syllabus {{/str}}</th>
+                <th>{{#str}} versionnotes_notes, mod_syllabus {{/str}}</th>
             </tr>
             <tr>
                 <td>1</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>3</td>
                 <td></td>
                 <td></td>
             </tr>
@@ -37,6 +47,8 @@
     </table>
 {{/plaineditor}}
 {{#plaineditor}}
-    Numéro de version |       Date      |   Notes  
-             1                    |                      | 
+    {{#str}} versionnotes_number, mod_syllabus {{/str}} |       {{#str}} versionnotes_date, mod_syllabus {{/str}}       |   {{#str}} versionnotes_notes, mod_syllabus {{/str}}  
+             1                     |                      | 
+             2                     |                      | 
+             3                     |                      | 
 {{/plaineditor}}

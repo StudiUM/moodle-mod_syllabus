@@ -20,7 +20,7 @@
  * @package    mod_syllabus
  * @copyright  2019 Université de Montréal
  * @author     Issam Taboubi <issam.taboubi@umontreal.ca>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['additionalresourcedocuments'] = 'Documents';
@@ -109,7 +109,7 @@ $string['registrationmodification'] = 'Modification de l\'inscription';
 $string['regulationsexplained'] = 'Les règlements expliqués';
 $string['regulationsexplaineddefault'] = 'https://integrite.umontreal.ca/reglements/les-reglements-expliques/';
 $string['reminders'] = 'Rappels';
-$string['requiredfields_title'] = 'Error - Required fields';
+$string['requiredfields_title'] = 'Required fields';
 $string['requiredfields_tab_one'] = 'The following tab contains required fields that have not been completed : ';
 $string['requiredfields_tab_moreone'] = 'The following tabs contain required fields that have not been completed : ';
 $string['requiredfields_continueorcancel'] = 'Click on Save to continue your action, and on Cancel to continue to edit the form and see the fields that have not been completed.';
@@ -168,21 +168,9 @@ $string['trimesterend'] = 'Fin du trimestre';
 $string['udemlibraries'] = 'Services des bibliothèques UdeM';
 $string['udemlibrariesdefault'] = 'http://www.bib.umontreal.ca/services/default.htm';
 $string['versionnotes'] = 'Notes de versions';
-$string['versionnotesdefault'] = '<table width="100%">
-        <tbody>
-            <tr>
-                <th>Numéro de version</th>
-                <th>Date</th>
-                <th>Notes</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>';
-$string['versionnotesdefaultplain'] = "Numéro de version |       Date      |   Notes  \n             1                    |                     | ";
+$string['versionnotes_number'] = 'Numéro de version';
+$string['versionnotes_date'] = 'Date';
+$string['versionnotes_notes'] = 'Notes';
 $string['versionnotes_help'] = 'Ce champ permet de saisir des commentaires sur la version du plan de cours, et n\'est pas visible par les étudiants. Pour informer les étudiants des modifications apportées au plan de cours, vous pouvez utiliser le champ Description.';
 $string['websites'] = 'Sites Internet';
 $string['weeklyworkload'] = 'Charge de travail hebdomadaire';

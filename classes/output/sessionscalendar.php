@@ -62,9 +62,6 @@ class sessionscalendar extends rubric {
 
         $headers = ['dates' => true, 'titles' => false, 'contents' => true, 'activities' => true, 'readingandworks' => false,
             'formativeevaluations' => false, 'evaluations' => false];
-        if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            unset($headers['formativeevaluations']);
-        }
 
         foreach ($headers as $header => $isrequired) {
             $table .= \html_writer::start_tag('th');
@@ -142,12 +139,10 @@ class sessionscalendar extends rubric {
         $this->form->setType('calendarsession_readingandworks', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
-        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            $this->form->addElement('html', '<td class="textareadate">');
-            $this->form->addElement('textarea', 'calendarsession_formativeevaluations[' . $index . ']', '', $textareaoptions);
-            $this->form->setType('calendarsession_formativeevaluations', PARAM_TEXT);
-            $this->form->addElement('html', '</td>');
-        }
+        $this->form->addElement('html', '<td class="textareadate">');
+        $this->form->addElement('textarea', 'calendarsession_formativeevaluations[' . $index . ']', '', $textareaoptions);
+        $this->form->setType('calendarsession_formativeevaluations', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
         $this->form->addElement('textarea', 'calendarsession_evaluations[' . $index . ']', '', $textareaoptions);

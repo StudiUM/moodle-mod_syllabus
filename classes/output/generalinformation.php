@@ -59,31 +59,34 @@ class generalinformation extends rubric {
         $this->form->addElement('html', $this->fieldset_html_start('cours', 'Cours'));
 
         $this->form->addElement('text', 'title', get_string('title', 'mod_syllabus'),
-            array_merge(self::INPUTOPTIONS, $reqoptoffical));
+            array_merge(self::INPUTOPTIONS, $reqoptoffical, array('maxlength' => 255)));
         $this->form->setType('title', PARAM_TEXT);
 
-        $this->form->addElement('text', 'creditnb', get_string('creditnb', 'mod_syllabus'), $reqoptshortstring);
+        $this->form->addElement('text', 'creditnb', get_string('creditnb', 'mod_syllabus'),
+            array_merge($reqoptshortstring, array('maxlength' => 45)));
         $this->form->setType('creditnb', PARAM_TEXT);
         $this->form->addRule('creditnb', get_string('required'), 'required', null, 'server');
         $this->form->addElement('text', 'idnumber', get_string('idnumber', 'mod_syllabus'),
-            array_merge(array('size' => '16'), $reqoptoffical));
+            array_merge(array('size' => '16', 'maxlength' => 255), $reqoptoffical));
         $this->form->setType('idnumber', PARAM_TEXT);
 
         $this->form->addElement('text', 'moodlecourseurl', get_string('moodlecourseurl', 'mod_syllabus'),
-            array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS));
+            array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS, array('maxlength' => 255)));
         $this->form->setType('moodlecourseurl', PARAM_URL);
         $this->form->addRule('moodlecourseurl', get_string('required'), 'required', null, 'server');
 
         $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'),
-            array_merge(self::INPUTOPTIONS, self::REQUIREDOPTIONS));
+            array_merge(self::INPUTOPTIONS, self::REQUIREDOPTIONS, array('maxlength' => 255)));
         $this->form->setType('facultydept', PARAM_TEXT);
         $this->form->addRule('facultydept', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'trimester', get_string('trimester', 'mod_syllabus'), $reqoptshortstring);
+        $this->form->addElement('text', 'trimester', get_string('trimester', 'mod_syllabus'),
+            array_merge($reqoptshortstring, array('maxlength' => 45)));
         $this->form->setType('trimester', PARAM_TEXT);
         $this->form->addRule('trimester', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('text', 'courseyear', get_string('courseyear', 'mod_syllabus'), $reqoptshortstring);
+        $this->form->addElement('text', 'courseyear', get_string('courseyear', 'mod_syllabus'),
+            array_merge($reqoptshortstring, array('maxlength' => 4)));
         $this->form->setType('courseyear', PARAM_TEXT);
         $this->form->addRule('courseyear', get_string('required'), 'required', null, 'server');
 
@@ -281,7 +284,7 @@ class generalinformation extends rubric {
 
         $this->form->addElement('html', '<td class="personinputname">');
         $this->form->addElement('text', 'teacher_name[' . $index . ']', '',
-            array_merge(['class' => 'personinputname'], self::REQUIREDOPTIONS));
+            array_merge(['class' => 'personinputname', 'maxlength' => 255], self::REQUIREDOPTIONS));
         $this->form->setType('teacher_name', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
@@ -323,7 +326,7 @@ class generalinformation extends rubric {
         $this->form->addElement('html', "<tr $class>");
 
         $this->form->addElement('html', '<td class="personinputname">');
-        $this->form->addElement('text', 'contact_name[' . $index . ']', '');
+        $this->form->addElement('text', 'contact_name[' . $index . ']', '', array('maxlength' => 255));
         $this->form->setType('contact_name', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 

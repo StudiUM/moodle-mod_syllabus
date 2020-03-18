@@ -65,9 +65,6 @@ class assessments extends rubric {
 
         $headers = ['dates' => true, 'activities' => true, 'learningobjectives' => true, 'evaluationcriteria' => false,
             'weightings' => true];
-        if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            unset($headers['learningobjectives']);
-        }
 
         foreach ($headers as $header => $isrequired) {
             $table .= \html_writer::start_tag('th');
@@ -159,13 +156,11 @@ class assessments extends rubric {
         $this->form->setType('assessmentcalendar_activities', PARAM_TEXT);
         $this->form->addElement('html', '</td>');
 
-        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            $this->form->addElement('html', '<td class="textareadate">');
-            $this->form->addElement('textarea', 'assessmentcalendar_learningobjectives[' . $index . ']', '',
-                array_merge($textareaoptions, self::REQUIREDOPTIONS));
-            $this->form->setType('assessmentcalendar_learningobjectives', PARAM_TEXT);
-            $this->form->addElement('html', '</td>');
-        }
+        $this->form->addElement('html', '<td class="textareadate">');
+        $this->form->addElement('textarea', 'assessmentcalendar_learningobjectives[' . $index . ']', '',
+            array_merge($textareaoptions, self::REQUIREDOPTIONS));
+        $this->form->setType('assessmentcalendar_learningobjectives', PARAM_TEXT);
+        $this->form->addElement('html', '</td>');
 
         $this->form->addElement('html', '<td class="textareadate">');
         $this->form->addElement('textarea', 'assessmentcalendar_evaluationcriteria[' . $index . ']', '', $textareaoptions);
