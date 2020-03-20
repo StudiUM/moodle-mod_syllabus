@@ -119,20 +119,36 @@ class pdfmanager {
     /**
      * Return the link to the PDF file for this syllabus.
      *
+     * @param stored_file $file Pdf file object.
      * @return string The link to the file, or null if no file generated yet.
      */
-    public function getpdflink() {
+    public function getpdflink($file = null) {
+        if (!$file) {
+            $file = $this->getpdffile();
+        }
+        if (empty($file)) {
+            return null;
+        }
+        $filename = $file->get_filename();
+        $url = \moodle_url::make_pluginfile_url($this->context->id, 'mod_syllabus', 'generatedpdfs', $this->syllabus->get('id'),
+            '/', $filename, true);
+
+        return $url;
+    }
+
+    /**
+     * Return the pdf file for this syllabus.
+     *
+     * @return stored_file The pdf file object.
+     */
+    public function getpdffile() {
         $fs = get_file_storage();
         $files = $fs->get_area_files($this->context->id, 'mod_syllabus', 'generatedpdfs', $this->syllabus->get('id'),
             'timemodified DESC', false, 0, 0, 1);
         if (empty($files)) {
             return null;
         }
-        $filename = reset($files)->get_filename();
-        $url = \moodle_url::make_pluginfile_url($this->context->id, 'mod_syllabus', 'generatedpdfs', $this->syllabus->get('id'),
-            '/', $filename, true);
-
-        return $url;
+        return reset($files);
     }
 
     /**

@@ -172,3 +172,21 @@
 #page-mod-syllabus-view .actionbuttons {
     margin-left: 0.2rem;
 }
+.syllabusmobile {
+    background-color: #fff;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+.syllabusmobile h3 {
+    margin-top: 0;
+    padding-top: 2rem;
+}
+h3.downloadsyllabuspdf {
+    padding-top: 1.6rem;
+    padding-bottom: 1rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+}

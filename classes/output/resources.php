@@ -93,11 +93,13 @@ class resources extends rubric {
 
         $url = get_string('writtencommunicationcenterdefault', 'mod_syllabus');
         $text = get_string('writtencommunicationcenter', 'mod_syllabus');
-        $this->form->addElement('static', 'writtencommunicationcenter', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
+        $this->form->addElement('static', 'writtencommunicationcenter', $text,
+                "<a href='$url' title='$text' target='_blank'>" . $url . "</a>");
 
         $url = get_string('successstudentcenterdefault', 'mod_syllabus');
         $text = get_string('successstudentcenter', 'mod_syllabus');
-        $this->form->addElement('static', 'successstudentcenter', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
+        $this->form->addElement('static', 'successstudentcenter', $text,
+                "<a href='$url' title='$text' target='_blank'>" . $url . "</a>");
 
         $url = get_string('sourcequotedefault', 'mod_syllabus');
         $text = get_string('sourcequote', 'mod_syllabus');
@@ -109,7 +111,8 @@ class resources extends rubric {
 
         $url = get_string('studentswithdisabilitiesdefault', 'mod_syllabus');
         $text = get_string('studentswithdisabilities', 'mod_syllabus');
-        $this->form->addElement('static', 'studentswithdisabilities', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
+        $this->form->addElement('static', 'studentswithdisabilities', $text,
+                "<a href='$url' title='$text' target='_blank'>" . $url . "</a>");
 
         $this->form->addElement('editor', 'supportsuccessothers',
                 get_string('supportsuccessothers', 'mod_syllabus'), self::EDITOROPTIONS);

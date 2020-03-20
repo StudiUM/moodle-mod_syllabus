@@ -63,7 +63,8 @@ class regfrmwkinstitpolicies extends rubric {
 
         $url = get_string('regulationsexplaineddefault', 'mod_syllabus');
         $text = get_string('regulationsexplained', 'mod_syllabus');
-        $this->form->addElement('static', 'regulationsexplained', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
+        $this->form->addElement('static', 'regulationsexplained', $text,
+                "<a href='$url' title='$text' target='_blank'>" . $url . "</a>");
 
         $this->form->addElement('editor', 'integrityothers', get_string('integrityothers', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('integrityothers', PARAM_CLEANHTML);
