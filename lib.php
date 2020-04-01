@@ -349,3 +349,28 @@ function syllabus_fill_course_data($data) {
 function syllabus_syllabuscollector_include_search() {
     return \mod_syllabus\syllabus::TABLE;
 }
+
+/**
+ * Returns files for downloadcenter plugin.
+ *
+ * @param stdClass $cm the course module object
+ * @return stored_file[]  Array of syllabus files
+ */
+function syllabus_downloadcenter_get_files($cm) {
+    global $DB;
+    $context = context_module::instance($cm->id);
+    require_capability('mod/syllabus:view', $context);
+    $syllabus = $DB->get_record('syllabus', array('id' => $cm->instance), 'id', MUST_EXIST);
+    $fs = get_file_storage();
+    return $fs->get_area_files($context->id, 'mod_syllabus', 'generatedpdfs', $syllabus->id,
+            'timemodified DESC', false, 0, 0, 1);
+}
+
+/**
+ * Returns module name for downloadcenter plugin.
+ *
+ * @return string  Module name.
+ */
+function syllabus_downloadcenter_get_component() {
+    return 'syllabus';
+}
