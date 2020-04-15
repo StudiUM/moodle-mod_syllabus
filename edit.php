@@ -95,7 +95,7 @@ if ($data) {
     $event->add_record_snapshot('syllabus', $syllabus);
     $event->trigger();
 
-    $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent, $alldata);
+    $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent);
     $pdfmanager->generate();
 
     if ($alldata['typeofsubmit'] == 'saveandpreview') {

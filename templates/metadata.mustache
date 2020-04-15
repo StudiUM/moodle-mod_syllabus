@@ -15,13 +15,13 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    This is the main Syllabus view that integrates all the template sections.
+    Syllabus metadata template.
+
+    Context variables required for this template:
+    * All syllabus properties, plus :
+    * ismodified - boolean
 }}
-{{> mod_syllabus/metadata }}
-{{> mod_syllabus/generalinformation }}
-{{> mod_syllabus/learningtargeted }}
-{{> mod_syllabus/sessionscalendar }}
-{{> mod_syllabus/evaluations }}
-{{> mod_syllabus/reminders }}
-{{> mod_syllabus/resources }}
-{{> mod_syllabus/regfrmwkinstitpolicies }}
+{{#ismodified}}
+    <p>{{#str}} lastmodified {{/str}} {{#userdate}} {{timemodified}}, {{#str}} strftimedate {{/str}} {{/userdate}}</p>
+{{/ismodified}}
+{{{intro}}}

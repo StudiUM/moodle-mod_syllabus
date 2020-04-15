@@ -176,6 +176,7 @@
     background-color: #fff;
     padding-left: 0.25rem;
     padding-right: 0.25rem;
+    padding-top: 1rem;
 }
 .syllabusmobile h3 {
     margin-top: 0;
@@ -189,4 +190,7 @@ h3.downloadsyllabuspdf {
     background-color: #fff;
     margin-top: 0;
     margin-bottom: 0;
+}
+#page-mod-syllabus-view .view_action_buttons .actionbuttons a i.fa-file-pdf-o {
+    color: #B30000;
 }

@@ -40,7 +40,7 @@ $addons = array(
                 ),
                 'styles' => [
                     'url' => 'mod/syllabus/styles.css',
-                    'version' => 2
+                    'version' => 3
                 ]
             )
         ),

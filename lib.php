@@ -151,6 +151,10 @@ function syllabus_update_instance($data, $mform) {
     $data->timemodified = time();
     $data->id           = $data->instance;
     $DB->update_record('syllabus', $data);
+    // Generate new pdf.
+    $syllabuspersistent = new \mod_syllabus\syllabus($data->id);
+    $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent);
+    $pdfmanager->generate();
 
     $completiontimeexpected = !empty($data->completionexpected) ? $data->completionexpected : null;
     \core_completion\api::update_completion_date_event($cmid, 'syllabus', $data->id, $completiontimeexpected);

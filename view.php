@@ -70,7 +70,6 @@ $PAGE->set_heading($course->fullname);
 $PAGE->set_activity_record($syllabus);
 
 $output = $PAGE->get_renderer('mod_syllabus');
-
 echo $output->header();
 
 echo $output->heading(format_string($syllabus->name), 2);
@@ -83,7 +82,8 @@ $pdfurl = $pdfmanager->getpdflink();
 // View action buttons.
 echo html_writer::start_tag('div', ['class' => 'view_action_buttons']);
 if (!empty($pdfurl)) {
-    $link = \html_writer::link($pdfurl, get_string('downloadpdf', 'syllabus'), ['class' => 'btn btn-secondary']);
+    $pdficon = '<i class="fa fa-file-pdf-o mr-2" aria-hidden="true"></i>';
+    $link = \html_writer::link($pdfurl, $pdficon . get_string('downloadpdf', 'syllabus'), ['class' => 'btn btn-secondary']);
     echo \html_writer::span($link, 'actionbuttons');
 }
 if (has_capability('mod/syllabus:addinstance', $context)) {

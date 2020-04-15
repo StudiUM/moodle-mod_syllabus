@@ -44,14 +44,8 @@ class syllabus_exporter extends \core\external\persistent_exporter {
     public function __construct($persistent, $related = array()) {
         parent::__construct($persistent, $related);
 
-        $this->data->intro = file_rewrite_pluginfile_urls(
-            $this->persistent->get('intro'),
-            'pluginfile.php',
-            $related['context']->id,
-            'mod_syllabus',
-            'intro',
-            $this->persistent->get('id')
-        );
+        $cm = get_coursemodule_from_instance('syllabus', $this->data->id, $this->data->course, true, MUST_EXIST);
+        $this->data->intro = format_module_intro('syllabus', $this->data, $cm->id);
 
         $this->data->versionnotes = file_rewrite_pluginfile_urls(
             $this->persistent->get('versionnotes'),
@@ -174,6 +168,9 @@ class syllabus_exporter extends \core\external\persistent_exporter {
                 'type' => PARAM_BOOL
             ),
             'iseven_guides' => array(
+                'type' => PARAM_BOOL
+            ),
+            'ismodified' => array(
                 'type' => PARAM_BOOL
             ),
             'iseven_additionalresourceothers' => array(
@@ -418,6 +415,10 @@ class syllabus_exporter extends \core\external\persistent_exporter {
                 // Initialise to default value.
                 $othersyllabusproperties->$varname = false;
             }
+        }
+        $othersyllabusproperties->ismodified = false;
+        if (!empty($this->persistent->get('timemodified'))) {
+            $othersyllabusproperties->ismodified = true;
         }
 
         return (array) $othersyllabusproperties;

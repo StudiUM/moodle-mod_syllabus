@@ -37,6 +37,9 @@ defined('MOODLE_INTERNAL') || die;
  */
 class pdfmanager {
 
+    /** Prefix of pdf filename **/
+    const PREFIX_FILENAME = 'plandecours';
+
     /**
      * Constructor for pdfmanager.
      *
@@ -80,6 +83,13 @@ class pdfmanager {
         $output = $PAGE->get_renderer('mod_syllabus');
         $page = new \mod_syllabus\output\view_syllabus_page($this->syllabus, $this->context);
 
+        // Syllabus last modified.
+        $lastmodified = $output->render_section_pdf($page, 'metadata');
+        $fontsizeorigin = $doc->getFontSizePt();
+        $doc->SetFont('helvetica', '', 10);
+        $doc->Cell(0, 5, $lastmodified, 0, false, 'R', 0, '', 0, false, 'M', 'M');
+        $doc->SetFontSize($fontsizeorigin);
+
         // Render all sections.
         $this->addsection($doc, $page, $output, 'generalinformation');
         $this->addsection($doc, $page, $output, 'learningtargeted');
@@ -112,7 +122,14 @@ class pdfmanager {
      * @return string
      */
     private function getpdffilename() {
-        $filename = 'syllabus_'.$this->syllabus->get('id').'_'.time().'.pdf';
+        global $DB;
+        if ($this->syllabus->get('idnumber')) {
+            $filenamepart = $this->syllabus->get('idnumber');
+        } else {
+            $course = $DB->get_record('course', array('id' => $this->syllabus->get('course')), 'fullname', MUST_EXIST);
+            $filenamepart = clean_param($course->fullname, PARAM_ALPHANUMEXT);
+        }
+        $filename = self::PREFIX_FILENAME . '_'.$filenamepart.'_'.date('Y-m-d').'.pdf';
         return $filename;
     }
 
@@ -181,6 +198,9 @@ class pdfmanager {
      */
     private function getcss() {
         $html = "<style>
+            * {
+                font-family: helvetica;
+            }
             h4 {
                 color: white;
                 background-color: #1177d1;
