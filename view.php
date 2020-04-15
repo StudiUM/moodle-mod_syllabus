@@ -30,6 +30,7 @@ require_once("$CFG->dirroot/repository/lib.php");
 $id = optional_param('id', 0, PARAM_INT);
 // Syllabus instance id.
 $s  = optional_param('sy', 0, PARAM_INT);
+$forceview = optional_param('forceview', 0, PARAM_INT);
 
 // Two ways to specify the module.
 if ($s) {
@@ -39,6 +40,11 @@ if ($s) {
 } else {
     $cm = get_coursemodule_from_id('syllabus', $id, 0, true, MUST_EXIST);
     $syllabus = $DB->get_record('syllabus', array('id' => $cm->instance), '*', MUST_EXIST);
+}
+// Syllabus just created, redirect to edit page.
+if (empty($syllabus->timemodified) && $forceview) {
+    $redirecturl = new moodle_url('/mod/syllabus/edit.php?', ['cmid' => $cm->id]);
+    redirect($redirecturl);
 }
 $syllabuspersistent = new \mod_syllabus\syllabus($syllabus->id);
 

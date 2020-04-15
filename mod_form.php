@@ -70,7 +70,7 @@ class mod_syllabus_mod_form extends moodleform_mod {
         $mform->addHelpButton('versionnoteseditor', 'versionnotes', 'mod_syllabus');
 
         $this->standard_coursemodule_elements();
-        $this->add_action_buttons();
+        $this->add_action_buttons(true, get_string('save'));
     }
 
     /**
