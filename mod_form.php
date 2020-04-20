@@ -56,17 +56,10 @@ class mod_syllabus_mod_form extends moodleform_mod {
         // Syllabus type.
         $radio = array();
 
-        $radio[] = $mform->createElement('html', '<div><span class="float-sm-right">'.
-            $OUTPUT->help_icon('syllabusobjectives', 'mod_syllabus').'</span>');
         $radio[] = $mform->createElement('radio', 'syllabustype',
                 null, get_string('syllabusobjectives', 'mod_syllabus'), \mod_syllabus\syllabus::SYLLABUS_TYPE_OBJECTIVES);
-        $radio[] = $mform->createElement('html', '</div>');
-
-        $radio[] = $mform->createElement('html', '<div><span class="float-sm-right">'.
-            $OUTPUT->help_icon('syllabuscompetencies', 'mod_syllabus').'</span>');
         $radio[] = $mform->createElement('radio', 'syllabustype',
                 null, get_string('syllabuscompetencies', 'mod_syllabus'), \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES);
-        $radio[] = $mform->createElement('html', '</div>');
 
         $mform->addGroup($radio, 'syllabustype', get_string('syllabustype', 'mod_syllabus'), ' ', false);
         $mform->setDefault('syllabustype', \mod_syllabus\syllabus::SYLLABUS_TYPE_OBJECTIVES);

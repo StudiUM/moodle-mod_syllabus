@@ -216,10 +216,8 @@ class syllabus extends persistent {
             $data->$activity = $record->get('activity');
             $readingandworks = "calendarsession_readingandworks[$i]";
             $data->$readingandworks = $record->get('readingandworks');
-            if ($data->syllabustype === \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-                $formativeevaluations = "calendarsession_formativeevaluations[$i]";
-                $data->$formativeevaluations = $record->get('formativeevaluations');
-            }
+            $formativeevaluations = "calendarsession_formativeevaluations[$i]";
+            $data->$formativeevaluations = $record->get('formativeevaluations');
             $evaluations = "calendarsession_evaluations[$i]";
             $data->$evaluations = $record->get('evaluations');
             $i++;
@@ -237,10 +235,8 @@ class syllabus extends persistent {
             $data->$evaluationcriteria = $record->get('evaluationcriteria');
             $weightings = "assessmentcalendar_weightings[$i]";
             $data->$weightings = $record->get('weightings');
-            if ($data->syllabustype === \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-                $learningobjectives = "assessmentcalendar_learningobjectives[$i]";
-                $data->$learningobjectives = $record->get('learningobjectives');
-            }
+            $learningobjectives = "assessmentcalendar_learningobjectives[$i]";
+            $data->$learningobjectives = $record->get('learningobjectives');
             $i++;
         }
 

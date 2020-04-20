@@ -117,9 +117,7 @@ class calendarsession extends persistent {
                 $record->content = $data['calendarsession_content'][$i];
                 $record->activity = $data['calendarsession_activity'][$i];
                 $record->readingandworks = $data['calendarsession_readingandworks'][$i];
-                if ($syllabus->get('syllabustype') == syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-                    $record->formativeevaluations = $data['calendarsession_formativeevaluations'][$i];
-                }
+                $record->formativeevaluations = $data['calendarsession_formativeevaluations'][$i];
                 $record->evaluations = $data['calendarsession_evaluations'][$i];
                 $record->syllabusid = $syllabus->get('id');
                 $sessioncal = new calendarsession(0, $record);

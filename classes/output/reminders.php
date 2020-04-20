@@ -55,7 +55,11 @@ class reminders extends rubric {
         $this->form->addElement('textarea', 'teachingevaluation',
                 get_string('teachingevaluation', 'mod_syllabus'), self::TEXTAREAOPTIONS);
         $this->form->setType('teachingevaluation', PARAM_TEXT);
-        $this->form->addHelpButton('teachingevaluation', 'teachingevaluation', 'mod_syllabus');
+        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('teachingevaluation', 'teachingevaluation_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('teachingevaluation', 'teachingevaluation', 'mod_syllabus');
+        }
 
         $this->form->addElement('html', $this->fieldset_html_end());
 
@@ -71,7 +75,11 @@ class reminders extends rubric {
         $this->form->addElement('textarea', 'notetaking',
                 get_string('notetaking', 'mod_syllabus'), self::TEXTAREAOPTIONS);
         $this->form->setType('notetaking', PARAM_TEXT);
-        $this->form->addHelpButton('notetaking', 'notetaking', 'mod_syllabus');
+        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('notetaking', 'notetaking_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('notetaking', 'notetaking', 'mod_syllabus');
+        }
 
         $this->form->addElement('html', $this->fieldset_html_end());
     }

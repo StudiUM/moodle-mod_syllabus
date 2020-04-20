@@ -74,7 +74,6 @@ class generalinformation extends rubric {
             array_merge(self::URLINPUTOPTIONS, self::REQUIREDOPTIONS, array('maxlength' => 255)));
         $this->form->setType('moodlecourseurl', PARAM_URL);
         $this->form->addRule('moodlecourseurl', get_string('required'), 'required', null, 'server');
-        $this->form->addHelpButton('moodlecourseurl', 'moodlecourseurl', 'mod_syllabus');
 
         $this->form->addElement('text', 'facultydept', get_string('facultydept', 'mod_syllabus'),
             array_merge(self::INPUTOPTIONS, self::REQUIREDOPTIONS, array('maxlength' => 255)));
@@ -92,30 +91,14 @@ class generalinformation extends rubric {
         $this->form->addRule('courseyear', get_string('required'), 'required', null, 'server');
 
         $radio = array();
-
-        $radio[] = $this->form->createElement('html', '<div><span class="float-sm-right">'.
-            $OUTPUT->help_icon('campusbased', 'mod_syllabus').'</span>');
         $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('campusbased', 'mod_syllabus'),
                 \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED);
-        $radio[] = $this->form->createElement('html', '</div>');
-
-        $radio[] = $this->form->createElement('html', '<div><span class="float-sm-right">'.
-            $OUTPUT->help_icon('online', 'mod_syllabus').'</span>');
-        $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('online', 'mod_syllabus'),
-                \mod_syllabus\syllabus::TRAINING_TYPE_ONLINE);
-        $radio[] = $this->form->createElement('html', '</div>');
-
-        $radio[] = $this->form->createElement('html', '<div><span class="float-sm-right">'.
-            $OUTPUT->help_icon('hybrid', 'mod_syllabus').'</span>');
         $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('hybrid', 'mod_syllabus'),
                 \mod_syllabus\syllabus::TRAINING_TYPE_HYBDRID);
-        $radio[] = $this->form->createElement('html', '</div>');
-
-        $radio[] = $this->form->createElement('html', '<div><span class="float-sm-right">'.
-            $OUTPUT->help_icon('bimodal', 'mod_syllabus').'</span>');
+        $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('online', 'mod_syllabus'),
+                \mod_syllabus\syllabus::TRAINING_TYPE_ONLINE);
         $radio[] = $this->form->createElement('radio', 'trainingtype', null, get_string('bimodal', 'mod_syllabus'),
                 \mod_syllabus\syllabus::TRAINING_TYPE_BIMODAL);
-        $radio[] = $this->form->createElement('html', '</div>');
 
         $this->form->addGroup($radio, 'trainingtype', get_string('trainingtype', 'mod_syllabus'), ' ', false);
         $this->form->setDefault('trainingtype', \mod_syllabus\syllabus::TRAINING_TYPE_CAMPUSBASED);
@@ -264,6 +247,7 @@ class generalinformation extends rubric {
         } else {
             $this->form->addElement('static', 'simpledescription_static', get_string('simpledescription', 'mod_syllabus'),
                 $this->syllabus->get('simpledescription'));
+            $this->form->addHelpButton('simpledescription_static', 'simpledescription', 'mod_syllabus');
         }
 
         $syllabustype = $this->syllabus->get('syllabustype');

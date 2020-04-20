@@ -110,9 +110,7 @@ class evaluation extends persistent {
                 $record->activities = $data['assessmentcalendar_activities'][$i];
                 $record->evaluationcriteria = $data['assessmentcalendar_evaluationcriteria'][$i];
                 $record->weightings = $data['assessmentcalendar_weightings'][$i];
-                if ($syllabus->get('syllabustype') == syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-                    $record->learningobjectives = $data['assessmentcalendar_learningobjectives'][$i];
-                }
+                $record->learningobjectives = $data['assessmentcalendar_learningobjectives'][$i];
                 $record->syllabusid = $syllabus->get('id');
                 $sessioncal = new evaluation(0, $record);
                 $sessioncal->create();

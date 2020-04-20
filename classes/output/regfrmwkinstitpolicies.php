@@ -51,6 +51,7 @@ class regfrmwkinstitpolicies extends rubric {
 
         $this->form->addElement('editor', 'policyothers', get_string('policyothers', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('policyothers', PARAM_CLEANHTML);
+        $this->form->addHelpButton('policyothers', 'policyothers', 'mod_syllabus');
 
         $this->form->addElement('html', $this->fieldset_html_end());
 
@@ -68,6 +69,7 @@ class regfrmwkinstitpolicies extends rubric {
 
         $this->form->addElement('editor', 'integrityothers', get_string('integrityothers', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('integrityothers', PARAM_CLEANHTML);
+        $this->form->addHelpButton('integrityothers', 'integrityothers', 'mod_syllabus');
 
         $this->form->addElement('html', $this->fieldset_html_end());
     }

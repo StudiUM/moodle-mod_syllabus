@@ -66,10 +66,9 @@ class assessments extends rubric {
         $headers = ['dates', 'activities', 'learningobjectives', 'evaluationcriteria', 'weightings'];
         $headersrequired = ['dates', 'activities', 'learningobjectives', 'weightings'];
         $headerswithhelp = ['dates', 'activities', 'learningobjectives', 'evaluationcriteria', 'weightings'];
-
-        if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            unset($headers[2]);
-        }
+        // Headers with different help for 'competencies' syllabus type.
+        $headersdiffcmp = ['activities', 'learningobjectives', 'evaluationcriteria'];
+        $syllabustype = $this->syllabus->get('syllabustype');
 
         foreach ($headers as $header) {
             $table .= \html_writer::start_tag('th');
@@ -78,7 +77,11 @@ class assessments extends rubric {
                 $table .= ' ' . $OUTPUT->pix_icon('req', get_string('required'));
             }
             if (in_array($header, $headerswithhelp)) {
-                $table .= $OUTPUT->help_icon('assessmentcalendar_' . $header, 'mod_syllabus');
+                if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES && in_array($header, $headersdiffcmp)) {
+                    $table .= $OUTPUT->help_icon('assessmentcalendar_' . $header . '_cmp', 'mod_syllabus');
+                } else {
+                    $table .= $OUTPUT->help_icon('assessmentcalendar_' . $header, 'mod_syllabus');
+                }
             }
             $table .= \html_writer::end_tag('th');
         }
@@ -116,16 +119,9 @@ class assessments extends rubric {
         $this->form->addElement('html',
                 $this->fieldset_html_start('rulesassessments', get_string('rulesassessments', 'mod_syllabus')));
         $label = get_string('evaluationabsence', 'mod_syllabus');
-        if ($this->syllabus->get('syllabustype') == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            $label = get_string('evaluationabsence_cmp', 'mod_syllabus');
-        }
         $this->form->addElement('textarea', 'evaluationabsence', $label, self::TEXTAREAOPTIONS);
         $this->form->setType('evaluationabsence', PARAM_TEXT);
-        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            $this->form->addHelpButton('evaluationabsence', 'evaluationabsence_cmp', 'mod_syllabus');
-        } else {
-            $this->form->addHelpButton('evaluationabsence', 'evaluationabsence', 'mod_syllabus');
-        }
+        $this->form->addHelpButton('evaluationabsence', 'evaluationabsence', 'mod_syllabus');
 
         $this->form->addElement('textarea', 'workdeposits',
                 get_string('workdeposits', 'mod_syllabus'), self::TEXTAREAOPTIONS);

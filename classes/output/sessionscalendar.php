@@ -63,9 +63,9 @@ class sessionscalendar extends rubric {
         $headers = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
         $headersrequired = ['dates', 'contents', 'activities'];
         $headerswithhelp = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
-        if ($this->syllabus->get('syllabustype') != \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
-            unset($headers[5]);
-        }
+        // Headers with different help for 'competencies' syllabus type.
+        $headersdiffcmp = ['activities', 'formativeevaluations'];
+        $syllabustype = $this->syllabus->get('syllabustype');
 
         foreach ($headers as $header) {
             $table .= \html_writer::start_tag('th');
@@ -74,7 +74,11 @@ class sessionscalendar extends rubric {
                 $table .= ' '.$OUTPUT->pix_icon('req', get_string('required'));
             }
             if (in_array($header, $headerswithhelp)) {
-                $table .= $OUTPUT->help_icon('sessionscalendar_' . $header, 'mod_syllabus');
+                if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES && in_array($header, $headersdiffcmp)) {
+                    $table .= $OUTPUT->help_icon('sessionscalendar_' . $header . '_cmp', 'mod_syllabus');
+                } else {
+                    $table .= $OUTPUT->help_icon('sessionscalendar_' . $header, 'mod_syllabus');
+                }
             }
             $table .= \html_writer::end_tag('th');
         }

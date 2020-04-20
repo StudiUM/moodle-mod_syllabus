@@ -117,6 +117,7 @@ class resources extends rubric {
         $this->form->addElement('editor', 'supportsuccessothers',
                 get_string('supportsuccessothers', 'mod_syllabus'), self::EDITOROPTIONS);
         $this->form->setType('supportsuccessothers', PARAM_CLEANHTML);
+        $this->form->addHelpButton('supportsuccessothers', 'supportsuccessothers', 'mod_syllabus');
 
         $this->form->addElement('html', $this->fieldset_html_end());
     }
