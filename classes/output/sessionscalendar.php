@@ -55,56 +55,27 @@ class sessionscalendar extends rubric {
         }
         $this->form->setDefault('nbrepeatsessioncal', $nbrepeat);
 
-        $textareaoptions = ['cols' => 22, 'rows' => 4];
-        $table = \html_writer::start_tag('table', ['class' => 'generaltable fullwidth managedates', 'id' => 'calendarsession']);
-        $table .= \html_writer::start_tag('thead');
-        $table .= \html_writer::start_tag('tr');
+        $textareaoptions = self::TEXTAREAOPTIONS;
 
-        $headers = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
-        $headersrequired = ['dates', 'contents', 'activities'];
-        $headerswithhelp = ['dates', 'titles', 'contents', 'activities', 'readingandworks', 'formativeevaluations', 'evaluations'];
-        // Headers with different help for 'competencies' syllabus type.
-        $headersdiffcmp = ['activities', 'formativeevaluations'];
-        $syllabustype = $this->syllabus->get('syllabustype');
-
-        foreach ($headers as $header) {
-            $table .= \html_writer::start_tag('th');
-            $table .= get_string('sessionscalendar_' . $header, 'mod_syllabus');
-            if (in_array($header, $headersrequired)) {
-                $table .= ' '.$OUTPUT->pix_icon('req', get_string('required'));
-            }
-            if (in_array($header, $headerswithhelp)) {
-                if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES && in_array($header, $headersdiffcmp)) {
-                    $table .= $OUTPUT->help_icon('sessionscalendar_' . $header . '_cmp', 'mod_syllabus');
-                } else {
-                    $table .= $OUTPUT->help_icon('sessionscalendar_' . $header, 'mod_syllabus');
-                }
-            }
-            $table .= \html_writer::end_tag('th');
+        // Add css border if items in calendar.
+        if ($nbrepeat == 0) {
+            $this->form->addElement('html', '<div class="syllabus_repeated_items_block" id="calendarsession">');
+        } else {
+            $this->form->addElement('html', '<div class="syllabus_repeated_items_block greyborder" id="calendarsession">');
         }
 
-        $table .= \html_writer::start_tag('th');
-        $table .= \html_writer::end_tag('th');
-        $table .= \html_writer::end_tag('tr');
-        $table .= \html_writer::end_tag('thead');
-
-        $table .= \html_writer::start_tag('tbody');
-
-        $this->form->addElement('html', $table);
         $deletelabel = get_string('delete');
         $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
         $link = \html_writer::link('#', $action,
                 ['class' => 'deleteline', 'data-id' => 'calendarsession', 'data-repeat' => 'nbrepeatsessioncal']);
 
         for ($i = 0; $i < $nbrepeat; $i++) {
-            $this->build_sessioncalendar_line($i, $link, $textareaoptions);
+            $this->build_sessioncalendar_item($i, $link, $textareaoptions);
         }
 
         // Hidden for adding line.
-        $this->build_sessioncalendar_line('newindex', $link, $textareaoptions, true);
-
-        $this->form->addElement('html', '</tbody>');
-        $this->form->addElement('html', '</table>');
+        $this->build_sessioncalendar_item('newindex', $link, $textareaoptions, true);
+        $this->form->addElement('html', '</div>');
 
         $this->form->addElement('html', '<div class="text-right">');
         $this->form->addElement('html', $this->button_add_html('calendarsession', 'nbrepeatsessioncal'));
@@ -112,7 +83,7 @@ class sessionscalendar extends rubric {
     }
 
     /**
-     * Build session calendar line (tr).
+     * Build session calendar item.
      *
      * @param string $index
      * @param string $linkdelete
@@ -120,50 +91,67 @@ class sessionscalendar extends rubric {
      * @param boolean $hidden
      * @return string HTML
      */
-    protected function build_sessioncalendar_line($index, $linkdelete, $textareaoptions, $hidden = false) {
-        $class = ($hidden) ? "class='hidden'" : '';
-        $this->form->addElement('html', "<tr $class>");
+    protected function build_sessioncalendar_item($index, $linkdelete, $textareaoptions, $hidden = false) {
+        $syllabustype = $this->syllabus->get('syllabustype');
+        $class = ($hidden) ? "class='hidden syllabus_repeated_item'" : "class='syllabus_repeated_item'";
+        $this->form->addElement('html', "<div $class>");
+
         $startyearopt = ['startyear' => date('Y', strtotime('-1 year'))];
-        $this->form->addElement('html', '<td>');
-        $this->form->addElement('date_selector', 'calendarsession_date[' . $index . ']', '', $startyearopt);
-        $this->form->addElement('html', '</td>');
+        $this->form->addElement('date_selector', 'calendarsession_date[' . $index . ']',
+            get_string('sessionscalendar_dates', 'mod_syllabus'), $startyearopt);
+        $this->form->addHelpButton('calendarsession_date[' . $index . ']', 'sessionscalendar_dates', 'mod_syllabus');
+        $this->form->addRule('calendarsession_date[' . $index . ']', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_title[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'calendarsession_title[' . $index . ']',
+            get_string('sessionscalendar_titles', 'mod_syllabus'), ['cols' => 64, 'rows' => 1]);
         $this->form->setType('calendarsession_title', PARAM_TEXT);
-        $this->form->addElement('html', '</td>');
+        $this->form->addHelpButton('calendarsession_title[' . $index . ']', 'sessionscalendar_titles', 'mod_syllabus');
 
-        $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_content[' . $index . ']', '',
-            array_merge($textareaoptions, self::REQUIREDOPTIONS));
+        $this->form->addElement('textarea', 'calendarsession_content[' . $index . ']',
+            get_string('sessionscalendar_contents', 'mod_syllabus'), array_merge($textareaoptions, self::REQUIREDOPTIONS));
         $this->form->setType('calendarsession_content', PARAM_TEXT);
-        $this->form->addElement('html', '</td>');
+        $this->form->addHelpButton('calendarsession_content[' . $index . ']', 'sessionscalendar_contents', 'mod_syllabus');
+        $this->form->addRule('calendarsession_content[' . $index . ']', get_string('required'), 'required', null, 'server');
 
-        $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_activity[' . $index . ']', '',
-            array_merge($textareaoptions, self::REQUIREDOPTIONS));
+        $this->form->addElement('textarea', 'calendarsession_activity[' . $index . ']',
+            get_string('sessionscalendar_activities', 'mod_syllabus'), array_merge($textareaoptions, self::REQUIREDOPTIONS));
         $this->form->setType('calendarsession_activity', PARAM_TEXT);
-        $this->form->addElement('html', '</td>');
+        $this->form->addRule('calendarsession_activity[' . $index . ']', get_string('required'), 'required', null, 'server');
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('calendarsession_activity[' . $index . ']',
+                'sessionscalendar_activities_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('calendarsession_activity[' . $index . ']',
+                'sessionscalendar_activities', 'mod_syllabus');
+        }
 
-        $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_readingandworks[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'calendarsession_readingandworks[' . $index . ']',
+            get_string('sessionscalendar_readingandworks', 'mod_syllabus'), $textareaoptions);
         $this->form->setType('calendarsession_readingandworks', PARAM_TEXT);
-        $this->form->addElement('html', '</td>');
+        $this->form->addHelpButton('calendarsession_readingandworks[' . $index . ']',
+            'sessionscalendar_readingandworks', 'mod_syllabus');
 
-        $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_formativeevaluations[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'calendarsession_formativeevaluations[' . $index . ']',
+            get_string('sessionscalendar_formativeevaluations', 'mod_syllabus'), $textareaoptions);
         $this->form->setType('calendarsession_formativeevaluations', PARAM_TEXT);
-        $this->form->addElement('html', '</td>');
+        if ($syllabustype == \mod_syllabus\syllabus::SYLLABUS_TYPE_COMPETENCIES) {
+            $this->form->addHelpButton('calendarsession_formativeevaluations[' . $index . ']',
+                'sessionscalendar_formativeevaluations_cmp', 'mod_syllabus');
+        } else {
+            $this->form->addHelpButton('calendarsession_formativeevaluations[' . $index . ']',
+                'sessionscalendar_formativeevaluations', 'mod_syllabus');
+        }
 
-        $this->form->addElement('html', '<td class="textareadate">');
-        $this->form->addElement('textarea', 'calendarsession_evaluations[' . $index . ']', '', $textareaoptions);
+        $this->form->addElement('textarea', 'calendarsession_evaluations[' . $index . ']',
+            get_string('sessionscalendar_evaluations', 'mod_syllabus'), $textareaoptions);
         $this->form->setType('calendarsession_evaluations', PARAM_TEXT);
-        $this->form->addElement('html', '</td>');
+        $this->form->addHelpButton('calendarsession_evaluations[' . $index . ']',
+            'sessionscalendar_evaluations', 'mod_syllabus');
 
-        $this->form->addElement('html', '<td>');
+        $this->form->addElement('html', '<div class="text-right">');
         $this->form->addElement('html', $linkdelete);
-        $this->form->addElement('html', '</td>');
+        $this->form->addElement('html', '</div>');
 
-        $this->form->addElement('html', '</tr>');
+        $this->form->addElement('html', '</div>');
     }
 }

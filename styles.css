@@ -8,6 +8,18 @@
     padding: 0.25rem;
     margin: 0.625rem 0 0 0;
 }
+.syllabus .syllabus_repeated_items_block {
+    margin-bottom: 1rem;
+}
+.syllabus .syllabus_repeated_item{
+    padding: 1rem 0.5rem 1rem 0.5rem;
+}
+.syllabus .syllabus_repeated_item:nth-child(odd){
+    background-color: rgba(0,0,0,.05);
+}
+.syllabus .syllabus_repeated_item:hover{
+    background-color: rgba(0,0,0,.075);
+}
 .syllabus .syllabus_info_block {
     margin-bottom: 0.5rem;
     overflow-wrap: break-word;
@@ -29,6 +41,10 @@
 }
 .syllabus .greyborder {
     border: 1px solid #ced4da;
+}
+.syllabus fieldset .greyborder {
+    border: none;
+    border-bottom: 1px solid #ced4da;
 }
 .syllabus .syllabus_info_block .greybackground {
     background-color: rgba(0,0,0,.05);

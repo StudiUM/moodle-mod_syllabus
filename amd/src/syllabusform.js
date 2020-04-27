@@ -78,6 +78,7 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
             // Handle on delete click.
             $("#page-mod-syllabus-edit").on('click', 'a.deleteline', function(event) {
                 event.preventDefault();
+
                 var identifier = $(this).data('id');
                 var repeatname = $(this).data('repeat');
                 var element = $(this);
@@ -93,9 +94,13 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
                         strings[2],
                         strings[3],
                         function() {
-                            var linetodelete = element.closest('tr');
+                            var linetodelete = element.closest('.syllabus_repeated_item');
                             linetodelete.remove();
                             self.nbrepeat[identifier]--;
+                            // Remove css border if no more item in calendar.
+                            if (!self.nbrepeat[identifier]) {
+                                $('#' + identifier + '.syllabus_repeated_items_block').removeClass("greyborder");
+                            }
                             self.reorderlines(identifier, repeatname);
                         }
                     );
@@ -104,10 +109,12 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
             // Handle on add click.
             $("#page-mod-syllabus-edit").on('click', '.addline', function(event) {
                 event.preventDefault();
+
                 var identifier = $(this).data('id');
                 var repeatname = $(this).data('repeat');
-                var hiddentr = $("table#" + identifier + " tr.hidden");
-                hiddentr.clone().addClass('newline').insertBefore("table#" + identifier + " tr.hidden");
+                var hiddenBlock = $("#" + identifier + " .hidden");
+
+                hiddenBlock.clone().addClass('newline').insertBefore("#" + identifier + " .hidden");
                 $("#" + identifier + " .newline [name^='" + identifier + "_']").each(function() {
                     var name = $(this).attr('name');
                     var patt = /newindex/g;
@@ -116,6 +123,10 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
                     $(this).attr('name', newname);
                 });
                 $('.newline').removeClass('newline hidden');
+                // Add css border if calendar was empty.
+                if (!self.nbrepeat[identifier]) {
+                    $('#' + identifier + '.syllabus_repeated_items_block').addClass("greyborder");
+                }
                 self.nbrepeat[identifier]++;
                 self.reorderlines(identifier, repeatname);
                 // Re-apply datepicker.
@@ -134,7 +145,7 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
          */
         SyllabusForm.prototype.reorderlines = function (id, namerepeat) {
             var self = this;
-            $("#" + id + " tbody tr:not(.hidden)").each(function(index) {
+            $("#" + id + " .syllabus_repeated_item:not(.hidden)").each(function(index) {
                 $(this).find("[name^='" + id + "_']").each(function() {
                     var name = $(this).attr('name');
                     var patt = /\[[\d]\]/g;
@@ -234,7 +245,7 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
                     // For each required field in the form.
                     $('[data-required="true"]').each(function(key, field) {
                         // Do not check hidden rows used for duplication.
-                        if (!$(this).closest('tr').hasClass('hidden')) {
+                        if (!$(this).closest('.syllabus_repeated_item').hasClass('hidden')) {
                             // For regular fields.
                             var fieldtovalidate = field;
                             var valuetovalidate = $(field).val();

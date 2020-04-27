@@ -307,7 +307,7 @@ class generalinformation extends rubric {
      * @return string HTML
      */
     protected function build_teacher_line($index, $linkdelete, $textareaoptions, $hidden = false) {
-        $class = ($hidden) ? "class='hidden'" : '';
+        $class = ($hidden) ? "class='hidden syllabus_repeated_item'" : "class='syllabus_repeated_item'";
         $this->form->addElement('html', "<tr $class>");
 
         $this->form->addElement('html', '<td class="personinputname">');
@@ -350,7 +350,7 @@ class generalinformation extends rubric {
      * @return string HTML
      */
     protected function build_contact_line($index, $linkdelete, $textareaoptions, $hidden = false) {
-        $class = ($hidden) ? "class='hidden'" : '';
+        $class = ($hidden) ? "class='hidden syllabus_repeated_item'" : "class='syllabus_repeated_item'";
         $this->form->addElement('html', "<tr $class>");
 
         $this->form->addElement('html', '<td class="personinputname">');
