@@ -148,7 +148,7 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
             $("#" + id + " .syllabus_repeated_item:not(.hidden)").each(function(index) {
                 $(this).find("[name^='" + id + "_']").each(function() {
                     var name = $(this).attr('name');
-                    var patt = /\[[\d]\]/g;
+                    var patt = /\[[0-9]+\]/g;
                     var newname = name.replace(patt, '[' + index.toString() + ']');
                     $(this).attr('name', newname);
                 });
