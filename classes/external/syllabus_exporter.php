@@ -182,9 +182,6 @@ class syllabus_exporter extends \core\external\persistent_exporter {
             'successstudentcenter' => array(
                 'type' => PARAM_TEXT
             ),
-            'sourcequote' => array(
-                'type' => PARAM_TEXT
-            ),
             'udemlibraries' => array(
                 'type' => PARAM_TEXT
             ),
@@ -235,7 +232,6 @@ class syllabus_exporter extends \core\external\persistent_exporter {
      * iseven_additionalresourceothers - bool
      * writtencommunicationcenter - text
      * successstudentcenter - text
-     * sourcequote - text
      * udemlibraries - text
      * studentswithdisabilities - text
      * studyregulations - text
@@ -252,7 +248,6 @@ class syllabus_exporter extends \core\external\persistent_exporter {
         // Return prefilled not editable texts.
         $othersyllabusproperties->writtencommunicationcenter = get_string('writtencommunicationcenterdefault', 'mod_syllabus');
         $othersyllabusproperties->successstudentcenter = get_string('successstudentcenterdefault', 'mod_syllabus');
-        $othersyllabusproperties->sourcequote = get_string('sourcequotedefault', 'mod_syllabus');
         $othersyllabusproperties->udemlibraries = get_string('udemlibrariesdefault', 'mod_syllabus');
         $othersyllabusproperties->studentswithdisabilities = get_string('studentswithdisabilitiesdefault', 'mod_syllabus');
         $othersyllabusproperties->studyregulations = get_string('studyregulationsdefault', 'mod_syllabus');

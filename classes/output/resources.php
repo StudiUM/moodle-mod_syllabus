@@ -101,10 +101,6 @@ class resources extends rubric {
         $this->form->addElement('static', 'successstudentcenter', $text,
                 "<a href='$url' title='$text' target='_blank'>" . $url . "</a>");
 
-        $url = get_string('sourcequotedefault', 'mod_syllabus');
-        $text = get_string('sourcequote', 'mod_syllabus');
-        $this->form->addElement('static', 'sourcequote', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");
-
         $url = get_string('udemlibrariesdefault', 'mod_syllabus');
         $text = get_string('udemlibraries', 'mod_syllabus');
         $this->form->addElement('static', 'udemlibraries', $text, "<a href='$url' title='$text' target='_blank'>".$url."</a>");

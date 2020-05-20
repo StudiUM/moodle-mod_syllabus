@@ -179,8 +179,6 @@ $string['sessionscalendar_titles'] = 'Titre';
 $string['sessionscalendar_titles_help'] = 'Si vous le souhaitez, donnez un <strong>titre aux séances</strong>.';
 $string['simpledescription'] = 'Description simple';
 $string['simpledescription_help'] = 'La description simple provient du <a href="https://admission.umontreal.ca/repertoire-des-cours/" target="_blank">répertoire des cours de l\'Université de Montréal</a>.';
-$string['sourcequote'] = 'Citer ses sources et logiciels bibliographiques';
-$string['sourcequotedefault'] = 'http://www.bib.umontreal.ca/LGB/';
 $string['studentswithdisabilities'] = 'Soutien aux étudiants en situation de handicap';
 $string['studentswithdisabilitiesdefault'] = 'http://bsesh.umontreal.ca/';
 $string['studyregulations'] = 'Règlement des études';
@@ -230,7 +228,7 @@ $string['trainingtype_help'] = '<p>Choisissez un type de formation parmi les sui
 $string['trimester'] = 'Trimestre';
 $string['trimesterend'] = 'Fin du trimestre';
 $string['udemlibraries'] = 'Services des bibliothèques UdeM';
-$string['udemlibrariesdefault'] = 'http://www.bib.umontreal.ca/services/default.htm';
+$string['udemlibrariesdefault'] = 'https://bib.umontreal.ca/';
 $string['versionnotes'] = 'Version notes';
 $string['versionnotes_number'] = 'Version number';
 $string['versionnotes_date'] = 'Date';
