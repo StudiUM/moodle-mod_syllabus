@@ -65,10 +65,12 @@
                                 <td>{{{formativeevaluations}}}</td>
                             </tr>
                         {{/formativeevaluations}}
-                        <tr {{#iseven_evaluations}}class="even"{{/iseven_evaluations}}>
-                            <th>{{#str}} sessionscalendar_evaluations, mod_syllabus {{/str}}</th>
-                            <td>{{{evaluations}}}</td>
-                        </tr>
+                        {{#evaluations}}
+                            <tr {{#iseven_evaluations}}class="even"{{/iseven_evaluations}}>
+                                <th>{{#str}} sessionscalendar_evaluations, mod_syllabus {{/str}}</th>
+                                <td>{{{evaluations}}}</td>
+                            </tr>
+                        {{/evaluations}}
                     </table>
                 </td>
             </tr>

@@ -66,10 +66,12 @@
                             <div class="col-12 col-md-9" col-12 col-md-9>{{{formativeevaluations}}}</div>
                         </div>
                     {{/formativeevaluations}}
-                    <div class="row">
-                        <div class="col-12 col-md-3" col-12 col-md-3>{{#str}} sessionscalendar_evaluations, mod_syllabus {{/str}}</div>
-                        <div class="col-12 col-md-9" col-12 col-md-9>{{{evaluations}}}</div>
-                    </div>
+                    {{#evaluations}}
+                        <div class="row">
+                            <div class="col-12 col-md-3" col-12 col-md-3>{{#str}} sessionscalendar_evaluations, mod_syllabus {{/str}}</div>
+                            <div class="col-12 col-md-9" col-12 col-md-9>{{{evaluations}}}</div>
+                        </div>
+                    {{/evaluations}}
                 </div>
             </div>
         </div>
