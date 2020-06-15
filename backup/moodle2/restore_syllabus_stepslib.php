@@ -146,5 +146,11 @@ class restore_syllabus_activity_structure_step extends restore_activity_structur
         // Add syllabus related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_syllabus', 'intro', null);
         $this->add_related_files('mod_syllabus', 'versionnotes', null);
+
+        // Generate new pdf.
+        $context = context_module::instance($this->task->get_moduleid());
+        $syllabuspersistent = new \mod_syllabus\syllabus($this->task->get_activityid());
+        $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent);
+        $pdfmanager->generate();
     }
 }

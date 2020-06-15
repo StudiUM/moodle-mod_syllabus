@@ -124,6 +124,11 @@ function syllabus_add_instance($data, $mform) {
     // We need to use context now, so we need to make sure all needed info is already in db.
     $DB->set_field('course_modules', 'instance', $data->id, array('id' => $cmid));
 
+    // Generate new pdf.
+    $syllabuspersistent = new \mod_syllabus\syllabus($data->id);
+    $pdfmanager = new \mod_syllabus\pdfmanager($context, $syllabuspersistent);
+    $pdfmanager->generate();
+
     $completiontimeexpected = !empty($data->completionexpected) ? $data->completionexpected : null;
     \core_completion\api::update_completion_date_event($cmid, 'syllabus', $data->id, $completiontimeexpected);
 
