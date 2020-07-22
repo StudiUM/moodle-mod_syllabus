@@ -46,7 +46,7 @@ $string['assessmentcalendar_weightings'] = 'Pondération';
 $string['assessmentcalendar_weightings_help'] = 'Précisez, en pourcentage, l\'<strong>importance relative</strong> de chaque évaluation sur la note finale.';
 $string['authorizedmaterial'] = 'Matériel autorisé';
 $string['authorizedmaterial_help'] = 'Présentez le <strong>matériel autorisé ou non autorisé</strong> durant une évaluation&nbsp;: documentation, gabarits, technologies mobiles, etc.';
-$string['bimodal'] = 'Comodal';
+$string['bimodal'] = 'Multimodal';
 $string['campusbased'] = 'En présentiel';
 $string['confirmdeleteline'] = 'Are you sure you want to delete this line?';
 $string['contact'] = 'Personne-ressource';
@@ -217,13 +217,13 @@ $string['teachingevaluation_help'] = 'Informez les étudiant(e)s de la <strong>d
 $string['teachingevaluation_explanations'] = 'Accordez à l\'évaluation tout le sérieux qu\'elle mérite. Vos commentaires contribuent à améliorer le déroulement du cours et la qualité de la formation.';
 $string['techuses'] = 'Utilisation des technologies en classe';
 $string['title'] = 'Titre';
-$string['trainingtype'] = 'Type de formation';
-$string['trainingtype_help'] = '<p>Choisissez un type de formation parmi les suivants&nbsp;:</p>
+$string['trainingtype'] = 'Mode d\'enseignement';
+$string['trainingtype_help'] = '<p>Choisissez un mode d\'enseignement parmi les suivants&nbsp;:</p>
 <ul>
-    <li><strong>En présentiel&nbsp;:</strong> cours en présence des étudiant(e)s dans un lieu donné (salle, laboratoire, etc.) ou dans l\'un des lieux proposés (cours multisites) <strong>qui peut inclure</strong> une ou plusieurs activités en ligne ne réduisant pas le temps de présence requis&nbsp;;</li>
-    <li><strong>Hybride&nbsp;:</strong> cours en présence des étudiant(e)s dans un lieu donné (salle, laboratoire, etc.) ou dans l\'un des lieux proposés (stages, cours multisites, etc.) <strong>qui inclut</strong> des activités en ligne réduisant le temps de présence requis&nbsp;;</li>
-    <li><strong>À distance&nbsp;:</strong> cours entièrement en ligne qui inclut des activités synchrones (en temps réel), asynchrones (en temps différé) ou mixtes (synchrones et asynchrones)&nbsp;;</li>
-    <li><strong>Comodal&nbsp;:</strong> cours offert simultanément en présentiel et à distance permettant, selon le contexte, de réduire le nombre d\'étudiant(e)s dans une salle de classe ou de leur laisser le choix du type de formation qu\'ils(elles) préfèrent.</li>
+    <li><strong>En présentiel&nbsp;:</strong> enseignement dispensé en présence des étudiant(e)s et de l\'enseignant(e) dans un lieu donné (salle de cours, laboratoire, etc.)</li>
+    <li><strong>Hybride&nbsp;:</strong> enseignement mixte combinant, en proportion variable, des activités en présence (mode en présentiel) et des activités à distance, synchrones ou asynchrones (mode à distance).</li>
+    <li><strong>À distance&nbsp;:</strong> enseignement dispensé entièrement à distance en temps réel (activités synchrones) ou en temps différé (activités asynchrones).</li>
+    <li><strong>Multimodal&nbsp;:</strong> enseignement dispensé simultanément en présentiel et à distance (par vidéoconférence) permettant, selon le contexte, de rejoindre des étudiant(e)s provenant de campus différents, de réduire le nombre d\'étudiant(e)s dans une salle de cours ou de leur laisser le choix du mode d\'enseignement qu\'ils(elles) préfèrent.</li>
 </ul>';
 $string['trimester'] = 'Trimestre';
 $string['trimesterend'] = 'Fin du trimestre';
