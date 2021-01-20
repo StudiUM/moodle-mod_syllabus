@@ -1,0 +1,51 @@
+/** From main css file (styles.css). */
+.syllabus h4 {
+    color: var(--white, white);
+    background-color: var(--primary, #1177d1);
+}
+.syllabus .greyborder {
+    border: 1px solid #ced4da;
+}
+.syllabus fieldset .greyborder {
+    border: none;
+    border-bottom: 1px solid #ced4da;
+}
+.syllabus fieldset {
+    border: 1px solid #dee2e6;
+    clear: right;
+}
+
+/** Specific to mobile. */
+.syllabusmobile {
+    background-color: #fff;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    padding-top: 1rem;
+}
+.syllabusmobile h3 {
+    margin-top: 0;
+    padding-top: 2rem;
+}
+h3.downloadsyllabuspdf {
+    padding-top: 1.6rem;
+    padding-bottom: 1rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    background-color: #fff;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.syllabus .syllabus_info_block .row:nth-child(even) {
+    background-color: #d6effc;
+}
+
+/** Specific to mobile - dark mode. */
+body.scheme-dark .syllabusmobile {
+    background-color: #3a3a3a;
+}
+body.scheme-dark h3.downloadsyllabuspdf {
+    background-color: #3a3a3a;
+}
+body.scheme-dark .syllabus .syllabus_info_block .row:nth-child(even){
+    background-color: #626262;
+}

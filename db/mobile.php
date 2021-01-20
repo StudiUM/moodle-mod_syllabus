@@ -39,8 +39,8 @@ $addons = array(
                     'mobile_course_view' => array(),
                 ),
                 'styles' => [
-                    'url' => 'mod/syllabus/styles.css',
-                    'version' => 3
+                    'url' => 'mod/syllabus/stylesmobile.css',
+                    'version' => 4
                 ]
             )
         ),
