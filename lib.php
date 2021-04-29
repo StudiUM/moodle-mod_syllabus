@@ -25,6 +25,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+use core_table\local\filter\filter;
+use core_table\local\filter\integer_filter;
+use core_user\table\participants_filterset;
+use core_user\table\participants_search;
+
 /**
  * List of features supported in Syllabus module
  * @param string $feature FEATURE_xx constant for requested feature
@@ -95,7 +100,19 @@ function syllabus_add_instance($data, $mform) {
     $data->id = $DB->insert_record('syllabus', $data);
     // Add editingteachers.
     if ($id = $DB->get_field('role', 'id', array('shortname' => 'editingteacher'))) {
-        $rawdata = user_get_participants($data->course, 0, 0, $id, 0, -1, '');
+        // Create the basic filter.
+        $filterset = new participants_filterset();
+        $filterset->add_filter(new integer_filter('courseid', null, [(int) $data->course]));
+
+        // Create the role filter.
+        $filterset->add_filter(new integer_filter('roles', filter::JOINTYPE_DEFAULT, [(int) $id]));
+
+        // Run the search.
+        $course = get_course($data->course);
+        $search = new participants_search($course, $context, $filterset);
+        $rawdata = $search->get_participants();
+
+        // Create the teachers.
         foreach ($rawdata as $user) {
             $record = new \stdClass();
             $record->name = fullname($user);
@@ -106,10 +123,23 @@ function syllabus_add_instance($data, $mform) {
         }
         $rawdata->close();
     }
+
     // Add teachers (contacts).
     $teachers = [];
     if ($id = $DB->get_field('role', 'id', array('shortname' => 'teacher'))) {
-        $rawdata = user_get_participants($data->course, 0, 0, $id, 0, -1, '');
+        // Create the basic filter.
+        $filterset = new participants_filterset();
+        $filterset->add_filter(new integer_filter('courseid', null, [(int) $data->course]));
+
+        // Create the role filter.
+        $filterset->add_filter(new integer_filter('roles', filter::JOINTYPE_DEFAULT, [(int) $id]));
+
+        // Run the search.
+        $course = get_course($data->course);
+        $search = new participants_search($course, $context, $filterset);
+        $rawdata = $search->get_participants();
+
+        // Create the contacts.
         foreach ($rawdata as $user) {
             $record = new \stdClass();
             $record->name = fullname($user);
