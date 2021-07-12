@@ -132,7 +132,7 @@ abstract class rubric {
         $linkcontent .= \html_writer::end_tag('i');
         $linkcontent .= ' ' . get_string('add');
         return \html_writer::link('#', $linkcontent, [
-                    'class' => 'btn btn-default small-button add addline',
+                    'class' => 'btn btn-secondary add addline',
                     'role' => 'button',
                     'data-id' => $dataid,
                     'data-repeat' => $datarepeat

@@ -138,26 +138,24 @@
     padding-right: 0px;
     max-width: 100%;
 }
-.syllabus .btn.btn-default.small-button {
-    font-size: 0.7rem;
+.syllabus .btn.addline {
     padding: .24rem .5rem;
     margin-top: 6px;
     margin-right: 5px;
 }
-.syllabus .btn.btn-default.small-button.is-invalid {
+.syllabus .btn.addline.is-invalid {
     border-color: #dc3545;
     border-width: 2px;
 }
-.syllabus .btn.btn-default.small-button.add {
+.syllabus .btn.addline.add {
     margin-bottom: 1rem;
     margin-top: 0.1rem;
 }
 .syllabus a.deleteline .fa-trash {
     font-size: 1.2rem;
 }
-.syllabus .btn.btn-default.small-button .fa-plus-square {
+.syllabus .btn.addline .fa-plus-square {
     font-size: 0.9rem;
-    color: #5cb85c;
 }
 .syllabus .mceIframeContainer.is-invalid {
     border-color: #dc3545;
