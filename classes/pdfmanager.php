@@ -208,7 +208,7 @@ class pdfmanager {
                 font-weight: bold;
             }
             tr.even td, tr.even th {
-                background-color: #d6effc;
+                background-color: #f2f2f2;
             }
             p.spacer {
                 font-size: 0pt;
@@ -231,14 +231,14 @@ class pdfmanager {
             p.normal {
                 font-weight: normal;
             }
-            table.greytable {
+            table.backgroundblockinfo {
                 border: 2px solid #ced4da;
-                background-color: #f2f2f2;
+                background-color: #d6effc;
             }
-            table.greytable td {
+            table.backgroundblockinfo td {
                 width: 75%;
             }
-            table.greytable th {
+            table.backgroundblockinfo th {
                 width: 25%;
                 font-weight: normal;
             }

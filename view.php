@@ -88,7 +88,7 @@ if (!empty($pdfurl)) {
 }
 if (has_capability('mod/syllabus:addinstance', $context)) {
     $link = \html_writer::link(new moodle_url('/mod/syllabus/edit.php?', ['cmid' => $PAGE->cm->id]),
-            get_string('enterdata', 'syllabus'), ['class' => 'btn btn-secondary']);
+            get_string('enterdata', 'syllabus'), ['class' => 'btn btn-primary']);
     echo \html_writer::span($link, 'actionbuttons');
 }
 echo html_writer::end_tag('div');

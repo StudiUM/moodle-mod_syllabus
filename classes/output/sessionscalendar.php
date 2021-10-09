@@ -64,10 +64,11 @@ class sessionscalendar extends rubric {
             $this->form->addElement('html', '<div class="syllabus_repeated_items_block greyborder" id="calendarsession">');
         }
 
-        $deletelabel = get_string('delete');
+        $deletelabel = get_string('deletethisline', 'mod_syllabus');
         $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
         $link = \html_writer::link('#', $action,
-                ['class' => 'deleteline', 'data-id' => 'calendarsession', 'data-repeat' => 'nbrepeatsessioncal']);
+                ['class' => 'deleteline', 'data-id' => 'calendarsession', 'data-repeat' => 'nbrepeatsessioncal',
+                'role' => 'button']);
 
         for ($i = 0; $i < $nbrepeat; $i++) {
             $this->build_sessioncalendar_item($i, $link, $textareaoptions);

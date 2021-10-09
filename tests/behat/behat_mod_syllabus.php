@@ -135,10 +135,11 @@ class behat_mod_syllabus extends behat_base {
      */
     public function i_click_on_subrubric_delete_button($subrubric, $nb) {
         // Click on delete icon. Some subrubrics are tables, others are not.
+        $deletetitle = get_string('deletethisline', 'mod_syllabus');
         if ($subrubric == 'teacher' || $subrubric == 'contact') {
-            $xpath = "//table[@id='$subrubric']/tbody/tr[$nb]/td/a[./@href]/i[@title='".get_string('delete')."']";
+            $xpath = "//table[@id='$subrubric']/tbody/tr[$nb]/td/a[./@href]/i[@title='".$deletetitle."']";
         } else {
-            $xpath = "//div[@id='$subrubric']/div[$nb]//a[./@href]/i[@title='".get_string('delete')."']";
+            $xpath = "//div[@id='$subrubric']/div[$nb]//a[./@href]/i[@title='".$deletetitle."']";
         }
 
         $this->execute("behat_general::i_click_on", [$xpath, 'xpath_element']);

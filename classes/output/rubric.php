@@ -127,10 +127,10 @@ abstract class rubric {
      * @param string $datarepeat
      * @return string HTML
      */
-    public function button_add_html($dataid, $datarepeat = '') {
+    public function button_add_html($dataid, $datarepeat = '', $addidentifier = null) {
         $linkcontent = \html_writer::start_tag('i', ['class' => 'icon fa fa-plus-square fa-fw']);
         $linkcontent .= \html_writer::end_tag('i');
-        $linkcontent .= ' ' . get_string('add');
+        $linkcontent .= ($addidentifier) ? ' ' . get_string($addidentifier, 'mod_syllabus') : ' ' . get_string('add');
         return \html_writer::link('#', $linkcontent, [
                     'class' => 'btn btn-secondary add addline',
                     'role' => 'button',

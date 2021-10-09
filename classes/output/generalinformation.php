@@ -155,10 +155,10 @@ class generalinformation extends rubric {
         $table .= \html_writer::start_tag('tbody');
 
         $this->form->addElement('html', $table);
-        $deletelabel = get_string('delete');
+        $deletelabel = get_string('deletethisline', 'mod_syllabus');
         $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
         $link = \html_writer::link('#', $action, ['class' => 'deleteline',
-            'data-id' => "teacher", 'data-repeat' => 'nbrepeatteachers']);
+            'data-id' => "teacher", 'data-repeat' => 'nbrepeatteachers', 'role' => 'button']);
 
         for ($i = 0; $i < $nbrepeat; $i++) {
             $this->build_teacher_line($i, $link, $textareaoptions);
@@ -171,7 +171,7 @@ class generalinformation extends rubric {
         $this->form->addElement('html', '</table>');
 
         $this->form->addElement('html', '<div class="text-right">');
-        $this->form->addElement('html', $this->button_add_html('teacher', 'nbrepeatteachers'));
+        $this->form->addElement('html', $this->button_add_html('teacher', 'nbrepeatteachers', 'addteacher'));
         $this->form->addElement('html', '</div>');
 
         $this->form->addElement('html', $this->fieldset_html_end());
@@ -212,10 +212,10 @@ class generalinformation extends rubric {
         $table .= \html_writer::start_tag('tbody');
 
         $this->form->addElement('html', $table);
-        $deletelabel = get_string('delete');
+        $deletelabel = get_string('deletethisline', 'mod_syllabus');
         $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
         $link = \html_writer::link('#', $action, ['class' => 'deleteline',
-            'data-id' => "contact", 'data-repeat' => 'nbrepeatcontacts']);
+            'data-id' => "contact", 'data-repeat' => 'nbrepeatcontacts', 'role' => 'button']);
 
         for ($i = 0; $i < $nbrepeat; $i++) {
             $this->build_contact_line($i, $link, $textareaoptions);
@@ -228,7 +228,7 @@ class generalinformation extends rubric {
         $this->form->addElement('html', '</table>');
 
         $this->form->addElement('html', '<div class="text-right">');
-        $this->form->addElement('html', $this->button_add_html('contact', 'nbrepeatcontacts'));
+        $this->form->addElement('html', $this->button_add_html('contact', 'nbrepeatcontacts', 'addcontact'));
         $this->form->addElement('html', '</div>');
 
         $this->form->addElement('html', $this->fieldset_html_end());

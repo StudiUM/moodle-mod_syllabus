@@ -77,11 +77,11 @@ class syllabus extends persistent {
 
         $buttonarray = array();
         $attrsubmit = array('data-submitbtn' => 'true');
-        $buttonarray[] = $this->_form->createElement('button', 'saveandcontinue',
+        $buttonarray[] = $this->_form->createElement('submit', 'saveandcontinue',
             get_string('saveandcontinue', 'mod_syllabus'), $attrsubmit);
-        $buttonarray[] = $this->_form->createElement('button', 'saveandpreview',
+        $buttonarray[] = $this->_form->createElement('submit', 'saveandpreview',
             get_string('saveandpreview', 'mod_syllabus'), $attrsubmit);
-        $buttonarray[] = $this->_form->createElement('button',
+        $buttonarray[] = $this->_form->createElement('submit',
             'saveandreturntocourse', get_string('saveandreturntocourse', 'mod_syllabus'), $attrsubmit);
         $buttonarray[] = $this->_form->createElement('cancel');
         $this->_form->addGroup($buttonarray, 'buttonar', '', array(' '), false);

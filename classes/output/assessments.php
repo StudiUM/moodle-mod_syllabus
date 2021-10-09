@@ -65,10 +65,10 @@ class assessments extends rubric {
             $this->form->addElement('html', '<div class="syllabus_repeated_items_block greyborder" id="assessmentcalendar">');
         }
 
-        $deletelabel = get_string('delete');
+        $deletelabel = get_string('deletethisline', 'mod_syllabus');
         $action = '<i class="icon fa fa-trash fa-fw " title="' . $deletelabel . '" aria-label="' . $deletelabel . '"></i>';
         $link = \html_writer::link('#', $action, ['class' => 'deleteline',
-            'data-id' => "assessmentcalendar", 'data-repeat' => 'nbrepeatassessmentcal']);
+            'data-id' => "assessmentcalendar", 'data-repeat' => 'nbrepeatassessmentcal', 'role' => 'button']);
 
         for ($i = 0; $i < $nbrepeat; $i++) {
             $this->build_assessmentscalendar_item($i, $link);

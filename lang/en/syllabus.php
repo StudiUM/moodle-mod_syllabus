@@ -23,9 +23,11 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['addcontact'] = 'Add a contact person';
 $string['additionalresourcedocuments'] = 'Documents';
 $string['additionalresourceothers'] = 'Autres';
 $string['additionalresources'] = 'Ressources complémentaires';
+$string['addteacher'] = 'Add a teacher';
 $string['assessments'] = 'Évaluations';
 $string['assessmentcalendar'] = 'Calendrier des évaluations';
 $string['assessmentcalendar_activities'] = 'Activité';
@@ -68,6 +70,7 @@ Notez que la permission d\'enregistrer NE donne PAS la permission de diffuser l\
 $string['courseregistration_help'] = 'Vous pouvez <strong>utiliser tel quel le texte figurant dans le champ ou l\'adapter</strong> en fonction de vos propres exigences. Dans tous les cas, les étudiant(e)s doivent comprendre&nbsp;: 1) que l\'enregistrement d\'une séance de cours n\'est généralement pas autorisé&nbsp;; 2) qu\'ils doivent obtenir l\'autorisation de l\'enseignant(e) avant d\'enregistrer une séance de cours&nbsp;; 3) que la diffusion de l\'enregistrement est interdite.';
 $string['courseyear'] = 'Année';
 $string['creditnb'] = 'Nombre de crédits';
+$string['deletethisline'] = 'Delete this line';
 $string['detaileddescription'] = 'Description détaillée';
 $string['detaileddescription_cmp'] = 'Description détaillée';
 $string['detaileddescription_cmp_help'] = 'Décrivez le cours de façon à piquer la curiosité et susciter la motivation des étudiant(e)s&nbsp;: principaux <strong>sujets</strong> abordés, <strong>participation</strong> attendue (analyser, critiquer, explorer, mettre en pratique, etc.), place laissée à la discussion et à la collaboration entre pairs, <strong>pertinence</strong> des activités proposées pour la pratique professionnelle, la recherche ou une meilleure compréhension du monde, <strong>ressources</strong> (numériques ou autres) utilisées.';

@@ -25,7 +25,7 @@
     overflow-wrap: break-word;
 }
 .syllabus .syllabus_info_block .row:nth-child(even) {
-    background-color: #d6effc;
+    background-color: rgba(0,0,0,.05);
 }
 .syllabus .syllabus_info_block .row div {
     padding: 0.25rem;
@@ -36,7 +36,7 @@
 .syllabus .syllabus_info_block .row div:first-child.normal, .syllabus .syllabus_info_block .row div:first-child p.normal {
     font-weight: initial;
 }
-.syllabus .syllabus_info_block .greybackground + div .row div:not(:first-child) {
+.syllabus .syllabus_info_block .backgroundblockinfo + div .row div:not(:first-child) {
     font-weight: initial;
 }
 .syllabus .greyborder {
@@ -46,13 +46,13 @@
     border: none;
     border-bottom: 1px solid #ced4da;
 }
-.syllabus .syllabus_info_block .greybackground {
-    background-color: rgba(0,0,0,.05);
+.syllabus .syllabus_info_block .backgroundblockinfo {
+    background-color: #d6effc;
 }
-.syllabus .syllabus_info_block .greybackground + div {
+.syllabus .syllabus_info_block .backgroundblockinfo + div {
     padding: 0;
 }
-.syllabus .syllabus_info_block .greybackground + div .row {
+.syllabus .syllabus_info_block .backgroundblockinfo + div .row {
     padding: 0;
 }
 .syllabus .view_action_buttons {
@@ -153,6 +153,7 @@
 }
 .syllabus a.deleteline .fa-trash {
     font-size: 1.2rem;
+    margin-right: 0;
 }
 .syllabus .btn.addline .fa-plus-square {
     font-size: 0.9rem;
