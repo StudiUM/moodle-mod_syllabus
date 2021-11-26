@@ -190,3 +190,8 @@
 #page-mod-syllabus-view .view_action_buttons .actionbuttons a i.fa-file-pdf-o {
     color: #B30000;
 }
+#page-mod-syllabus-view .syllabus .syllabus_info_block .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
