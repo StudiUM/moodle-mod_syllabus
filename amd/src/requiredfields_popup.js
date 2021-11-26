@@ -16,7 +16,6 @@
 /**
  * Manage the popup about the required fields.
  *
- * @package    mod_syllabus
  * @author     Marie-Eve Lévesque <marie-eve.levesque.8@umontreal.ca>
  * @copyright  2020 Université de Montréal
  */

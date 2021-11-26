@@ -21,7 +21,7 @@ Feature: Navigation
       | Description | Test description |
 
   Scenario: Collapsible sections.
-    Given I follow "TestSyllabus"
+    Given I am on the "TestSyllabus" "syllabus activity" page
     When I navigate to "Draw up" in current page administration
     Then I should see "Nombre de crédits"
     And I should see "teacher1@example.com"
@@ -57,7 +57,7 @@ Feature: Navigation
     And I should see "Prise de notes"
 
   Scenario: Buttons.
-    Given I follow "TestSyllabus"
+    Given I am on the "TestSyllabus" "syllabus activity" page
     # Save and continue button.
     When I navigate to "Draw up" in current page administration
     And I set the field "Charge de travail hebdomadaire" to "Text for weekly workload."
@@ -88,5 +88,4 @@ Feature: Navigation
     And I click on "Save changes" "button"
     And I should see "Course1"
     And I should see "Topic 1"
-    And "TestSyllabus" "link" should be visible
-
+    And I should see "TestSyllabus" in the "Topic 1" "section"

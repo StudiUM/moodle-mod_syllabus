@@ -17,7 +17,6 @@
  * JavaScript for the syllabus form class.
  *
  * @module    mod_syllabus/syllabusform
- * @package   mod_syllabus
  * @copyright 2019 Université de Montréal
  * @author    Issam Taboubi <issam.taboubi@umontreal.ca>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -142,6 +141,8 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
          * Reorder lines.
          *
          * @name   reorderlines
+         * @param {String} id
+         * @param {String} namerepeat
          * @return {Void}
          * @function
          */

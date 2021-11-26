@@ -22,12 +22,12 @@ Feature: PDF file
       | Description | Test description |
 
   Scenario: Download the pdf as a teacher and as a student
-    Given I follow "TestSyllabus"
+    Given I am on the "TestSyllabus" "syllabus activity" page
     Then I should see "Download as PDF"
     And following "Download as PDF" should download between "1000" and "500000" bytes
     And I log out
     And I log in as "student1"
     And I am on "Course1" course homepage
-    And I follow "TestSyllabus"
+    And I am on the "TestSyllabus" "syllabus activity" page
     And I should see "Download as PDF"
     And following "Download as PDF" should download between "1000" and "500000" bytes

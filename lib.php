@@ -222,8 +222,8 @@ function syllabus_delete_instance($id) {
  * information needed to print this activity in various places.
  *
  * If syllabus needs to be displayed inline we store additional information
- * in customdata, so functions {@link syllabus_cm_info_dynamic()} and
- * {@link syllabus_cm_info_view()} do not need to do DB queries
+ * in customdata, so functions syllabus_cm_info_dynamic() and
+ * syllabus_cm_info_view() do not need to do DB queries.
  *
  * @param cm_info $cm
  * @return cached_cm_info info
@@ -288,8 +288,8 @@ function syllabus_view($syllabus, $course, $cm, $context) {
  * This function is called when the context for the page is a syllabus module. This is not called by AJAX
  * so it is safe to rely on the $PAGE.
  *
- * @param settings_navigation $settingsnav {@link settings_navigation}
- * @param navigation_node $syllabusnode {@link navigation_node}
+ * @param settings_navigation $settingsnav
+ * @param navigation_node $syllabusnode
  */
 function syllabus_extend_settings_navigation(settings_navigation $settingsnav, navigation_node $syllabusnode=null) {
     global $PAGE;
@@ -364,7 +364,7 @@ function syllabus_fill_course_data($data) {
     $data->title = $course->fullname;
     $data->idnumber = $course->idnumber;
     $data->facultydept = $category->get_nested_name(false);
-    if ($date = udem_get_session_date($course->idnumber)) {
+    if (function_exists('udem_get_session_date') && $date = udem_get_session_date($course->idnumber)) {
         $d = new \DateTime();
         $d->setTimestamp($date);
         $data->courseyear = $d->format('Y');

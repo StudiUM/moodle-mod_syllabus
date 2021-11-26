@@ -77,7 +77,7 @@ abstract class rubric {
     /**
      * Build elements for rubric.
      */
-    public abstract function build_form_rubric();
+    abstract public function build_form_rubric();
 
     /**
      * Get HTML fieldset start.
@@ -125,6 +125,7 @@ abstract class rubric {
      *
      * @param string $dataid
      * @param string $datarepeat
+     * @param string $addidentifier
      * @return string HTML
      */
     public function button_add_html($dataid, $datarepeat = '', $addidentifier = null) {

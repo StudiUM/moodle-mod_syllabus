@@ -144,7 +144,7 @@ class behat_mod_syllabus extends behat_base {
 
         $this->execute("behat_general::i_click_on", [$xpath, 'xpath_element']);
         // Click on confirm delete button.
-        $xpath = "//div[contains(@class,'moodle-dialogue')]//input[@value='".get_string('delete')."']";
+        $xpath = "//div[contains(@class,'modal-dialog')]//button[text()='".get_string('delete')."']";
         $this->execute("behat_general::i_click_on", [$xpath, 'xpath_element']);
     }
 

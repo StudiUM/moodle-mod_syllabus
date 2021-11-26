@@ -8,10 +8,13 @@ Feature: Prefilled fields
     Given the following "users" exist:
       | username | firstname | lastname | email                |
       | teacher1 | Terry1    | Teacher1 | teacher1@example.com |
+    And the following "categories" exist:
+      | name  | category  | idnumber  |
+      | Cat 1 | 0         | CAT1      |
     And the following "courses" exist:
-      | fullname  | shortname | idnumber   | summary             |
-      | Course1   | c1        | c1         | Summary of course 1 |
-      | Course2   | c2        | TEST-A-E20 | Summary of course 2 |
+      | fullname  | shortname | idnumber   | category | summary             |
+      | Course1   | c1        | c1         | CAT1     | Summary of course 1 |
+      | Course2   | c2        | TEST-A-E20 | CAT1     | Summary of course 2 |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | c1     | editingteacher |
@@ -23,12 +26,12 @@ Feature: Prefilled fields
     And I add a "Syllabus" to section "1" and I fill the form with:
       | Name | TestSyllabus |
       | Description | Test description |
-    When I follow "TestSyllabus"
+    When I am on the "TestSyllabus" "syllabus activity" page
     And I navigate to "Draw up" in current page administration
     Then the following fields match these values:
       | Titre | Course1 |
       | Sigle | c1 |
-      | Faculté / École / Département | Miscellaneous |
+      | Faculté / École / Département | Cat 1 |
       | Trimestre | |
       | Année | |
       | Description simple | Summary of course 1 |
@@ -45,14 +48,15 @@ Feature: Prefilled fields
     And I add a "Syllabus" to section "1" and I fill the form with:
       | Name | TestSyllabus |
       | Description | Test description |
-    When I follow "TestSyllabus"
+    When I am on the "TestSyllabus" "syllabus activity" page
     And I navigate to "Draw up" in current page administration
     Then the following fields match these values:
       | Titre | Course2 |
       | Sigle | TEST-A-E20 |
-      | Faculté / École / Département | Miscellaneous |
+      | Faculté / École / Département | Cat 1 |
       | Trimestre | Été |
-      | Année | 2020 |
+    #  | Année | 2020 |
+    # We don't check year, because it depends if we are in the UdeM specific Moodle or not.
     And the "Titre" "field" should be disabled
     And the "Sigle" "field" should be disabled
     And the "Faculté / École / Département" "field" should be disabled

@@ -12,7 +12,7 @@ Feature: Mandatory and non mandatory fields
       | teacher1 | Terry1    | Teacher1 | teacher1@example.com |
     And the following "courses" exist:
       | fullname  | shortname | idnumber   | summary             |
-      | Course1   | c1        | TEST-A-E20 | Summary of course 1 |
+      | Course1   | c1        | c1         | Summary of course 1 |
     And the following "course enrolments" exist:
       | user     | course | role           |
       | student1 | c1     | student        |
@@ -24,7 +24,7 @@ Feature: Mandatory and non mandatory fields
       | Description | Test description |
 
   Scenario: Mandatory fields always appear, the others appear if filled.
-    Given I follow "TestSyllabus"
+    Given I am on the "TestSyllabus" "syllabus activity" page
     # Nothing modified yet, but mandatory fields should be shown anyway.
     # Sub-rubrics and pre-filled fields are not verified here, there are other tests for that.
     # Information générale.
@@ -75,8 +75,11 @@ Feature: Mandatory and non mandatory fields
     And I set the following fields to these values:
       | creditnb                    | 3                 |
       | teacher_availability[0]     | Monday 9am-5pm    |
-      | detaileddescription[text]         | Test detailed     |
-      | placeinprogram[text]              | Test place        |
+      | detaileddescription[text]   | Test detailed     |
+      | placeinprogram[text]        | Test place        |
+      | idnumber                    | ABCD-A-A21        |
+      | trimester                   | Autumn            |
+      | courseyear                  | 2021              |
     And I click on "Apprentissages visés" "link"
     And I set the following fields to these values:
       | educationalintentions[text]       | Test educational  |
@@ -122,7 +125,7 @@ Feature: Mandatory and non mandatory fields
     And I log out
     And I log in as "student1"
     And I am on "Course1" course homepage
-    And I follow "TestSyllabus"
+    And I am on the "TestSyllabus" "syllabus activity" page
     And the syllabus "Titre" field under "Information générale" should contain "Course1"
     And the syllabus block "1" under "Enseignant" should contain "Monday 9am-5pm" value for "Disponibilités" field
     And the syllabus "Objectifs généraux" field under "Apprentissages visés" should contain ""

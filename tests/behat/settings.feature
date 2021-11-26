@@ -39,7 +39,7 @@ Feature: Settings
     And I click on "Save image" "button"
     # There are leftovers of the popup so you need quit the page and come back (problem occurs in behat only).
     And I click on "Save and return to course" "button"
-    And I follow "TestSyllabus"
+    And I am on the "TestSyllabus" "syllabus activity" page
     And I navigate to "Edit settings" in current page administration
     # In the version notes.
     And I click on "Insert or edit image" "button" in the "//*[contains(.,'Version notes')]/following::div[1][@data-fieldtype='editor']" "xpath_element"
@@ -51,7 +51,7 @@ Feature: Settings
     And I click on "Save image" "button"
     # Save the form and check results : description is visible, but not version notes.
     And I click on "Save and return to course" "button"
-    And I follow "TestSyllabus"
+    And I am on the "TestSyllabus" "syllabus activity" page
     Then "//img[contains(@src, 'moodle_logo1.jpg') and @alt='Moodle logo in description']" "xpath_element" should exist
     And "//img[contains(@src, 'moodle_logo2.jpg') and @alt='Moodle logo in version notes']" "xpath_element" should not exist
     # When editing, the teacher should see both images.
@@ -62,6 +62,6 @@ Feature: Settings
     And I log out
     And I log in as "student1"
     And I am on "Course1" course homepage
-    And I follow "TestSyllabus"
+    And I am on the "TestSyllabus" "syllabus activity" page
     And "//img[contains(@src, 'moodle_logo1.jpg') and @alt='Moodle logo in description']" "xpath_element" should exist
     And "//img[contains(@src, 'moodle_logo2.jpg') and @alt='Moodle logo in version notes']" "xpath_element" should not exist
