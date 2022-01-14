@@ -122,6 +122,7 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
                     var newname = name.replace(patt, index.toString());
                     $(this).attr('name', newname);
                 });
+                var firstfocusable = $('.newline').find('input,textarea,select').first();
                 $('.newline').removeClass('newline hidden');
                 // Add css border if calendar was empty.
                 if (!self.nbrepeat[identifier]) {
@@ -133,6 +134,7 @@ define(['jquery', 'core/str', 'core/notification', 'mod_syllabus/requiredfields_
                 Y.use("moodle-form-dateselector",function() {
                     M.form.dateselector.init_date_selectors(self.configdatepicker);
                 });
+                firstfocusable.focus();
             });
         };
 
